@@ -474,17 +474,30 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100vh;
   
-  background: url("../img/brandenburggate5.gif") top center;
-
-/*  background: url("https://i.imgur.com/7AvAAds.gif") top center;
+/*  background: url("../img/brandenburggate5.gif") top center;
 */
-/*  background: url("../img/branden.png") top center;
-  
-/*  background: url("https://s8.gifyu.com/images/brandenburggate5.gif") top center;
-*/  background-size: cover;
+  background-size: cover;
   position: relative;
   padding: 0;
 }
+
+#bgvideo {
+position: absolute;
+top: 50%;
+left: 50%;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: 100%;
+z-index: -100;
+-ms-transform: translateX(-50%) translateY(-50%);
+-moz-transform: translateX(-50%) translateY(-50%);
+-webkit-transform: translateX(-50%) translateY(-50%);
+transform: translateX(-50%) translateY(-50%);
+/*background: url(../img/branden.png) no-repeat;
+*/background-size: cover;
+}
+
 
 #hero:before {
   content: "";
