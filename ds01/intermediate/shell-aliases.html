@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Shell Aliases - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Intermediate</a></li><li>Shell Aliases</li>
           </ol>
         </div>
       </div>
@@ -262,7 +262,7 @@
 <li><a href="intermediate/container-states.html">Container States</a></li>
 <li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
 <li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
-<li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
+<li><a href="intermediate/shell-aliases.html" class="active">Shell Aliases</a></li>
 </ul>
 </li>
 <li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
@@ -316,22 +316,48 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
-</ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+            <h1 id="shell-aliases">Shell Aliases<a class="headerlink" href="#shell-aliases" title="Permanent link">&para;</a></h1>
+<p>Speed up your workflow with these handy aliases.</p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>Add these to your <code>~/.bashrc</code>:</p>
+<pre class="codehilite"><code class="language-bash"># Short aliases
+alias pl='project launch'
+alias pd='project deploy'
+alias ca='container-attach'
+alias cr='container retire'
+alias cl='container-list'
+
+# Common patterns
+alias plo='project launch --open'
+alias plb='project launch --background'
+alias crf='container retire --force'
+</code></pre>
+
+<p>Then reload your shell:</p>
+<pre class="codehilite"><code class="language-bash">source ~/.bashrc
+</code></pre>
+
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">plo my-thesis          # project launch my-thesis --open
+plb my-thesis          # project launch my-thesis --background
+crf my-thesis          # container retire my-thesis --force
+cl                     # container-list
+ca my-thesis           # container-attach my-thesis
+</code></pre>
+
+<h2 id="more-aliases">More Aliases<a class="headerlink" href="#more-aliases" title="Permanent link">&para;</a></h2>
+<p>Feel free to add your own based on your workflow:</p>
+<pre class="codehilite"><code class="language-bash"># Project shortcuts
+alias pi='project init'
+alias pig='project init --guided'
+
+# Container inspection
+alias cs='container-stats'
+
+# Quick checks
+alias limits='check-limits'
+alias gpus='dashboard'
+</code></pre>
           </article>
         </div>
       </div>

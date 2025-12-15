@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Common Errors - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Troubleshooting</a></li><li>Common Errors</li>
           </ol>
         </div>
       </div>
@@ -307,7 +307,7 @@
 </li>
 <li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
 <ul>
-<li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
+<li><a href="troubleshooting/common-errors.html" class="active">Common Errors</a></li>
 <li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
 <li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
 <li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
@@ -316,22 +316,273 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="common-errors">Common Errors<a class="headerlink" href="#common-errors" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
+</blockquote>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="file-issues">File Issues<a class="headerlink" href="#file-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-find-my-files-files-missing">Can't Find My Files {#files-missing}<a class="headerlink" href="#cant-find-my-files-files-missing" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Files missing from container<br />
+- Workspace appears empty</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Check both locations:</strong><br />
+   ```bash<br />
+   # On host<br />
+   ls ~/workspace/<project-name>/</li>
+</ol>
+<p># In container<br />
+   docker exec <project-name>._.$(whoami) ls /workspace/<br />
+   ```</p>
+<ol>
+<li>
+<p><strong>Remember the mapping:</strong><br />
+<code>Host:      ~/workspace/&lt;project-name&gt;/
+   Container: /workspace/</code></p>
+</li>
+<li>
+<p><strong>Verify workspace mount:</strong><br />
+<code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep -A 5 "Mounts"</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="permission-denied-on-files-permission-denied">Permission Denied on Files {#permission-denied}<a class="headerlink" href="#permission-denied-on-files-permission-denied" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ touch /workspace/file.txt
+Permission denied
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check ownership:</strong><br />
+<code>bash
+   ls -ld ~/workspace/&lt;project-name&gt;/
+   # Should be owned by you</code></p>
+</li>
+<li>
+<p><strong>Fix permissions (on host):</strong><br />
+<code>bash
+   sudo chown -R $(whoami):$(whoami) ~/workspace/&lt;project-name&gt;/</code></p>
+</li>
+<li>
+<p><strong>Check disk space:</strong><br />
+<code>bash
+   df -h | grep home</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="out-of-disk-space-disk-space">Out of Disk Space {#disk-space}<a class="headerlink" href="#out-of-disk-space-disk-space" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">No space left on device
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<p>Best to notify DSL admin by raising an issue ticket in <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">ds01-hub repo</a>. Most user permissions are restricted so you will not be able to do a full clean of docker/disk except from those files related to you (limited). </p>
+<ol>
+<li><strong>Check usage:</strong><br />
+   ```bash<br />
+   # Workspace<br />
+   du -sh ~/workspace/*</li>
+</ol>
+<p># Docker<br />
+   docker system df<br />
+   ```</p>
+<ol>
+<li><strong>Clean up:</strong><br />
+   ```bash<br />
+   # Remove old projects<br />
+   rm -rf ~/workspace/old-project/</li>
+</ol>
+<p># Clean Docker<br />
+   docker image prune<br />
+   docker system prune</p>
+<p># Remove old checkpoints<br />
+   find ~/workspace -name "checkpoint-*.pt" -mtime +30 -delete<br />
+   ```</p>
+<hr />
+<h2 id="permission-issues">Permission Issues<a class="headerlink" href="#permission-issues" title="Permanent link">&para;</a></h2>
+<h3 id="docker-permission-denied-docker-permission">Docker Permission Denied {#docker-permission}<a class="headerlink" href="#docker-permission-denied-docker-permission" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ docker ps
+Permission denied while trying to connect to the Docker daemon socket
+</code></pre>
+
+<p><strong>Cause:</strong> Not in <code>docker</code> group</p>
+<p><strong>Solution:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Check groups
+groups | grep docker
+</code></pre>
+
+<h2 id="if-not-in-docker-group-ask-dsl-admin-to-add-you">If not in docker group, ask DSL admin to add you<a class="headerlink" href="#if-not-in-docker-group-ask-dsl-admin-to-add-you" title="Permanent link">&para;</a></h2>
+<h3 id="commands-not-found-commands-not-found">Commands Not Found {#commands-not-found}<a class="headerlink" href="#commands-not-found-commands-not-found" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-deploy my-project
+bash: container-deploy: command not found
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check PATH:</strong><br />
+<code>bash
+   echo $PATH | grep ds01</code></p>
+</li>
+<li>
+<p><strong>Use full path:</strong><br />
+<code>bash
+   /opt/ds01-infra/scripts/user/orchestrators/container-deploy my-project</code></p>
+</li>
+<li>
+<p><strong>Fix PATH:</strong><br />
+<code>bash
+   shell-setup
+   source ~/.bashrc</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="network-issues">Network Issues<a class="headerlink" href="#network-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-access-jupyter-jupyter-access">Can't Access Jupyter {#jupyter-access}<a class="headerlink" href="#cant-access-jupyter-jupyter-access" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Jupyter running but can't access in browser</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check Jupyter is running:</strong><br />
+<code>bash
+   docker exec &lt;project-name&gt;._.$(whoami) ps aux | grep jupyter</code></p>
+</li>
+<li>
+<p><strong>Check port:</strong><br />
+<code>bash
+   docker port &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Set up SSH tunnel:</strong><br />
+   ```bash<br />
+   # On your laptop<br />
+   ssh -L 8888:localhost:8888 <user-id>@ds01</p>
+</li>
+</ol>
+<p># Then access: http://localhost:8888<br />
+   ```</p>
+<ol>
+<li><strong>Start Jupyter correctly:</strong><br />
+<code>bash
+   jupyter lab --ip=0.0.0.0 --port=8888 --no-browser</code></li>
+</ol>
+<hr />
+<h2 id="git-issues">Git Issues<a class="headerlink" href="#git-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-push-to-github">Can't Push to GitHub<a class="headerlink" href="#cant-push-to-github" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ git push
+Permission denied (publickey)
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check SSH key:</strong><br />
+<code>bash
+   ls ~/.ssh/
+   cat ~/.ssh/id_ed25519.pub</code></p>
+</li>
+<li>
+<p><strong>Add key to GitHub:</strong></p>
+</li>
+<li>Copy public key</li>
+<li>
+<p>GitHub → Settings → SSH Keys → Add</p>
+</li>
+<li>
+<p><strong>Test connection:</strong><br />
+<code>bash
+   ssh -T git@github.com</code></p>
+</li>
+<li>
+<p><strong>Use HTTPS instead:</strong><br />
+<code>bash
+   git remote set-url origin https://github.com/user/repo.git</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="resource-limits">Resource Limits<a class="headerlink" href="#resource-limits" title="Permanent link">&para;</a></h2>
+<h3 id="memory-limit-exceeded">Memory Limit Exceeded<a class="headerlink" href="#memory-limit-exceeded" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Container killed<br />
+- OOMKilled in logs</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check limits:</strong><br />
+<code>bash
+   check-limits</code></p>
+</li>
+<li>
+<p><strong>Reduce memory usage:</strong></p>
+</li>
+<li>Process data in chunks</li>
+<li>Use data generators</li>
+<li>Clear variables when done</li>
+</ol>
+<hr />
+<h2 id="error-message-reference">Error Message Reference<a class="headerlink" href="#error-message-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Meaning</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>No GPUs available</code></td>
+<td>All GPUs allocated</td>
+<td>Wait or retire old containers</td>
+</tr>
+<tr>
+<td><code>OOMKilled</code></td>
+<td>Out of memory</td>
+<td>Reduce memory usage</td>
+</tr>
+<tr>
+<td><code>Permission denied</code></td>
+<td>Not in docker group or file permissions</td>
+<td>Check groups, fix permissions</td>
+</tr>
+<tr>
+<td><code>Container not found</code></td>
+<td>Container removed or wrong name</td>
+<td>Recreate or check name</td>
+</tr>
+<tr>
+<td><code>Image not found</code></td>
+<td>Image doesn't exist</td>
+<td>Build image first</td>
+</tr>
+<tr>
+<td><code>Network unreachable</code></td>
+<td>Network issue</td>
+<td>Check network, retry</td>
+</tr>
+<tr>
+<td><code>Quota exceeded</code></td>
+<td>Hit disk quota</td>
+<td>Clean up old files</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="container-issues.html">Container Issues</a></li>
+<li><a href="gpu-issues.html">GPU Issues</a></li>
+<li><a href="image-issues.html">Image Issues</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

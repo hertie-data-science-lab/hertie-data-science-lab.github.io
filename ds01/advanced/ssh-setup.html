@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>SSH Setup - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>SSH Setup</li>
           </ol>
         </div>
       </div>
@@ -273,7 +273,7 @@
 <li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
 <li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
 <li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
-<li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
+<li><a href="advanced/ssh-setup.html" class="active">SSH Setup</a></li>
 <li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
 </ul>
 </li>
@@ -316,22 +316,54 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="ssh-setup">SSH Setup<a class="headerlink" href="#ssh-setup" title="Permanent link">&para;</a></h1>
+<p>Configuring SSH keys for Git and remote access.</p>
+<h2 id="generate-ssh-key">Generate SSH Key<a class="headerlink" href="#generate-ssh-key" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N &quot;&quot;
+</code></pre>
+
+<h2 id="add-to-githubgitlab">Add to GitHub/GitLab<a class="headerlink" href="#add-to-githubgitlab" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Display public key
+cat ~/.ssh/id_ed25519.pub
+
+# Copy the output
+</code></pre>
+
+<p><strong>GitHub:</strong><br />
+- Settings → SSH and GPG keys → New SSH key<br />
+- Paste and save</p>
+<p><strong>GitLab:</strong><br />
+- Preferences → SSH Keys<br />
+- Paste and save</p>
+<h2 id="test-connection">Test Connection<a class="headerlink" href="#test-connection" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># GitHub
+ssh -T git@github.com
+
+# GitLab
+ssh -T git@gitlab.com
+</code></pre>
+
+<h2 id="ssh-config">SSH Config<a class="headerlink" href="#ssh-config" title="Permanent link">&para;</a></h2>
+<p>Create <code>~/.ssh/config</code>:</p>
+<pre class="codehilite"><code>Host ds01
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    IdentityFile ~/.ssh/id_ed25519
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh ds01  # Instead of the full format below
+</code></pre>
+
+<p><strong>Without SSH config:</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+</code></pre>
+
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>→ <a href="../getting-started/first-time-setup.html">First-Time Setup</a></li>
+<li>→ <a href="vscode-remote.html">VSCode Remote</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

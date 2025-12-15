@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Building Custom Images - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Core Guides</a></li><li>Building Custom Images</li>
           </ol>
         </div>
       </div>
@@ -245,7 +245,7 @@
 <li><a href="core-guides/collaboration.html">Collaboration</a></li>
 <li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
-<li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
+<li><a href="core-guides/custom-images.html" class="active">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
@@ -316,22 +316,51 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="building-custom-images">Building Custom Images<a class="headerlink" href="#building-custom-images" title="Permanent link">&para;</a></h1>
+<p>Guide to creating and managing custom Docker images on DS01.</p>
+<h2 id="quick-build">Quick Build<a class="headerlink" href="#quick-build" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">image-create my-project
+</code></pre>
+
+<p><strong>Interactive wizard guides you through:</strong><br />
+1. Phase 1: Choose framework (PyTorch, TensorFlow, JAX)<br />
+2. Phase 2: Add Jupyter Lab<br />
+3. Phase 3: Add data science packages<br />
+4. Phase 4: Add custom packages</p>
+<h2 id="dockerfile-location">Dockerfile Location<a class="headerlink" href="#dockerfile-location" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">~/dockerfiles/my-project.Dockerfile
+</code></pre>
+
+<h2 id="adding-packages">Adding Packages<a class="headerlink" href="#adding-packages" title="Permanent link">&para;</a></h2>
+<h3 id="recommended-interactive-gui">Recommended: Interactive GUI<a class="headerlink" href="#recommended-interactive-gui" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">image-update                  # Select image, add/remove packages
+</code></pre>
+
+<p>The interactive GUI lets you:<br />
+- View current packages<br />
+- Add Python packages (pip)<br />
+- Add system packages (apt)<br />
+- Import from requirements.txt<br />
+- Rebuild automatically</p>
+<h3 id="advanced-edit-dockerfile-directly">Advanced: Edit Dockerfile Directly<a class="headerlink" href="#advanced-edit-dockerfile-directly" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">vim ~/dockerfiles/my-project.Dockerfile
+# Add: RUN pip install transformers datasets accelerate
+
+# Then rebuild:
+image-update my-project --rebuild
+# Or: docker build -t ds01-&lt;uid&gt;/my-project:latest -f ~/dockerfiles/my-project.Dockerfile ~/dockerfiles/
+</code></pre>
+
+<h2 id="base-images">Base Images<a class="headerlink" href="#base-images" title="Permanent link">&para;</a></h2>
+<p><strong>Available frameworks:</strong><br />
+- PyTorch 2.8.0 (CUDA 12.4)<br />
+- TensorFlow 2.16.1 (CUDA 12.3)<br />
+- JAX 0.4.23 (CUDA 12.3)</p>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>→ <a href="../advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li>→ <a href="daily-workflow.html">Daily Usage Patterns</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

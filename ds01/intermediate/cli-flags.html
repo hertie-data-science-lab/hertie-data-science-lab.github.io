@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>CLI Flags and Efficiency - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Intermediate</a></li><li>CLI Flags and Efficiency</li>
           </ol>
         </div>
       </div>
@@ -257,7 +257,7 @@
 <li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
 <ul>
 <li><a href="intermediate/atomic-commands.html">Atomic Commands Reference</a></li>
-<li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
+<li><a href="intermediate/cli-flags.html" class="active">CLI Flags and Efficiency</a></li>
 <li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
 <li><a href="intermediate/container-states.html">Container States</a></li>
 <li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
@@ -316,22 +316,204 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="cli-flags-and-efficiency">CLI Flags and Efficiency<a class="headerlink" href="#cli-flags-and-efficiency" title="Permanent link">&para;</a></h1>
+<p>Stop using interactive mode - master CLI flags for fast, scriptable workflows.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="from-interactive-to-flags">From Interactive to Flags<a class="headerlink" href="#from-interactive-to-flags" title="Permanent link">&para;</a></h2>
+<p><strong>Beginner (interactive):</strong></p>
+<pre class="codehilite"><code class="language-bash">container deploy
+# Menu appears, select project, options...
+</code></pre>
+
+<p><strong>Intermediate (flags):</strong></p>
+<pre class="codehilite"><code class="language-bash">container deploy my-project --open
+</code></pre>
+
+<p><strong>10x faster when you know what you want.</strong></p>
+<hr />
+<h2 id="universal-flags">Universal Flags<a class="headerlink" href="#universal-flags" title="Permanent link">&para;</a></h2>
+<p><strong>Every DS01 command supports:</strong></p>
+<pre class="codehilite"><code class="language-bash">--help, -h              Quick reference
+--info                  Full documentation
+--concepts              Learn concept first
+--guided                Step-by-step walkthrough
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy --help
+image-create --info
+project-init --concepts
+container-retire --guided
+</code></pre>
+
+<hr />
+<h2 id="container-deployment-flags">Container Deployment Flags<a class="headerlink" href="#container-deployment-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">container deploy &lt;name&gt; [flags]
+
+--open                  Create and open terminal (default)
+--background            Create but don't attach
+--project=&lt;name&gt;        Mount specific project
+--workspace=&lt;path&gt;      Custom workspace mount
+--image=&lt;name&gt;          Use specific image
+--gpu=&lt;count&gt;           Request N GPUs
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Standard deploy
+container deploy my-thesis --open
+
+# Background deploy
+container deploy training --background
+
+# Custom workspace
+container deploy analysis --workspace=/data/shared
+
+# Multi-GPU
+container deploy distributed --gpu=2
+</code></pre>
+
+<hr />
+<h2 id="project-commands-flags">Project Commands Flags<a class="headerlink" href="#project-commands-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">project init &lt;name&gt; [flags]
+
+--type=&lt;type&gt;           ml, cv, nlp, rl, llm, ts, audio
+--quick                 Skip interactive questions, use defaults
+--no-git                Skip Git initialization
+--blank                 Create blank directory (no structure)
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash">project launch &lt;name&gt; [flags]
+
+--open                  Launch and open (default)
+--background            Launch without attaching
+--rebuild               Force image rebuild
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Quick project creation
+project init cv-research --type=cv --quick
+
+# Launch with rebuild
+project launch cv-research --rebuild --open
+</code></pre>
+
+<hr />
+<h2 id="container-atomic-flags">Container Atomic Flags<a class="headerlink" href="#container-atomic-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">container-create &lt;name&gt; [flags]
+
+--image=&lt;name&gt;          Docker image
+--project=&lt;name&gt;        Project workspace
+--gpu=&lt;count&gt;           GPU count
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash">container-remove &lt;name&gt; [flags]
+
+--force                 Skip confirmations
+--stop                  Stop if running
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Create with options
+container-create exp-1 --image=aime/pytorch:2.8.0 --gpu=2
+
+# Force remove
+container-remove exp-1 --force --stop
+</code></pre>
+
+<hr />
+<h2 id="image-flags">Image Flags<a class="headerlink" href="#image-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">image-create &lt;project&gt; [flags]
+
+-f, --framework &lt;name&gt;  Base framework (pytorch, tensorflow, jax)
+-t, --type &lt;type&gt;       Use case type (cv, nlp, rl, ml, custom)
+--no-cache              Rebuild from scratch
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash">image-delete &lt;name&gt; [flags]
+
+--force                 Skip confirmations
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Fresh build
+image-create my-project --no-cache
+
+# Quick delete
+image-delete old-project --force
+</code></pre>
+
+<hr />
+<h2 id="listquery-flags">List/Query Flags<a class="headerlink" href="#listquery-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">container-list [flags]
+
+--all                   Include stopped
+--format=&lt;type&gt;         table, json, simple
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash">image-list [flags]
+
+--all                   Include base images
+--format=json           JSON output
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># All containers as JSON
+container-list --all --format=json
+
+# Parse with jq
+container-list --format=json | jq '.[] | select(.status==&quot;running&quot;)'
+</code></pre>
+
+<hr />
+<h2 id="flag-combinations">Flag Combinations<a class="headerlink" href="#flag-combinations" title="Permanent link">&para;</a></h2>
+<p><strong>Multiple flags together:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Background deploy with custom project
+container deploy training --background --project=research-2024
+
+# Force stop and remove
+container-remove old-container --stop --force
+
+# Fresh image build with framework
+image-create my-project --no-cache -f pytorch -t nlp
+</code></pre>
+
+<hr />
+<h2 id="scripting-with-flags">Scripting with Flags<a class="headerlink" href="#scripting-with-flags" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# deploy-and-train.sh
+
+PROJECT=$1
+CONFIG=$2
+
+# Deploy in background
+container deploy $PROJECT --background --gpu=2 || exit 1
+
+# Wait for startup
+sleep 5
+
+# Run training
+docker exec $PROJECT._.$(id -u) python /workspace/train.py --config $CONFIG
+
+# Check results
+docker exec $PROJECT._.$(id -u) cat /workspace/results/metrics.txt
+
+# Cleanup
+container retire $PROJECT --force
+</code></pre>
+
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p>→ <a href="container-states.html">Container States</a> - Understand full lifecycle</p>
+</li>
+<li>
+<p>→ <a href="scripting.html">Scripting Guide</a> - Automate with bash scripts</p>
+</li>
+<li>
+<p>→ <a href="efficiency-tips.html">Efficiency Tips</a> - More shortcuts</p>
+</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

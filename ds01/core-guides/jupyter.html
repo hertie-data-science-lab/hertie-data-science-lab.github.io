@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Jupyter Notebooks - DS01 Documentation</title>
+  <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
+  <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/logo.jpg" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- DS01 Docs Custom Styles -->
+  <style>
+    .docs-container {
+      display: flex;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    .docs-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .docs-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .docs-sidebar > ul > li {
+      margin-bottom: 15px;
+    }
+    .docs-sidebar .section-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      padding: 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .docs-sidebar .section-title a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .docs-sidebar .section-title a:hover {
+      color: #cda45e;
+    }
+    .docs-sidebar ul ul {
+      padding-left: 15px;
+      margin-top: 5px;
+    }
+    .docs-sidebar ul ul li {
+      margin-bottom: 5px;
+    }
+    .docs-sidebar ul ul a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 4px 0;
+    }
+    .docs-sidebar ul ul a:hover,
+    .docs-sidebar ul ul a.active {
+      color: #cda45e;
+    }
+    .docs-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+    .docs-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .docs-content h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #333;
+    }
+    .docs-content pre {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .docs-content code {
+      background: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .docs-content pre code {
+      background: none;
+      padding: 0;
+    }
+    .docs-content table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+    }
+    .docs-content th,
+    .docs-content td {
+      border: 1px solid #dee2e6;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .docs-content th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .docs-content blockquote {
+      border-left: 4px solid #cda45e;
+      padding-left: 20px;
+      margin: 1rem 0;
+      color: #666;
+      font-style: italic;
+    }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 1rem;
+      padding-left: 25px;
+    }
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+    .docs-content a {
+      color: #cda45e;
+    }
+    .docs-content a:hover {
+      color: #d9ba85;
+    }
+    @media (max-width: 991px) {
+      .docs-container {
+        flex-direction: column;
+      }
+      .docs-sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex">
+      <div class="contact-info mr-auto">
+        <i class="icofont-phone"></i> +49 30 2592190 (ext. 252)
+        <span class="d-none d-lg-inline-block"><i class="icofont-clock-time icofont-rotate-180"></i> Mon-Friday: 09:00 AM - 17:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <a href="https://hertie-data-science-lab.github.io/" class="logo mr-auto"><img src="../assets/img/logo.svg" alt="" class="img-fluid"></a>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#about">About</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#work">Work</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#teaching">Teaching</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#student">Student Projects</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#contact">Contact</a></li>
+          <li class="active"><a href="index.html">DS01 Docs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>DS01 Documentation</h2>
+          <ol>
+            <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+            <li><a href="index.html">DS01 Docs</a></li>
+            <li><a href="index.html">Core Guides</a></li><li>Jupyter Notebooks</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="inner-page">
+      <div class="container">
+        <div class="docs-container">
+          <aside class="docs-sidebar">
+            <ul>
+<li><span class="section-title"><a href="index.html">Home</a></span></li>
+<li><span class="section-title"><a href="quickstart.html">Quickstart</a></span></li>
+<li><span class="section-title"><a href="quick-reference.html">Quick Reference</a></span></li>
+<li><span class="section-title"><a href="getting-started/index.html">Getting Started</a></span>
+<ul>
+<li><a href="getting-started/first-container.html">First Container</a></li>
+<li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
+<li><a href="getting-started/help-system.html">Using the Help System</a></li>
+<li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="core-guides/index.html">Core Guides</a></span>
+<ul>
+<li><a href="core-guides/collaboration.html">Collaboration</a></li>
+<li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
+<li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
+<li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
+<li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
+<li><a href="core-guides/jupyter.html" class="active">Jupyter Notebooks</a></li>
+<li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
+<li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
+<li><a href="core-guides/vscode-remote.html">VSCode Remote Development</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
+<ul>
+<li><a href="intermediate/atomic-commands.html">Atomic Commands Reference</a></li>
+<li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
+<li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
+<li><a href="intermediate/container-states.html">Container States</a></li>
+<li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
+<li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
+<li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
+<ul>
+<li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
+<li><a href="advanced/docker-direct.html">Docker Direct</a></li>
+<li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
+<li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
+<li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
+<li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
+<li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
+<ul>
+<li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
+<li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
+<li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
+<li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="background/index.html">Background</a></span>
+<ul>
+<li><a href="background/containers-and-docker.html">Containers & Docker</a></li>
+<li><a href="background/ephemeral-philosophy.html">Ephemeral Container Philosophy</a></li>
+<li><a href="background/industry-parallels.html">Industry Parallels</a></li>
+<li><a href="background/linux-basics.html">Linux Basics</a></li>
+<li><a href="background/resource-management.html">Resource Management</a></li>
+<li><a href="background/servers-and-hpc.html">Servers & High-Performance Computing</a></li>
+<li><a href="background/workspaces-and-persistence.html">Workspaces & Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="reference/index.html">Reference</a></span>
+<ul>
+<li><a href="reference/command-quick-ref.html">Command Quick Reference</a></li>
+<li><a href="reference/command-reference.html">Command Reference</a></li>
+<li><a href="reference/file-locations.html">File Locations</a></li>
+<li><a href="reference/glossary.html">Glossary</a></li>
+<li><a href="reference/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
+<ul>
+<li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
+<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
+<li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
+<li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
+</ul>
+</li>
+</ul>
+          </aside>
+          <article class="docs-content">
+            <h1 id="jupyter-notebooks">Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permanent link">&para;</a></h1>
+<p>Run Jupyter notebooks on DS01 with GPU access.</p>
+<hr />
+<h2 id="two-ways-to-use-jupyter">Two Ways to Use Jupyter<a class="headerlink" href="#two-ways-to-use-jupyter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Best For</th>
+<th>GPU Access</th>
+<th>Setup Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Browser Jupyter Lab</strong></td>
+<td>Full Jupyter experience, extensions</td>
+<td>✓</td>
+<td>2 minutes</td>
+</tr>
+<tr>
+<td><strong>VS Code Notebooks</strong></td>
+<td>Integrated development, debugging</td>
+<td>✓</td>
+<td>1 minute</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
+<h3 id="quick-start-browser-jupyter-lab">Quick Start: Browser Jupyter Lab<a class="headerlink" href="#quick-start-browser-jupyter-lab" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># 1. Launch container
+project launch my-project --open
+
+# 2. Inside container: Start Jupyter
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+
+# 3. On laptop: Create SSH tunnel (new terminal)
+ssh -L 8888:localhost:8888 ds01
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+
+# 4. Open browser: http://localhost:8888
+# Copy token from step 2
+</code></pre>
+
+<hr />
+<h3 id="quick-start-vs-code-notebooks">Quick Start: VS Code Notebooks<a class="headerlink" href="#quick-start-vs-code-notebooks" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># 1. Launch container
+project launch my-project --background
+
+# 2. In VS Code: Connect to DS01 (Remote-SSH extension)
+# 3. Attach VS Code to running container (Dev Containers extension)
+# 4. Open .ipynb file
+# 5. Select kernel: /usr/bin/python (see below)
+# 6. Start coding!
+</code></pre>
+
+<ul>
+<li>→ <a href="vscode-remote.html">Full VS Code setup guide</a> | <a href="vscode-remote.md#selecting-a-kernel">Kernel selection details</a></li>
+</ul>
+<hr />
+<h1 id="detailed-walkthroughs">Detailed Walkthroughs:<a class="headerlink" href="#detailed-walkthroughs" title="Permanent link">&para;</a></h1>
+<h3 id="browser-jupyter-lab-detailed">Browser Jupyter Lab (Detailed)<a class="headerlink" href="#browser-jupyter-lab-detailed" title="Permanent link">&para;</a></h3>
+<h3 id="step-1-launch-container">Step 1: Launch Container<a class="headerlink" href="#step-1-launch-container" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">project launch my-project --open
+</code></pre>
+
+<p><strong>Make sure Jupyter is installed:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+pip list | grep jupyter
+
+# If not installed
+pip install jupyterlab
+</code></pre>
+
+<p><strong>Add to Dockerfile permanently:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile">RUN pip install jupyterlab ipywidgets
+</code></pre>
+
+<h3 id="step-2-start-jupyter">Step 2: Start Jupyter<a class="headerlink" href="#step-2-start-jupyter" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+</code></pre>
+
+<p><strong>Output:</strong></p>
+<pre class="codehilite"><code>[I 2024-12-09 10:30:15.123 ServerApp] Jupyter Server 2.12.1 is running at:
+[I 2024-12-09 10:30:15.123 ServerApp] http://localhost:8888/lab?token=abc123def456...
+[I 2024-12-09 10:30:15.123 ServerApp]     http://127.0.0.1:8888/lab?token=abc123def456...
+</code></pre>
+
+<p><strong>Copy the token</strong> (everything after <code>token=</code>).</p>
+<p><strong>Keep this terminal open</strong> - Jupyter runs in foreground.</p>
+<h3 id="step-3-ssh-tunnel-from-laptop">Step 3: SSH Tunnel from Laptop<a class="headerlink" href="#step-3-ssh-tunnel-from-laptop" title="Permanent link">&para;</a></h3>
+<p><strong>On your laptop</strong> (new terminal):</p>
+<pre class="codehilite"><code class="language-bash">ssh -L 8888:localhost:8888 ds01
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+</code></pre>
+
+<p><strong>What this does:</strong> Forwards port 8888 from DS01 to your laptop.</p>
+<p><strong>Keep this tunnel open</strong> while using Jupyter.</p>
+<h3 id="step-4-access-in-browser">Step 4: Access in Browser<a class="headerlink" href="#step-4-access-in-browser" title="Permanent link">&para;</a></h3>
+<p>Open: <strong>http://localhost:8888</strong></p>
+<p><strong>First time:</strong> Paste token when prompted.</p>
+<p><strong>You're in!</strong> Create notebooks, access GPU, work normally.</p>
+<h3 id="step-5-verify-gpu-access">Step 5: Verify GPU Access<a class="headerlink" href="#step-5-verify-gpu-access" title="Permanent link">&para;</a></h3>
+<p><strong>In a notebook cell:</strong></p>
+<pre class="codehilite"><code class="language-python">import torch
+print(f&quot;CUDA available: {torch.cuda.is_available()}&quot;)
+print(f&quot;GPU count: {torch.cuda.device_count()}&quot;)
+print(f&quot;GPU name: {torch.cuda.get_device_name(0)}&quot;)
+</code></pre>
+
+<p><strong>Expected output:</strong></p>
+<pre class="codehilite"><code>CUDA available: True
+GPU count: 1
+GPU name: NVIDIA A100-SXM4-40GB
+</code></pre>
+
+<p><strong>Monitor GPU:</strong></p>
+<pre class="codehilite"><code class="language-python">!nvidia-smi
+</code></pre>
+
+<hr />
+<h2 id="running-jupyter-in-background">Running Jupyter in Background<a class="headerlink" href="#running-jupyter-in-background" title="Permanent link">&para;</a></h2>
+<p><strong>Problem:</strong> When you close terminal, Jupyter stops.</p>
+<p><strong>Solutions:</strong></p>
+<h3 id="option-1-tmux-recommended">Option 1: tmux (Recommended)<a class="headerlink" href="#option-1-tmux-recommended" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Inside container: Start tmux session
+tmux new -s jupyter
+
+# Start Jupyter
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+
+# Detach: Press Ctrl+B, then D
+# Jupyter keeps running!
+
+# Exit container
+exit
+
+# Later: Reconnect
+container-attach my-project
+tmux attach -t jupyter
+</code></pre>
+
+<p><strong>Benefits:</strong><br />
+- Jupyter survives disconnect<br />
+- Easy to reattach<br />
+- Can see output</p>
+<h3 id="option-2-nohup">Option 2: nohup<a class="headerlink" href="#option-2-nohup" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Inside container
+nohup jupyter lab --ip=0.0.0.0 --port=8888 --no-browser &gt; jupyter.log 2&gt;&amp;1 &amp;
+
+# Get token
+cat jupyter.log | grep token
+
+# Exit container - Jupyter still running
+exit
+</code></pre>
+
+<p><strong>To stop Jupyter later:</strong></p>
+<pre class="codehilite"><code class="language-bash">pkill jupyter
+</code></pre>
+
+<h3 id="option-3-systemd-service-advanced">Option 3: Systemd Service (Advanced)<a class="headerlink" href="#option-3-systemd-service-advanced" title="Permanent link">&para;</a></h3>
+<p>Create <code>~/jupyter.service</code> inside container:</p>
+<pre class="codehilite"><code class="language-ini">[Unit]
+Description=Jupyter Lab
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+Restart=always
+
+[Install]
+WantedBy=default.target
+</code></pre>
+
+<p>Start with systemd (if enabled in container).</p>
+<hr />
+<h2 id="understanding-kernels-in-ds01">Understanding Kernels in DS01<a class="headerlink" href="#understanding-kernels-in-ds01" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Your container has one Python environment (containers provide complete isolation)</li>
+<li>Jupyter uses that environment as the kernel</li>
+<li>All packages installed in container are available</li>
+<li><strong>You don't need venv or conda</strong> - the container IS your environment</li>
+</ul>
+<p>→ See <a href="../key-concepts/python-environments.html">Python Environments in Containers</a> for details</p>
+<p><strong>Check available kernels:</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter kernelspec list
+</code></pre>
+
+<p><strong>Example output:</strong></p>
+<pre class="codehilite"><code>Available kernels:
+  python3    /usr/local/share/jupyter/kernels/python3
+</code></pre>
+
+<p><strong>Install additional kernels (rare):</strong></p>
+<pre class="codehilite"><code class="language-bash"># If you need multiple Python versions
+python -m ipykernel install --user --name=python39 --display-name=&quot;Python 3.9&quot;
+</code></pre>
+
+<p><strong>Most users:</strong> One container = one environment = one kernel. Simple!</p>
+<hr />
+<h2 id="vs-code-notebooks-detailed">VS Code Notebooks (Detailed)<a class="headerlink" href="#vs-code-notebooks-detailed" title="Permanent link">&para;</a></h2>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
+<p><strong>1. Install VS Code extensions (on laptop):</strong><br />
+- Remote - SSH<br />
+- Jupyter<br />
+- Python</p>
+<p><strong>2. Connect to DS01:</strong></p>
+<pre class="codehilite"><code>VS Code → Remote Explorer → SSH → ds01-server
+</code></pre>
+
+<p><strong>3. Launch container:</strong></p>
+<pre class="codehilite"><code class="language-bash">project launch my-project --background
+</code></pre>
+
+<p><strong>4. Attach VS Code to container:</strong></p>
+<pre class="codehilite"><code>VS Code → Remote Explorer / Container Tools / Dev Containers → Attach
+</code></pre>
+
+<p><strong>5. Open notebook:</strong></p>
+<pre class="codehilite"><code>File → Open → /workspace/my-project/notebooks/experiment.ipynb
+</code></pre>
+
+<p><strong>6. Select kernel:</strong><br />
+- Click "Select Kernel" (top right)<br />
+- Choose: Python 3.x in container</p>
+<p><strong>7. Run cells!</strong></p>
+<h3 id="kernel-selection-in-vs-code">Kernel Selection in VS Code<a class="headerlink" href="#kernel-selection-in-vs-code" title="Permanent link">&para;</a></h3>
+<p><strong>When you open a notebook, VS Code asks for kernel:</strong></p>
+<p><strong>Options shown:</strong><br />
+1. <strong>Python 3.x (/usr/bin/python3)</strong> ← Choose this (your container Python)<br />
+2. Python environments (if any)</p>
+<p><strong>Choose the container Python</strong> - it has your packages and GPU access.</p>
+<p><strong>Verify GPU works:</strong></p>
+<pre class="codehilite"><code class="language-python">import torch
+torch.cuda.is_available()  # Should be True
+</code></pre>
+
+<hr />
+<h2 id="jupyter-configuration">Jupyter Configuration<a class="headerlink" href="#jupyter-configuration" title="Permanent link">&para;</a></h2>
+<p><strong>Save settings in container:</strong></p>
+<p>Create <code>~/.jupyter/jupyter_lab_config.py</code>:</p>
+<pre class="codehilite"><code class="language-python">c.ServerApp.ip = '0.0.0.0'
+c.ServerApp.port = 8888
+c.ServerApp.open_browser = False
+c.ServerApp.allow_root = True
+c.ServerApp.token = ''  # Disable token (use only on trusted network)
+</code></pre>
+
+<p><strong>Then just run:</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter lab
+</code></pre>
+
+<p><strong>Add to Dockerfile to persist:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile">RUN mkdir -p /root/.jupyter
+COPY jupyter_lab_config.py /root/.jupyter/
+</code></pre>
+
+<hr />
+<h2 id="password-authentication">Password Authentication<a class="headerlink" href="#password-authentication" title="Permanent link">&para;</a></h2>
+<p><strong>Instead of copying tokens:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+jupyter lab password
+
+# Enter password (prompted)
+
+# Start Jupyter
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+
+# Access via http://localhost:8888
+# Login with password
+</code></pre>
+
+<p><strong>Password persists in container</strong> - no need to set again.</p>
+<p><strong>To persist across recreates, add to Dockerfile:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile">RUN jupyter lab password &lt;&lt;EOF
+your-password-here
+your-password-here
+EOF
+</code></pre>
+
+<hr />
+<h2 id="custom-ports">Custom Ports<a class="headerlink" href="#custom-ports" title="Permanent link">&para;</a></h2>
+<p><strong>If port 8888 is busy:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Use different port
+jupyter lab --ip=0.0.0.0 --port=8889 --no-browser
+
+# Update SSH tunnel
+ssh -L 8889:localhost:8889 ds01
+# Without SSH keys: ssh -L 8889:localhost:8889 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+
+# Access via http://localhost:8889
+</code></pre>
+
+<p><strong>Check what ports are in use:</strong></p>
+<pre class="codehilite"><code class="language-bash">netstat -tuln | grep LISTEN
+</code></pre>
+
+<hr />
+<h2 id="jupyter-extensions">Jupyter Extensions<a class="headerlink" href="#jupyter-extensions" title="Permanent link">&para;</a></h2>
+<p><strong>Install extensions:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Popular extensions
+pip install jupyterlab-git
+pip install jupyterlab-lsp python-lsp-server
+pip install jupyterlab-execute-time
+
+# Restart Jupyter to see them
+</code></pre>
+
+<p><strong>Via Jupyter UI:</strong></p>
+<pre class="codehilite"><code>Settings → Enable Extension Manager
+Extensions tab → Search → Install 
+</code></pre>
+
+<p><strong>Recommended extensions:</strong><br />
+- <strong>jupyterlab-git</strong> - Git integration in Jupyter<br />
+- <strong>jupyterlab-lsp</strong> - Code completion, linting<br />
+- <strong>jupyterlab-execute-time</strong> - Show cell execution time<br />
+- <strong>jupyterlab-toc</strong> - Table of contents<br />
+- <strong>jupyterlab-system-monitor</strong> - CPU/RAM/GPU monitoring</p>
+<p><strong>Add to Dockerfile:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile">RUN pip install jupyterlab-git jupyterlab-lsp python-lsp-server
+</code></pre>
+
+<hr />
+<h2 id="saving-your-work">Saving Your Work<a class="headerlink" href="#saving-your-work" title="Permanent link">&para;</a></h2>
+<p><strong>Notebooks auto-save</strong> to <code>/workspace/notebooks/</code> - they persist across container recreates.</p>
+<p><strong>Before retiring container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Make sure notebooks are saved
+jupyter notebook list
+
+# Files are in /workspace? Safe to retire
+exit
+container retire my-project
+</code></pre>
+
+<hr />
+<h2 id="common-workflows">Common Workflows<a class="headerlink" href="#common-workflows" title="Permanent link">&para;</a></h2>
+<h3 id="exploratory-analysis">Exploratory Analysis<a class="headerlink" href="#exploratory-analysis" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Quick start
+project launch analysis --open
+
+# Start Jupyter
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+
+# On laptop: SSH tunnel
+ssh -L 8888:localhost:8888 ds01
+
+# Work in notebooks...
+
+# Done with GPU work
+exit
+container retire analysis
+</code></pre>
+
+<h3 id="long-training-run">Long Training Run<a class="headerlink" href="#long-training-run" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Launch in background
+project launch training --background
+
+# Start Jupyter with tmux
+container-attach training
+tmux new -s jupyter
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
+
+# In browser: Start training in notebook
+# Detach tmux: Ctrl+B, D
+
+# Training runs
+exit
+
+# Check progress
+container-attach training
+tmux attach -t jupyter
+</code></pre>
+
+<h3 id="rapid-prototyping-vs-code">Rapid Prototyping (VS Code)<a class="headerlink" href="#rapid-prototyping-vs-code" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Launch container
+project launch prototype --background
+
+# In VS Code: Attach to container
+# Open .ipynb files
+# Iterate quickly with debugging
+
+# Done
+container retire prototype
+</code></pre>
+
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="cannot-connect-to-jupyter">Cannot Connect to Jupyter<a class="headerlink" href="#cannot-connect-to-jupyter" title="Permanent link">&para;</a></h3>
+<p><strong>Checklist:</strong></p>
+<ol>
+<li>
+<p><strong>Is Jupyter running?</strong><br />
+<code>bash
+   ps aux | grep jupyter</code></p>
+</li>
+<li>
+<p><strong>Is SSH tunnel active?</strong><br />
+<code>bash
+   # On laptop
+   ps aux | grep "ssh.*8888"</code></p>
+</li>
+<li>
+<p><strong>Correct port?</strong><br />
+<code>bash
+   jupyter server list</code></p>
+</li>
+<li>
+<p><strong>Firewall blocking?</strong><br />
+<code>bash
+   # Try different port
+   jupyter lab --port=8889
+   ssh -L 8889:localhost:8889 ds01</code></p>
+</li>
+</ol>
+<h3 id="token-invalid-error">"Token Invalid" Error<a class="headerlink" href="#token-invalid-error" title="Permanent link">&para;</a></h3>
+<p><strong>Get current token:</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter server list
+</code></pre>
+
+<p><strong>Or set password:</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter lab password
+</code></pre>
+
+<h3 id="kernel-dies-restarts">Kernel Dies / Restarts<a class="headerlink" href="#kernel-dies-restarts" title="Permanent link">&para;</a></h3>
+<p><strong>Causes:</strong><br />
+1. Out of memory<br />
+2. GPU OOM<br />
+3. Segmentation fault in code</p>
+<p><strong>Check:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+dmesg | tail
+docker logs $(hostname)
+</code></pre>
+
+<p><strong>Reduce memory usage:</strong></p>
+<pre class="codehilite"><code class="language-python"># Clear variables
+del large_variable
+import gc
+gc.collect()
+
+# Use smaller batch size
+batch_size = 16  # Was 256
+</code></pre>
+
+<h3 id="slow-notebook-performance">Slow Notebook Performance<a class="headerlink" href="#slow-notebook-performance" title="Permanent link">&para;</a></h3>
+<p><strong>Check GPU utilisation:</strong></p>
+<pre class="codehilite"><code class="language-bash">nvidia-smi
+</code></pre>
+
+<p><strong>If GPU not used:</strong></p>
+<pre class="codehilite"><code class="language-python"># Move model to GPU
+device = torch.device(&quot;cuda&quot;)
+model = model.to(device)
+data = data.to(device)
+</code></pre>
+
+<h3 id="ssh-tunnel-disconnects">SSH Tunnel Disconnects<a class="headerlink" href="#ssh-tunnel-disconnects" title="Permanent link">&para;</a></h3>
+<p><strong>Use autossh:</strong></p>
+<pre class="codehilite"><code class="language-bash"># On laptop
+autossh -M 0 -L 8888:localhost:8888 ds01
+</code></pre>
+
+<p><strong>Or create alias in <code>~/.ssh/config</code>:</strong></p>
+<pre class="codehilite"><code>Host ds01-jupyter
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    LocalForward 8888 localhost:8888
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+</code></pre>
+
+<p><strong>Then:</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh ds01-jupyter
+</code></pre>
+
+<h3 id="cant-install-packages-in-notebook">Can't Install Packages in Notebook<a class="headerlink" href="#cant-install-packages-in-notebook" title="Permanent link">&para;</a></h3>
+<p><strong>Temporary (current session only):</strong></p>
+<pre class="codehilite"><code class="language-python">!pip install package-name
+</code></pre>
+
+<p><strong>Permanent (add to Dockerfile):</strong></p>
+<pre class="codehilite"><code class="language-bash"># Exit Jupyter
+# Use interactive GUI to add packages (recommended)
+image-update                  # Select image, add packages
+
+# Or edit Dockerfile directly (advanced)
+vim ~/workspace/my-project/Dockerfile
+image-update my-project --rebuild
+
+# Recreate container
+container retire my-project
+project launch my-project
+</code></pre>
+
+<hr />
+<h2 id="best-practices-save-checkpoints">Best Practices: Save Checkpoints<a class="headerlink" href="#best-practices-save-checkpoints" title="Permanent link">&para;</a></h2>
+<p>In case you loose ssh connection / container crashes. Remember: containers are disposable, your files in workspace are persistent. This way you persist progress.</p>
+<pre class="codehilite"><code class="language-python"># In training notebook
+if epoch % 5 == 0:
+    torch.save(model.state_dict(), f'/workspace/models/checkpoint_{epoch}.pt')
+</code></pre>
+
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li>→ <a href="vscode-remote.html">VS Code Remote Guide</a></li>
+<li>→ <a href="long-running-jobs.html">Long-Running Jobs</a></li>
+<li>→ <a href="../core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li>→ <a href="../key-concepts/containers-and-images.html">Containers and Images</a></li>
+</ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <a href="https://hertie-data-science-lab.github.io/"><img src="../assets/img/logo.svg" alt="" title=""></a>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/thehertieschool/" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/thehertieschool" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/thehertieschool/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://www.youtube.com/user/hertieschoolberlin/" class="youtube"><i class="bx bxl-youtube"></i></a>
+                <a href="https://de.linkedin.com/edu/hertie-school-of-governance-153040" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Site Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#about">About Us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#work">Our Work</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#teaching">Our Teaching</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://hertie-school.org/en/" target="_blank">Hertie School</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.hertie-school.org/en/mds" target="_blank">MSc Data Science for Public Policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://civica-data-science.github.io/" target="_blank">CIVICA Data Science Seminar Series</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>DS01 Documentation</h4>
+            <p>User documentation for the Hertie Data Science Lab GPU server.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Hertie School Data Science Lab</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>

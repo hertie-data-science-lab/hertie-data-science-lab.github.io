@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Docker Direct - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>Docker Direct</li>
           </ol>
         </div>
       </div>
@@ -268,7 +268,7 @@
 <li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
 <ul>
 <li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
-<li><a href="advanced/docker-direct.html">Docker Direct</a></li>
+<li><a href="advanced/docker-direct.html" class="active">Docker Direct</a></li>
 <li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 <li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
 <li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
@@ -316,22 +316,240 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="docker-direct">Docker Direct<a class="headerlink" href="#docker-direct" title="Permanent link">&para;</a></h1>
+<p>When and how to use Docker commands directly on DS01.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="when-to-use-docker-directly">When to Use Docker Directly<a class="headerlink" href="#when-to-use-docker-directly" title="Permanent link">&para;</a></h2>
+<p><strong>Use DS01 commands for:</strong><br />
+- Creating/deploying containers (<code>container-deploy</code>)<br />
+- Retiring containers (<code>container-retire</code>)<br />
+- Building images (<code>image-create</code>)</p>
+<p><strong>Use Docker directly for:</strong></p>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p><strong>Debugging containers:</strong> <code>docker inspect</code> shows the full container config - memory limits, GPU assignment, environment variables, mount points. <code>docker logs</code> shows stdout/stderr even if the process crashed. <code>docker exec</code> lets you poke around inside a running container without going through DS01 wrappers.</p>
+</li>
+<li>
+<p><strong>Inspecting logs:</strong> DS01 commands don't expose container logs directly. <code>docker logs my-project._.$(id -u)</code> shows everything your process printed. Add <code>-f</code> to follow in real-time, <code>--tail 100</code> to see the last 100 lines, or <code>--since 1h</code> to filter by time.</p>
+</li>
+<li>
+<p><strong>Advanced operations:</strong> Need to copy a file into a running container? <code>docker cp</code>. Want to commit the current container state as a new image? <code>docker commit</code>. Need to export a container filesystem for inspection? <code>docker export</code>. These aren't common, but when you need them, only Docker provides them.</p>
+</li>
+<li>
+<p><strong>One-off tasks:</strong> Quick sanity checks like <code>docker exec my-project._.$(id -u) nvidia-smi</code> or <code>docker exec my-project._.$(id -u) pip list</code> don't need DS01 wrappers. For ad-hoc commands where you know exactly what you want, Docker is faster than navigating interactive menus.</p>
+</li>
 </ul>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="common-docker-commands">Common Docker Commands<a class="headerlink" href="#common-docker-commands" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
+</blockquote>
+<h3 id="container-inspection">Container Inspection<a class="headerlink" href="#container-inspection" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># List all containers (including stopped)
+docker ps -a
+
+# Your containers only
+docker ps -a --filter &quot;name=._.$(whoami)&quot;
+
+# Container details
+docker inspect &lt;project-name&gt;._.$(whoami)
+
+# Container logs
+docker logs &lt;project-name&gt;._.$(whoami)
+docker logs &lt;project-name&gt;._.$(whoami) --tail 100
+docker logs &lt;project-name&gt;._.$(whoami) -f  # Follow
+</code></pre>
+
+<h3 id="container-interaction">Container Interaction<a class="headerlink" href="#container-interaction" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Execute command in container
+docker exec &lt;project-name&gt;._.$(whoami) nvidia-smi
+docker exec &lt;project-name&gt;._.$(whoami) pip list
+
+# Enter container (alternative to container-run)
+docker exec -it &lt;project-name&gt;._.$(whoami) /bin/bash
+</code></pre>
+
+<h3 id="image-management">Image Management<a class="headerlink" href="#image-management" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># List images
+docker images
+
+# Your images only
+docker images | grep ds01-$(whoami)
+
+# Remove image
+docker rmi ds01-$(whoami)/&lt;project-name&gt;:latest
+
+# Prune unused images
+docker image prune
+</code></pre>
+
+<h3 id="system-cleanup">System Cleanup<a class="headerlink" href="#system-cleanup" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Show disk usage
+docker system df
+
+# Clean up everything unused
+docker system prune
+
+# Remove all stopped containers
+docker container prune
+</code></pre>
+
+<hr />
+<h2 id="ds01-container-naming">DS01 Container Naming<a class="headerlink" href="#ds01-container-naming" title="Permanent link">&para;</a></h2>
+<p>Container names follow the pattern:</p>
+<pre class="codehilite"><code>&lt;project-name&gt;._.$(whoami)
+</code></pre>
+
+<p>Example:</p>
+<pre class="codehilite"><code class="language-bash">my-project._.alice
+experiment-1._.bob
+</code></pre>
+
+<hr />
+<h2 id="inspecting-resource-limits">Inspecting Resource Limits<a class="headerlink" href="#inspecting-resource-limits" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Check memory limit
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{.HostConfig.Memory}}'
+
+# Check CPU limit
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{.HostConfig.NanoCpus}}'
+
+# Check GPU allocation
+docker inspect &lt;project-name&gt;._.$(whoami) | grep -i gpu
+</code></pre>
+
+<hr />
+<h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h2>
+<h3 id="container-wont-start">Container Won't Start<a class="headerlink" href="#container-wont-start" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Check last exit code
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{.State.ExitCode}}'
+
+# Check OOM killed
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{.State.OOMKilled}}'
+
+# View full state
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{json .State}}' | jq
+</code></pre>
+
+<h3 id="network-issues">Network Issues<a class="headerlink" href="#network-issues" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Check network settings
+docker inspect &lt;project-name&gt;._.$(whoami) --format '{{json .NetworkSettings}}'
+
+# Check exposed ports
+docker port &lt;project-name&gt;._.$(whoami)
+</code></pre>
+
+<hr />
+<h2 id="manual-container-operations">Manual Container Operations<a class="headerlink" href="#manual-container-operations" title="Permanent link">&para;</a></h2>
+<h3 id="force-stop">Force Stop<a class="headerlink" href="#force-stop" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">docker stop -t 1 &lt;project-name&gt;._.$(whoami)
+</code></pre>
+
+<h3 id="force-kill">Force Kill<a class="headerlink" href="#force-kill" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">docker kill &lt;project-name&gt;._.$(whoami)
+</code></pre>
+
+<h3 id="force-remove">Force Remove<a class="headerlink" href="#force-remove" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">docker rm -f &lt;project-name&gt;._.$(whoami)
+</code></pre>
+
+<hr />
+<h2 id="manual-image-building">Manual Image Building<a class="headerlink" href="#manual-image-building" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Build from Dockerfile
+docker build -t ds01-$(whoami)/&lt;project-name&gt;:latest \
+    -f ~/dockerfiles/&lt;project-name&gt;.Dockerfile .
+
+# Build with no cache
+docker build --no-cache -t ds01-$(whoami)/&lt;project-name&gt;:latest \
+    -f ~/dockerfiles/&lt;project-name&gt;.Dockerfile .
+</code></pre>
+
+<hr />
+<h2 id="tagging-images">Tagging Images<a class="headerlink" href="#tagging-images" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Tag for version control
+docker tag ds01-alice/project:latest ds01-alice/project:v1.0
+
+# Tag as backup
+docker tag ds01-alice/project:latest ds01-alice/project:backup-$(date +%Y%m%d)
+</code></pre>
+
+<hr />
+<h2 id="ds01-enforcement">DS01 Enforcement<a class="headerlink" href="#ds01-enforcement" title="Permanent link">&para;</a></h2>
+<p><strong>Important:</strong> Direct Docker commands are still subject to DS01 enforcement.</p>
+<h3 id="whats-enforced-always">What's Enforced (Always)<a class="headerlink" href="#whats-enforced-always" title="Permanent link">&para;</a></h3>
+<p>Even with direct Docker commands:</p>
+<table>
+<thead>
+<tr>
+<th>Enforcement</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU/Memory limits</td>
+<td>Systemd cgroups (<code>ds01-&lt;group&gt;-&lt;user&gt;.slice</code>)</td>
+</tr>
+<tr>
+<td>GPU limits</td>
+<td>Docker wrapper injects constraints</td>
+</tr>
+<tr>
+<td>Container labeling</td>
+<td>Auto-added: <code>DS01_USER</code>, <code>DS01_MANAGED</code></td>
+</tr>
+<tr>
+<td>Event logging</td>
+<td>Container lifecycle tracked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="whats-not-enforced">What's NOT Enforced<a class="headerlink" href="#whats-not-enforced" title="Permanent link">&para;</a></h3>
+<p>When bypassing DS01 commands:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interactive wizards</td>
+<td>You configure everything manually</td>
+</tr>
+<tr>
+<td>Auto workspace mounting</td>
+<td>You specify <code>-v</code> flags yourself</td>
+</tr>
+<tr>
+<td>Project metadata</td>
+<td>Not tracked in DS01 metadata</td>
+</tr>
+<tr>
+<td>GPU allocation tracking</td>
+<td>May conflict with other users</td>
+</tr>
+</tbody>
+</table>
+<h3 id="best-practice">Best Practice<a class="headerlink" href="#best-practice" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Use DS01 for creation (gets enforcement + convenience)
+container deploy my-project
+
+# Use Docker for inspection/debugging
+docker logs my-project._.$(id -u)
+docker exec my-project._.$(id -u) nvidia-smi
+
+# Use DS01 for cleanup
+container retire my-project
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../reference/commands/container-commands.html">Container Commands</a></li>
+<li><a href="dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li><a href="../troubleshooting/">Troubleshooting</a></li>
+</ul>
           </article>
         </div>
       </div>

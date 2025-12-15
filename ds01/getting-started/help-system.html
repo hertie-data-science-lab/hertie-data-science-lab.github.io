@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Using the Help System - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Getting Started</a></li><li>Using the Help System</li>
           </ol>
         </div>
       </div>
@@ -236,7 +236,7 @@
 <ul>
 <li><a href="getting-started/first-container.html">First Container</a></li>
 <li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
-<li><a href="getting-started/help-system.html">Using the Help System</a></li>
+<li><a href="getting-started/help-system.html" class="active">Using the Help System</a></li>
 <li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
 </ul>
 </li>
@@ -316,22 +316,275 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="using-the-help-system">Using the Help System<a class="headerlink" href="#using-the-help-system" title="Permanent link">&para;</a></h1>
+<p>DS01 commands have built-in help to guide you from beginner to expert.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
-</ul>
+<h2 id="four-help-modes">Four Help Modes<a class="headerlink" href="#four-help-modes" title="Permanent link">&para;</a></h2>
+<p>Every command supports <strong>four help modes</strong> - two for quick reference, two for learning:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Type</th>
+<th>When to Use</th>
+<th>What You Get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--help</code> or <code>-h</code></td>
+<td><strong>Quick Reference</strong></td>
+<td>Know the command, need syntax</td>
+<td>Usage, main options, examples</td>
+</tr>
+<tr>
+<td><code>--info</code></td>
+<td><strong>Full Reference</strong></td>
+<td>Need all options</td>
+<td>Complete documentation, all flags</td>
+</tr>
+<tr>
+<td><code>--concepts</code></td>
+<td><strong>Learn First</strong></td>
+<td>New to this concept</td>
+<td>Explains what something is before running</td>
+</tr>
+<tr>
+<td><code>--guided</code></td>
+<td><strong>Learn by Doing</strong></td>
+<td>First time using command</td>
+<td>Step-by-step with explanations</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="quick-reference-help">Quick Reference: <code>--help</code><a class="headerlink" href="#quick-reference-help" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You know what the command does, just need the syntax.</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy --help
+</code></pre>
+
+<p><strong>Shows:</strong></p>
+<pre class="codehilite"><code>DS01 Container Deploy
+L3 Orchestrator - Creates and starts containers in one command
+
+Usage:
+  container-deploy [name] [options]
+
+Options:
+  --guided          Show detailed explanations
+  --background      Start without attaching
+  --open            Start and open terminal
+  -h, --help        Show this help
+
+Examples:
+  container-deploy                  # Interactive wizard
+  container-deploy my-project       # Quick deploy
+  container-deploy my-project --open
+</code></pre>
+
+<p><strong>Fast, concise, straight to the point.</strong></p>
+<hr />
+<h2 id="full-reference-info">Full Reference: <code>--info</code><a class="headerlink" href="#full-reference-info" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You need to see ALL options and detailed examples.</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy --info
+</code></pre>
+
+<p><strong>Shows:</strong><br />
+- Complete option list<br />
+- All subcommands<br />
+- Multiple examples<br />
+- Advanced use cases<br />
+- Related commands</p>
+<p><strong>Like a man page, but friendlier.</strong></p>
+<hr />
+<h2 id="learn-the-concept-concepts">Learn the Concept: <code>--concepts</code><a class="headerlink" href="#learn-the-concept-concepts" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You're new to containers, images, or DS01 concepts.</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-create --concepts
+</code></pre>
+
+<p><strong>Shows:</strong></p>
+<pre class="codehilite"><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Understanding Docker Images
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What is a Docker Image?
+
+An image is like a recipe for creating containers. It defines:
+  • What software is installed (PyTorch, pandas, etc.)
+  • What system libraries are included
+  • How the environment is configured
+
+Think of it as a snapshot of a configured system.
+
+Container vs Image:
+  Image     →  Recipe/Blueprint (stored, sharable)
+  Container →  Running instance (temporary, for work)
+
+You can create many containers from one image.
+
+Why Images Matter:
+
+1. Reproducibility - Same environment every time
+2. Shareability - Give Dockerfile to colleagues
+3. Version Control - Track changes in git
+4. Efficiency - Rebuild containers instantly
+
+[Press Enter to continue or Ctrl+C to exit]
+</code></pre>
+
+<p><strong>Read this BEFORE running the command</strong> - builds understanding first.</p>
+<hr />
+<h2 id="learn-by-doing-guided">Learn by Doing: <code>--guided</code><a class="headerlink" href="#learn-by-doing-guided" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> First time using a command or want explanations during execution.</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-create --guided
+</code></pre>
+
+<p><strong>What happens:</strong></p>
+<h3 id="1-explains-before-each-choice">1. Explains Before Each Choice<a class="headerlink" href="#1-explains-before-each-choice" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>━━━ Framework Selection ━━━
+
+PyTorch, TensorFlow, and JAX are deep learning frameworks.
+
+PyTorch:
+  • Most popular for research
+  • Dynamic computation graphs
+  • Great for experimentation
+
+TensorFlow:
+  • Industry standard for production
+  • Static computation graphs
+  • Extensive tooling
+
+JAX:
+  • Cutting-edge research
+  • Fast on GPUs/TPUs
+  • Functional programming style
+
+Which framework do you want?
+  1) PyTorch 2.8.0 (recommended for research)
+  2) TensorFlow 2.16.1
+  3) JAX 0.4.23
+
+[Press Enter to see options]
+</code></pre>
+
+<h3 id="2-pauses-for-you-to-read">2. Pauses for You to Read<a class="headerlink" href="#2-pauses-for-you-to-read" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>Press Enter to continue...
+</code></pre>
+
+<p>Gives you time to understand before proceeding.</p>
+<h3 id="3-shows-whats-happening">3. Shows What's Happening<a class="headerlink" href="#3-shows-whats-happening" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>Building Docker image...
+────────────────────────────────────────────────
+  [Step 1/4] Downloading PyTorch base image...
+  [Step 2/4] Installing system packages...
+  [Step 3/4] Installing Python packages...
+  [Step 4/4] Configuring environment...
+────────────────────────────────────────────────
+</code></pre>
+
+<h3 id="4-explains-what-just-happened">4. Explains What Just Happened<a class="headerlink" href="#4-explains-what-just-happened" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>━━━ What Just Happened? ━━━
+
+Your Docker image was built with:
+  • PyTorch 2.8.0 with CUDA 12.4
+  • pandas, numpy, matplotlib
+  • Jupyter Lab
+  • Your custom packages
+
+The image is stored as: ds01-username/my-project:latest
+
+You can create containers from this image anytime with:
+  project launch my-project
+</code></pre>
+
+<p><strong>Best for first-time users</strong> - learn while doing.</p>
+<hr />
+<h2 id="interactive-mode-no-arguments">Interactive Mode (No Arguments)<a class="headerlink" href="#interactive-mode-no-arguments" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You're not sure what arguments to provide.</p>
+<p><strong>Just run the command without anything:</strong></p>
+<pre class="codehilite"><code class="language-bash"># These all start interactive wizards
+project init
+container deploy
+image create
+</code></pre>
+
+<p><strong>What happens:</strong><br />
+- Command asks questions<br />
+- Presents menus<br />
+- Guides you through options<br />
+- No need to memorise flags</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy
+</code></pre>
+
+<p><strong>Shows:</strong></p>
+<pre class="codehilite"><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DS01 Container Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Select a project to deploy:
+
+  1) my-thesis          (PyTorch 2.8.0)
+  2) research-2024      (TensorFlow 2.16.1)
+  3) experiments        (JAX 0.4.23)
+
+Choice [1-3]:
+</code></pre>
+
+<p><strong>Friendly, menu-driven, no flags needed.</strong></p>
+<hr />
+<h2 id="quick-command-reference-commands">Quick Command Reference: <code>commands</code><a class="headerlink" href="#quick-command-reference-commands" title="Permanent link">&para;</a></h2>
+<p><strong>See everything available:</strong></p>
+<pre class="codehilite"><code class="language-bash">commands
+</code></pre>
+
+<p><strong>Shows:</strong><br />
+- All DS01 commands<br />
+- Organised by category<br />
+- Brief descriptions<br />
+- Common workflows</p>
+<p><strong>Like a cheat sheet</strong> - quick lookup of what's available.</p>
+<hr />
+<h2 id="combining-help-modes">Combining Help Modes<a class="headerlink" href="#combining-help-modes" title="Permanent link">&para;</a></h2>
+<h3 id="pattern-1-beginner-learning">Pattern 1: Beginner Learning<a class="headerlink" href="#pattern-1-beginner-learning" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># 1. Learn concept first
+image-create --concepts
+
+# 2. Run with guidance
+image-create --guided
+
+# 3. Second run: interactive
+image-create
+
+# 4. Later: Quick reference
+image-create --help
+
+# 5. Finally: experienced, run non-interactively as CLI
+image-create my-project -f pytorch -t nlp
+</code></pre>
+
+<hr />
+<h2 id="help-for-subcommands">Help for Subcommands<a class="headerlink" href="#help-for-subcommands" title="Permanent link">&para;</a></h2>
+<p><strong>Dispatchers have help too:</strong></p>
+<pre class="codehilite"><code class="language-bash"># See all container commands
+container help
+
+# Help for specific subcommand
+container deploy --help
+container retire --help
+</code></pre>
+
+<p><strong>Also works:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Hyphenated form
+container-deploy --help
+</code></pre>
+
+<p>Both formats are equivalent.</p>
           </article>
         </div>
       </div>

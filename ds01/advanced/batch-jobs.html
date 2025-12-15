@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Batch Jobs and Non-Interactive Execution - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>Batch Jobs and Non-Interactive Execution</li>
           </ol>
         </div>
       </div>
@@ -267,7 +267,7 @@
 </li>
 <li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
 <ul>
-<li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
+<li><a href="advanced/batch-jobs.html" class="active">Batch Jobs and Non-Interactive Execution</a></li>
 <li><a href="advanced/docker-direct.html">Docker Direct</a></li>
 <li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 <li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
@@ -316,22 +316,264 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="batch-jobs-and-non-interactive-execution">Batch Jobs and Non-Interactive Execution<a class="headerlink" href="#batch-jobs-and-non-interactive-execution" title="Permanent link">&para;</a></h1>
+<p>Submit long-running jobs and check results later - HPC-style workflows.</p>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(id -u)</code> part auto-substitutes your user ID.</p>
+</blockquote>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>Batch job pattern:</strong><br />
+1. Submit job to container<br />
+2. Job runs in background<br />
+3. Results written to workspace<br />
+4. Check logs/results later</p>
+<p><strong>No babysitting needed.</strong></p>
+<hr />
+<h2 id="basic-pattern">Basic Pattern<a class="headerlink" href="#basic-pattern" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Create container
+container-create training --gpu=2
+
+# Submit job (non-interactive)
+docker exec -d training._.$(id -u) \
+  nohup python /workspace/train.py &gt; /workspace/training.log 2&gt;&amp;1
+
+# Job runs for hours/days
+# You can disconnect, container keeps running
+
+# Check progress later
+tail -f ~/workspace/training.log
+
+# Or check GPU usage
+nvidia-smi
+</code></pre>
+
+<hr />
+<h2 id="with-nohup">With nohup<a class="headerlink" href="#with-nohup" title="Permanent link">&para;</a></h2>
+<p><strong>Standard approach:</strong></p>
+<pre class="codehilite"><code class="language-bash">docker exec -d &lt;project-name&gt;._.$(id -u) \
+  nohup python /workspace/train.py \
+  &gt; /workspace/output.log 2&gt;&amp;1 &amp;
+</code></pre>
+
+<p><strong>Components:</strong><br />
+- <code>docker exec -d</code> - Detached mode (background)<br />
+- <code>nohup</code> - Ignore hangup signals (survives disconnects)<br />
+- <code>&gt; /workspace/output.log</code> - Redirect stdout<br />
+- <code>2&gt;&amp;1</code> - Redirect stderr to stdout<br />
+- <code>&amp;</code> - Run in background</p>
+<hr />
+<h2 id="parameter-sweep-example">Parameter Sweep Example<a class="headerlink" href="#parameter-sweep-example" title="Permanent link">&para;</a></h2>
+<p><strong>Run multiple experiments:</strong></p>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# sweep.sh
+
+for lr in 0.001 0.01 0.1; do
+  for batch_size in 16 32 64; do
+    NAME=&quot;exp-lr${lr}-bs${batch_size}&quot;
+
+    # Create container
+    container-create $NAME --gpu=1 --background
+
+    # Submit job
+    docker exec -d $NAME._.$(id -u) \
+      nohup python /workspace/train.py \
+      --lr=$lr \
+      --batch-size=$batch_size \
+      &gt; /workspace/logs/${NAME}.log 2&gt;&amp;1
+
+    echo &quot;Submitted: $NAME&quot;
+  done
+done
+
+echo &quot;All jobs submitted. Monitor with:&quot;
+echo &quot;tail -f ~/workspace/logs/*.log&quot;
+</code></pre>
+
+<hr />
+<h2 id="monitoring-jobs">Monitoring Jobs<a class="headerlink" href="#monitoring-jobs" title="Permanent link">&para;</a></h2>
+<p><strong>Check running processes:</strong></p>
+<pre class="codehilite"><code class="language-bash"># All your containers
+docker ps --filter label=DS01_USER=$(id -u)
+
+# Processes in specific container
+docker exec &lt;project-name&gt;._.$(id -u) ps aux | grep python
+
+# GPU usage
+nvidia-smi
+
+# Live monitoring
+watch -n 1 nvidia-smi
+</code></pre>
+
+<p><strong>Check logs:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Follow log
+tail -f ~/workspace/training.log
+
+# Last 100 lines
+tail -100 ~/workspace/training.log
+
+# Search logs
+grep &quot;epoch&quot; ~/workspace/training.log
+
+# Multiple logs
+tail -f ~/workspace/logs/*.log
+</code></pre>
+
+<hr />
+<h2 id="job-completion-detection">Job Completion Detection<a class="headerlink" href="#job-completion-detection" title="Permanent link">&para;</a></h2>
+<p><strong>Wait for job to finish:</strong></p>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+
+PROJECT=my-training
+
+# Submit job
+docker exec -d $PROJECT._.$(id -u) \
+  nohup python /workspace/train.py &gt; /workspace/output.log 2&gt;&amp;1
+
+# Wait for completion
+while docker exec $PROJECT._.$(id -u) pgrep -f train.py &gt; /dev/null; do
+  echo &quot;Job still running...&quot;
+  sleep 60
+done
+
+echo &quot;Job completed!&quot;
+
+# Collect results
+cat ~/workspace/output.log
+</code></pre>
+
+<hr />
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<p><strong>Check exit codes:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Run job
+docker exec &lt;project-name&gt;._.$(id -u) \
+  python /workspace/train.py
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 0 ]; then
+  echo &quot;Success!&quot;
+else
+  echo &quot;Failed with code $EXIT_CODE&quot;
+  docker logs &lt;project-name&gt;._.$(id -u)
+fi
+</code></pre>
+
+<hr />
+<h2 id="checkpointing">Checkpointing<a class="headerlink" href="#checkpointing" title="Permanent link">&para;</a></h2>
+<p><strong>Save progress regularly:</strong></p>
+<pre class="codehilite"><code class="language-python"># In train.py
+for epoch in range(num_epochs):
+    train_one_epoch()
+
+    # Save checkpoint
+    if epoch % 5 == 0:
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+        }, f'/workspace/checkpoints/epoch_{epoch}.pt')
+</code></pre>
+
+<p><strong>Resume if interrupted:</strong></p>
+<pre class="codehilite"><code class="language-python"># Load checkpoint if exists
+checkpoint_path = '/workspace/checkpoints/latest.pt'
+if os.path.exists(checkpoint_path):
+    checkpoint = torch.load(checkpoint_path)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    start_epoch = checkpoint['epoch'] + 1
+else:
+    start_epoch = 0
+</code></pre>
+
+<hr />
+<h2 id="resource-alerts">Resource Alerts<a class="headerlink" href="#resource-alerts" title="Permanent link">&para;</a></h2>
+<p><strong>Email on completion (if configured):</strong></p>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+
+docker exec -d &lt;project-name&gt;._.$(id -u) \
+  bash -c &quot;python /workspace/train.py; echo 'Training complete' | mail -s 'Job Done' user@example.com&quot;
+</code></pre>
+
+<p><strong>Slack notification (if webhook configured):</strong></p>
+<pre class="codehilite"><code class="language-python"># At end of train.py
+import requests
+
+webhook_url = &quot;https://hooks.slack.com/...&quot;
+message = {&quot;text&quot;: &quot;Training completed!&quot;}
+requests.post(webhook_url, json=message)
+</code></pre>
+
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Always write to <code>/workspace</code>:</strong> Anything written elsewhere in the container (like <code>/tmp</code> or <code>/root</code>) vanishes when the container is removed. Your training ran for 12 hours, saved the model to <code>/home/model.pt</code>, you retired the container - model gone. Always use <code>/workspace/</code> which is mounted from the host and persists.</p>
+</li>
+<li>
+<p><strong>Use clear log names:</strong> When you're running a parameter sweep with 50 experiments, <code>output.log</code> tells you nothing. Use <code>exp-lr0.001-bs32-seed42.log</code> - you can grep for specific hyperparameters, sort by parameter values, and immediately know which experiment produced which results without opening each file.</p>
+</li>
+<li>
+<p><strong>Save checkpoints frequently:</strong> GPU jobs get interrupted - idle timeouts, server maintenance, OOM errors. If you only save at the end, 23 hours of training is lost. Save every N epochs to <code>/workspace/checkpoints/</code>. When restarting, load the latest checkpoint and continue from where you left off instead of starting over.</p>
+</li>
+<li>
+<p><strong>Log hyperparameters:</strong> At the start of your training script, write all hyperparameters to the log file: learning rate, batch size, model architecture, random seed. Three months later when you're writing your thesis, you'll need to know exactly what settings produced your best model. The log file is your lab notebook.</p>
+</li>
+<li>
+<p><strong>Clean up finished jobs:</strong> Each running container holds a GPU allocation. If you submit 10 experiments and forget to clean up, you're blocking 10 GPUs even though the jobs finished hours ago. Add cleanup to your scripts, or periodically run <code>container-list</code> and retire finished experiments.</p>
+</li>
+</ol>
+<hr />
+<h2 id="example-full-pipeline">Example: Full Pipeline<a class="headerlink" href="#example-full-pipeline" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# pipeline.sh
+
+set -e
+
+PROJECT=&quot;my-training&quot;
+LOG_DIR=~/workspace/logs
+CHECKPOINT_DIR=~/workspace/checkpoints
+
+mkdir -p $LOG_DIR $CHECKPOINT_DIR
+
+# Create container
+container-create $PROJECT --gpu=2 || exit 1
+
+# Submit job
+docker exec -d $PROJECT._.$(id -u) bash -c &quot;
+  cd /workspace
+  python train.py \
+    --epochs=100 \
+    --lr=0.001 \
+    --batch-size=32 \
+    --checkpoint-dir=/workspace/checkpoints \
+    &gt; /workspace/logs/training.log 2&gt;&amp;1
+&quot;
+
+echo &quot;Job submitted. Monitor with:&quot;
+echo &quot;  tail -f $LOG_DIR/training.log&quot;
+echo &quot;&quot;
+echo &quot;Check GPU usage:&quot;
+echo &quot;  nvidia-smi&quot;
+echo &quot;&quot;
+echo &quot;When complete, collect results from:&quot;
+echo &quot;  $CHECKPOINT_DIR/&quot;
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p>→ <a href="terminal-workflows.html">Terminal Workflows</a> - CLI development patterns</p>
+</li>
+<li>
+<p>→ <a href="docker-direct.html">Docker Direct</a> - Docker commands</p>
+</li>
+<li>
+<p>→ <a href="../intermediate/scripting.html">Scripting</a> - Automation patterns</p>
+</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>File Locations - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Reference</a></li><li>File Locations</li>
           </ol>
         </div>
       </div>
@@ -300,7 +300,7 @@
 <ul>
 <li><a href="reference/command-quick-ref.html">Command Quick Reference</a></li>
 <li><a href="reference/command-reference.html">Command Reference</a></li>
-<li><a href="reference/file-locations.html">File Locations</a></li>
+<li><a href="reference/file-locations.html" class="active">File Locations</a></li>
 <li><a href="reference/glossary.html">Glossary</a></li>
 <li><a href="reference/troubleshooting.html">Troubleshooting Guide</a></li>
 </ul>
@@ -316,22 +316,125 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="file-locations">File Locations<a class="headerlink" href="#file-locations" title="Permanent link">&para;</a></h1>
+<p>Where things are stored on DS01.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="your-files">Your Files<a class="headerlink" href="#your-files" title="Permanent link">&para;</a></h2>
+<h3 id="workspace-persistent">Workspace (Persistent)<a class="headerlink" href="#workspace-persistent" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>~/workspace/
+├── project-1/           # Project directory
+│   ├── data/           # Data files
+│   ├── notebooks/      # Jupyter notebooks
+│   ├── src/            # Source code
+│   └── models/         # Saved models
+└── project-2/
+    └── ...
+</code></pre>
+
+<p><strong>Inside container:</strong> <code>/workspace/</code> maps to <code>~/workspace/&lt;project&gt;/</code></p>
+<h3 id="dockerfiles">Dockerfiles<a class="headerlink" href="#dockerfiles" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>~/dockerfiles/
+├── project-1.Dockerfile
+└── project-2.Dockerfile
+</code></pre>
+
+<p>Custom image definitions. Edit these to change your environment.</p>
+<hr />
+<h2 id="mapping-host-container">Mapping: Host ↔ Container<a class="headerlink" href="#mapping-host-container" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Host Path</th>
+<th>Container Path</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/workspace/my-project/</code></td>
+<td><code>/workspace/</code></td>
+<td>Your files</td>
+</tr>
+<tr>
+<td><code>~/dockerfiles/</code></td>
+<td>(build only)</td>
+<td>Image definitions</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important:</strong> Only <code>/workspace</code> is mounted. Files outside <code>/workspace</code> in the container are temporary.</p>
+<hr />
+<h2 id="ds01-system-paths">DS01 System Paths<a class="headerlink" href="#ds01-system-paths" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>/opt/ds01-infra/                    # DS01 installation
+├── scripts/user/                   # User commands
+├── config/resource-limits.yaml     # System limits
+└── docs-user/                     # User documentation
+
+/var/lib/ds01/                      # State files
+├── gpu-state.json                  # GPU allocations
+└── container-metadata/             # Container tracking
+
+/var/log/ds01/                      # Logs
+├── events.jsonl                    # Event log
+└── gpu-allocations.log            # GPU allocation history
+</code></pre>
+
+<hr />
+<h2 id="user-configuration">User Configuration<a class="headerlink" href="#user-configuration" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>~/.bashrc                           # Shell configuration
+~/.ssh/                            # SSH keys
+</code></pre>
+
+<hr />
+<h2 id="container-internal-paths">Container Internal Paths<a class="headerlink" href="#container-internal-paths" title="Permanent link">&para;</a></h2>
+<p>Inside a container:</p>
+<pre class="codehilite"><code>/workspace/                         # Your mounted workspace
+/home/&lt;user&gt;/                       # User home (temporary)
+/tmp/                              # Temporary files (temporary)
+/opt/                              # Installed software
+</code></pre>
+
+<p><strong>Save important files to <code>/workspace</code></strong> - everything else is lost when container is removed.</p>
+<hr />
+<h2 id="docker-image-storage">Docker Image Storage<a class="headerlink" href="#docker-image-storage" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>/var/lib/docker/                    # Docker storage (system)
+</code></pre>
+
+<p>Your images are stored here automatically. Managed by Docker, not directly accessible.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your code</td>
+<td><code>~/workspace/&lt;project&gt;/</code> or <code>/workspace/</code> (in container)</td>
+</tr>
+<tr>
+<td>Your Dockerfiles</td>
+<td><code>~/dockerfiles/</code></td>
+</tr>
+<tr>
+<td>DS01 commands</td>
+<td><code>/opt/ds01-infra/scripts/user/</code></td>
+</tr>
+<tr>
+<td>Logs</td>
+<td><code>/var/log/ds01/</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="../background/workspaces-and-persistence.html">Workspaces &amp; Persistence</a></li>
+<li><a href="commands/container-commands.html">Container Commands</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

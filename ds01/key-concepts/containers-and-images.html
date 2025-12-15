@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Containers and Images - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Key Concepts</a></li><li>Containers and Images</li>
           </ol>
         </div>
       </div>
@@ -279,7 +279,7 @@
 </li>
 <li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
 <ul>
-<li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
+<li><a href="key-concepts/containers-and-images.html" class="active">Containers and Images</a></li>
 <li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
 <li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
 <li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
@@ -316,22 +316,154 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="containers-and-images">Containers and Images<a class="headerlink" href="#containers-and-images" title="Permanent link">&para;</a></h1>
+<p><strong>The most important concept for using DS01 effectively.</strong></p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="the-key-insight">The Key Insight<a class="headerlink" href="#the-key-insight" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><strong>Image = Blueprint (permanent)</strong></li>
+<li><strong>Container = Instance (temporary)</strong></li>
 </ul>
+<p>Changing the blueprint doesn't change existing instances.</p>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="quick-analogy">Quick Analogy<a class="headerlink" href="#quick-analogy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Image</th>
+<th>Container</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cooking</td>
+<td>Recipe</td>
+<td>Meal</td>
+</tr>
+<tr>
+<td>Programming</td>
+<td>Class</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td>Template</td>
+<td>Document</td>
+</tr>
+</tbody>
+</table>
+<p>You can make many meals from one recipe. Changing the recipe doesn't change already-cooked meals.</p>
+<hr />
+<h2 id="what-this-means-for-you">What This Means for You<a class="headerlink" href="#what-this-means-for-you" title="Permanent link">&para;</a></h2>
+<h3 id="why-packages-disappear">Why packages disappear<a class="headerlink" href="#why-packages-disappear" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Inside container
+pip install transformers
+
+# Later...
+container retire my-project
+project launch my-project
+
+import transformers  # ModuleNotFoundError!
+</code></pre>
+
+<p><strong>Why?</strong> The container was temporary. The image didn't change.</p>
+<h3 id="how-to-make-packages-permanent">How to make packages permanent<a class="headerlink" href="#how-to-make-packages-permanent" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Use the interactive package manager
+image-update                  # Select image, add &quot;transformers&quot;
+
+# Recreate container
+project launch my-project
+
+import transformers  # Works!
+</code></pre>
+
+<p><strong>Why?</strong> Now the package is in the image (blueprint).</p>
+<hr />
+<h2 id="the-ds01-workflow">The DS01 Workflow<a class="headerlink" href="#the-ds01-workflow" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>┌─────────────┐
+│  Dockerfile │  ← Edit this to change your environment
+└──────┬──────┘
+       │ image-update
+       ▼
+┌─────────────┐
+│    Image    │  ← Blueprint (permanent)
+└──────┬──────┘
+       │ project launch
+       ▼
+┌─────────────┐
+│  Container  │  ← Instance (temporary)
+└─────────────┘
+</code></pre>
+
+<p><strong>To change your environment:</strong> Run <code>image-update</code>, then recreate container.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+<th>Permanent?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dockerfile</td>
+<td><code>~/workspace/&lt;project&gt;/Dockerfile</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Docker storage</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Docker runtime</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Workspace files</td>
+<td><code>~/workspace/&lt;project&gt;/</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>pip install in container</td>
+<td>Container only</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-questions">Common Questions<a class="headerlink" href="#common-questions" title="Permanent link">&para;</a></h2>
+<p><strong>"Can I modify an image directly?"</strong></p>
+<blockquote>
+<p>No. Use <code>image-update</code> to add packages.</p>
+</blockquote>
+<p><strong>"Do changes in container affect the image?"</strong></p>
+<blockquote>
+<p>No. Container changes are isolated and temporary.</p>
+</blockquote>
+<p><strong>"Why not just keep containers running forever?"</strong></p>
+<blockquote>
+<p>Resources (GPU) stay allocated. Other users can't use them. See <a href="ephemeral-containers.html">Ephemeral Containers</a>.</p>
+</blockquote>
+<hr />
+<h2 id="want-deeper-understanding">Want Deeper Understanding?<a class="headerlink" href="#want-deeper-understanding" title="Permanent link">&para;</a></h2>
+<p>For comprehensive explanation of:<br />
+- <strong>How Docker layers work</strong><br />
+- <strong>Image vs container architecture</strong><br />
+- <strong>Advanced image management</strong><br />
+- <strong>Industry Docker practices</strong></p>
+<p>See <a href="../background/containers-and-docker.html">Containers &amp; Docker</a> in Educational Computing Context (20 min read).</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="ephemeral-containers.html">Ephemeral Containers</a> - Why containers are temporary</li>
+<li><a href="workspaces-persistence.html">Workspaces and Persistence</a> - Where files are saved</li>
+<li><a href="../core-guides/custom-images.html">Custom Images Guide</a> - Practical how-to</li>
+</ul>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Working with GPUs - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Core Guides</a></li><li>Working with GPUs</li>
           </ol>
         </div>
       </div>
@@ -247,7 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
-<li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
+<li><a href="core-guides/gpu-usage.html" class="active">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
 <li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
@@ -316,22 +316,70 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="working-with-gpus">Working with GPUs<a class="headerlink" href="#working-with-gpus" title="Permanent link">&para;</a></h1>
+<p>Practical guide to GPU usage on DS01.</p>
+<h2 id="requesting-gpus">Requesting GPUs<a class="headerlink" href="#requesting-gpus" title="Permanent link">&para;</a></h2>
+<p><em>NB: this is mostly applicable to PhDs, PostDocs, Researchers and students who have been given access to more than 1 full GPU. Most MDS students by default, do NOT have access to multiple full GPUs.</em></p>
+<pre class="codehilite"><code class="language-bash"># Request 1 GPU (default)
+container-deploy my-project
+
+# Request multiple MIG instances (during container-create)
+container-create my-project --num-migs 2
+
+# Request full GPU instead of MIG (if you have permission)
+container-create my-project --prefer-full
+</code></pre>
+
+<p><strong>Note:</strong> GPU allocation options (<code>--num-migs</code>, <code>--prefer-full</code>) are set during <code>container-create</code>. The <code>container-deploy</code> orchestrator uses your default allocation settings.</p>
+<h2 id="monitoring-gpu-usage">Monitoring GPU Usage<a class="headerlink" href="#monitoring-gpu-usage" title="Permanent link">&para;</a></h2>
+<p><strong>Inside container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Basic info
+nvidia-smi
+
+# Continuous monitoring
+watch -n 1 nvidia-smi
+
+# Memory usage
+nvidia-smi --query-gpu=memory.used,memory.total --format=csv
+</code></pre>
+
+<h2 id="using-gpus-in-code">Using GPUs in Code<a class="headerlink" href="#using-gpus-in-code" title="Permanent link">&para;</a></h2>
+<p><strong>PyTorch:</strong></p>
+<pre class="codehilite"><code class="language-python">import torch
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
+data = data.to(device)
+</code></pre>
+
+<p><strong>TensorFlow:</strong></p>
+<pre class="codehilite"><code class="language-python">import tensorflow as tf
+
+# List GPUs
+print(tf.config.list_physical_devices('GPU'))
+
+# Use GPU
+with tf.device('/GPU:0'):
+    # Your code
+</code></pre>
+
+<h2 id="optimising-gpu-usage">Optimising GPU Usage<a class="headerlink" href="#optimising-gpu-usage" title="Permanent link">&para;</a></h2>
+<p><strong>Use mixed precision:</strong></p>
+<pre class="codehilite"><code class="language-python">from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()
+with autocast():
+    output = model(input)
+</code></pre>
+
+<p><strong>Batch size tuning:</strong><br />
+- Start small, increase until GPU memory ~80% full<br />
+- Monitor with nvidia-smi</p>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>→ <a href="custom-environments.html">Custom Environments</a></li>
+<li>→ <a href="../advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

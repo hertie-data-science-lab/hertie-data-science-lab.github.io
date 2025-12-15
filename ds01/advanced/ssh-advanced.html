@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>SSH Advanced - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>SSH Advanced</li>
           </ol>
         </div>
       </div>
@@ -272,7 +272,7 @@
 <li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 <li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
 <li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
-<li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
+<li><a href="advanced/ssh-advanced.html" class="active">SSH Advanced</a></li>
 <li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
 <li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
 </ul>
@@ -316,22 +316,222 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="ssh-advanced">SSH Advanced<a class="headerlink" href="#ssh-advanced" title="Permanent link">&para;</a></h1>
+<p>Advanced SSH configuration for DS01 access.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="ssh-config-file">SSH Config File<a class="headerlink" href="#ssh-config-file" title="Permanent link">&para;</a></h2>
+<p>Create <code>~/.ssh/config</code> on your laptop:</p>
+<pre class="codehilite"><code>Host ds01
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    IdentityFile ~/.ssh/id_ed25519
+    ForwardAgent yes
+</code></pre>
+
+<p>Now connect with:</p>
+<pre class="codehilite"><code class="language-bash">ssh ds01
+</code></pre>
+
+<p>Without SSH config, use the full format:</p>
+<pre class="codehilite"><code class="language-bash">ssh &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+</code></pre>
+
+<hr />
+<h2 id="key-management">Key Management<a class="headerlink" href="#key-management" title="Permanent link">&para;</a></h2>
+<h3 id="generate-key">Generate Key<a class="headerlink" href="#generate-key" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Recommended: Ed25519
+ssh-keygen -t ed25519 -C &quot;your-email@example.com&quot;
+
+# Alternative: RSA
+ssh-keygen -t rsa -b 4096 -C &quot;your-email@example.com&quot;
+</code></pre>
+
+<h3 id="copy-to-ds01">Copy to DS01<a class="headerlink" href="#copy-to-ds01" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">ssh-copy-id ds01
+# Without SSH config: ssh-copy-id &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+</code></pre>
+
+<p>Or manually:</p>
+<pre class="codehilite"><code class="language-bash">cat ~/.ssh/id_ed25519.pub | ssh ds01 &quot;cat &gt;&gt; ~/.ssh/authorized_keys&quot;
+</code></pre>
+
+<h3 id="agent-forwarding">Agent Forwarding<a class="headerlink" href="#agent-forwarding" title="Permanent link">&para;</a></h3>
+<p>On your laptop:</p>
+<pre class="codehilite"><code class="language-bash"># Add key to agent
+ssh-add ~/.ssh/id_ed25519
+
+# Connect with forwarding
+ssh -A ds01
+</code></pre>
+
+<p>This lets you use your local key for Git inside DS01.</p>
+<hr />
+<h2 id="port-forwarding-tunnels">Port Forwarding (Tunnels)<a class="headerlink" href="#port-forwarding-tunnels" title="Permanent link">&para;</a></h2>
+<h3 id="jupyter">Jupyter<a class="headerlink" href="#jupyter" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Forward port 8888
+ssh -L 8888:localhost:8888 ds01
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+
+# Access at http://localhost:8888
+</code></pre>
+
+<h3 id="tensorboard">TensorBoard<a class="headerlink" href="#tensorboard" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Forward port 6006
+ssh -L 6006:localhost:6006 ds01
+
+# Access at http://localhost:6006
+</code></pre>
+
+<h3 id="multiple-ports">Multiple Ports<a class="headerlink" href="#multiple-ports" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">ssh -L 8888:localhost:8888 -L 6006:localhost:6006 ds01
+</code></pre>
+
+<h3 id="in-ssh-config">In SSH Config<a class="headerlink" href="#in-ssh-config" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>Host ds01
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    LocalForward 8888 localhost:8888
+    LocalForward 6006 localhost:6006
+</code></pre>
+
+<hr />
+<h2 id="persistent-connections">Persistent Connections<a class="headerlink" href="#persistent-connections" title="Permanent link">&para;</a></h2>
+<h3 id="controlmaster">ControlMaster<a class="headerlink" href="#controlmaster" title="Permanent link">&para;</a></h3>
+<p>Add to <code>~/.ssh/config</code>:</p>
+<pre class="codehilite"><code>Host ds01
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h-%p
+    ControlPersist 600
+</code></pre>
+
+<p>Create socket directory:</p>
+<pre class="codehilite"><code class="language-bash">mkdir -p ~/.ssh/sockets
+</code></pre>
+
+<p>First connection is slow, subsequent connections are instant.</p>
+<h3 id="keep-alive">Keep Alive<a class="headerlink" href="#keep-alive" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>Host ds01
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+</code></pre>
+
+<p>Prevents disconnection on idle.</p>
+<hr />
+<h2 id="multiplexing-tmuxscreen">Multiplexing (tmux/screen)<a class="headerlink" href="#multiplexing-tmuxscreen" title="Permanent link">&para;</a></h2>
+<h3 id="tmux-on-ds01">tmux on DS01<a class="headerlink" href="#tmux-on-ds01" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Create session
+tmux new -s work
+
+# Detach: Ctrl+B, D
+
+# List sessions
+tmux ls
+
+# Reattach
+tmux attach -t work
+</code></pre>
+
+<h3 id="disconnect-safe-workflow">Disconnect-Safe Workflow<a class="headerlink" href="#disconnect-safe-workflow" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Connect
+ssh ds01
+
+# Start tmux
+tmux new -s training
+
+# Run training
+python train.py
+
+# Detach (Ctrl+B, D)
+
+# Disconnect SSH (safe to close laptop)
+
+# Later, reconnect
+ssh ds01
+tmux attach -t training
+</code></pre>
+
+<hr />
+<h2 id="scp-and-rsync">SCP and rsync<a class="headerlink" href="#scp-and-rsync" title="Permanent link">&para;</a></h2>
+<h3 id="copy-files-to-ds01">Copy Files to DS01<a class="headerlink" href="#copy-files-to-ds01" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Single file
+scp local-file.txt ds01:~/workspace/project/
+
+# Directory
+scp -r local-dir/ ds01:~/workspace/project/
+
+# rsync (better for large transfers)
+rsync -avz local-dir/ ds01:~/workspace/project/
+</code></pre>
+
+<h3 id="copy-files-from-ds01">Copy Files from DS01<a class="headerlink" href="#copy-files-from-ds01" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">scp ds01:~/workspace/project/results.csv .
+rsync -avz ds01:~/workspace/project/models/ ./models/
+</code></pre>
+
+<hr />
+<h2 id="vs-code-remote">VS Code Remote<a class="headerlink" href="#vs-code-remote" title="Permanent link">&para;</a></h2>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Install "Remote - SSH" extension</li>
+<li>Open Command Palette (Cmd/Ctrl + Shift + P)</li>
+<li>Select "Remote-SSH: Connect to Host"</li>
+<li>Enter <code>user@ds01-server</code> or select from config</li>
+</ol>
+<h3 id="config-for-vs-code">Config for VS Code<a class="headerlink" href="#config-for-vs-code" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>Host ds01
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    ForwardAgent yes
+</code></pre>
+
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="connection-refused">Connection Refused<a class="headerlink" href="#connection-refused" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Check SSH is running
+ssh -v ds01
+# Without SSH config: ssh -v &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+</code></pre>
+
+<h3 id="permission-denied">Permission Denied<a class="headerlink" href="#permission-denied" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Check key permissions
+ls -la ~/.ssh/
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub
+
+# Test key
+ssh -i ~/.ssh/id_ed25519 ds01
+</code></pre>
+
+<h3 id="host-key-changed">Host Key Changed<a class="headerlink" href="#host-key-changed" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Remove old key (only if expected)
+ssh-keygen -R ds01-server
+</code></pre>
+
+<h3 id="slow-connection">Slow Connection<a class="headerlink" href="#slow-connection" title="Permanent link">&para;</a></h3>
+<p>Add to config:</p>
+<pre class="codehilite"><code>Host ds01
+    Compression yes
+    TCPKeepAlive yes
+</code></pre>
+
+<hr />
+<h2 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Use Ed25519 keys</strong> (more secure than RSA)</li>
+<li><strong>Use passphrase</strong> on keys</li>
+<li><strong>Don't share private keys</strong></li>
+<li><strong>Use agent forwarding</strong> instead of copying keys to server</li>
+<li><strong>Keep SSH config in ~/.ssh/</strong> (proper permissions)</li>
+</ol>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="../getting-started/prerequisites.html">Prerequisites</a></li>
+<li><a href="../core-guides/jupyter.html">Jupyter Setup</a></li>
+<li><a href="../core-guides/vscode-remote.html">VSCode Remote</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

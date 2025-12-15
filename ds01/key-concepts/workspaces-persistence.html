@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Workspaces and Persistence - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Key Concepts</a></li><li>Workspaces and Persistence</li>
           </ol>
         </div>
       </div>
@@ -282,7 +282,7 @@
 <li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
 <li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
 <li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
-<li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
+<li><a href="key-concepts/workspaces-persistence.html" class="active">Workspaces and Persistence</a></li>
 </ul>
 </li>
 <li><span class="section-title"><a href="background/index.html">Background</a></span>
@@ -316,22 +316,118 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="workspaces-and-persistence">Workspaces and Persistence<a class="headerlink" href="#workspaces-and-persistence" title="Permanent link">&para;</a></h1>
+<p><strong>Where your files live and what survives container removal.</strong></p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="the-golden-rule">The Golden Rule<a class="headerlink" href="#the-golden-rule" title="Permanent link">&para;</a></h2>
+<p><strong>Save everything important to <code>/workspace/</code></strong></p>
+<p>Everything else in the container is temporary.</p>
+<hr />
+<h2 id="two-filesystems">Two Filesystems<a class="headerlink" href="#two-filesystems" title="Permanent link">&para;</a></h2>
+<p>When you work in a container, there are two places files can be:</p>
+<h3 id="1-container-filesystem-temporary">1. Container filesystem (temporary)<a class="headerlink" href="#1-container-filesystem-temporary" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>/root/              ← Home directory (temporary!)
+/tmp/               ← Temp files (temporary!)
+/usr/, /opt/        ← From image (reset on recreate)
+</code></pre>
+
+<p><strong>Lost when:</strong> Container is removed (<code>container retire</code>)</p>
+<h3 id="2-workspace-permanent">2. Workspace (permanent)<a class="headerlink" href="#2-workspace-permanent" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>/workspace/               ← Your project files (permanent!)
+├── code/
+├── data/
+├── models/
+└── Dockerfile
+</code></pre>
+
+<p><strong>Maps to:</strong> <code>~/workspace/&lt;project&gt;/</code> on the host</p>
+<p><strong>Survives:</strong> Container removal, system reboots, everything</p>
+<hr />
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>Your project directory is "mounted" into the container as <code>/workspace</code>:</p>
+<pre class="codehilite"><code>Host Machine                    Container
+────────────                    ─────────
+~/workspace/my-project/    ←→   /workspace/
+</code></pre>
+
+<p><strong>Same files, different path.</strong> Changes in one appear in the other.</p>
+<hr />
+<h2 id="common-scenarios">Common Scenarios<a class="headerlink" href="#common-scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="saving-model-checkpoints">Saving model checkpoints<a class="headerlink" href="#saving-model-checkpoints" title="Permanent link">&para;</a></h3>
+<p><strong>Right (files persist):</strong></p>
+<pre class="codehilite"><code class="language-python">torch.save(model, '/workspace/models/checkpoint.pt')
+</code></pre>
+
+<h3 id="downloading-datasets">Downloading datasets<a class="headerlink" href="#downloading-datasets" title="Permanent link">&para;</a></h3>
+<p><strong>Right (download once):</strong></p>
+<pre class="codehilite"><code class="language-bash">cd /workspace/data
+wget https://example.com/data.tar.gz
+</code></pre>
+
+<h3 id="running-jupyter">Running Jupyter<a class="headerlink" href="#running-jupyter" title="Permanent link">&para;</a></h3>
+<p><strong>Always start from workspace:</strong></p>
+<pre class="codehilite"><code class="language-bash">cd /workspace
+jupyter lab
+</code></pre>
+
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Permanent?</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/workspace/</code></td>
+<td><strong>Yes</strong></td>
+<td>All important work</td>
+</tr>
+<tr>
+<td><code>/root/</code> (home)</td>
+<td>No</td>
+<td>Temporary config</td>
+</tr>
+<tr>
+<td><code>/tmp/</code></td>
+<td>No</td>
+<td>Scratch space</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-questions">Common Questions<a class="headerlink" href="#common-questions" title="Permanent link">&para;</a></h2>
+<p><strong>"Where did my files go?"</strong></p>
+<blockquote>
+<p>Check if they were in <code>/workspace/</code>. If not, they're gone with the container.</p>
+</blockquote>
+<p><strong>"Can I access workspace outside the container?"</strong></p>
+<blockquote>
+<p>Yes. It's at <code>~/workspace/&lt;project&gt;/</code> on the host.</p>
+</blockquote>
+<p><strong>"How much space do I have?"</strong></p>
+<blockquote>
+<p>Check with <code>du -sh ~/workspace/*</code></p>
+</blockquote>
+<hr />
+<h2 id="want-comprehensive-understanding">Want Comprehensive Understanding?<a class="headerlink" href="#want-comprehensive-understanding" title="Permanent link">&para;</a></h2>
+<p>This is a brief guide covering the essentials. For deeper exploration of:<br />
+- <strong>Backup strategies and data safety</strong><br />
+- <strong>Disk quota management</strong><br />
+- <strong>Advanced mounting options</strong><br />
+- <strong>Troubleshooting persistence issues</strong><br />
+- <strong>Industry best practices</strong></p>
+<p>See <a href="../background/workspaces-and-persistence.html">Workspaces &amp; Persistence</a> in Educational Computing Context (20 min read).</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="containers-and-images.html">Containers and Images</a> - Why containers are temporary</li>
+<li><a href="ephemeral-containers.html">Ephemeral Containers</a> - The design philosophy</li>
+<li><a href="../core-guides/creating-projects.html">Creating Projects</a> - Set up a new project</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Scripting with Python - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Intermediate</a></li><li>Scripting with Python</li>
           </ol>
         </div>
       </div>
@@ -261,7 +261,7 @@
 <li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
 <li><a href="intermediate/container-states.html">Container States</a></li>
 <li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
-<li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
+<li><a href="intermediate/scripting-python.html" class="active">Scripting with Python</a></li>
 <li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
 </ul>
 </li>
@@ -316,22 +316,348 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="scripting-with-python">Scripting with Python<a class="headerlink" href="#scripting-with-python" title="Permanent link">&para;</a></h1>
+<p>Automate DS01 workflows with Python scripts.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="why-python">Why Python?<a class="headerlink" href="#why-python" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Better error handling</td>
+<td>Extra subprocess overhead</td>
+</tr>
+<tr>
+<td>Rich data structures</td>
+<td>Requires Python installed</td>
+</tr>
+<tr>
+<td>Easier debugging</td>
+<td>More verbose for simple tasks</td>
+</tr>
+<tr>
+<td>JSON parsing built-in</td>
+<td>Not native shell integration</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Best for:</strong> Complex workflows, data processing, structured automation.</p>
+<hr />
+<h2 id="why-script">Why Script?<a class="headerlink" href="#why-script" title="Permanent link">&para;</a></h2>
+<p><strong>Manual (tedious):</strong></p>
+<pre class="codehilite"><code class="language-bash"># Run 10 experiments
+container deploy exp-1 --open
+python train.py --lr=0.001
+exit
+container retire exp-1
+
+container deploy exp-2 --open
+python train.py --lr=0.01
+exit
+container retire exp-2
+# ... 8 more times
+</code></pre>
+
+<p><strong>Scripted (efficient):</strong></p>
+<pre class="codehilite"><code class="language-bash">python run_experiments.py
+# Runs all 10 automatically
+</code></pre>
+
+<hr />
+<h2 id="basic-script-template">Basic Script Template<a class="headerlink" href="#basic-script-template" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+# my_workflow.py
+
+import subprocess
+import sys
+import os
+
+def run(cmd):
+    &quot;&quot;&quot;Run a command and return output.&quot;&quot;&quot;
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f&quot;Error: {result.stderr}&quot;)
+        sys.exit(1)
+    return result.stdout
+
+def main():
+    project = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;my-project&quot;
+    gpu_count = sys.argv[2] if len(sys.argv) &gt; 2 else &quot;1&quot;
+
+    # Deploy container
+    run(f&quot;container-create {project} --gpu={gpu_count}&quot;)
+    run(f&quot;container-start {project}&quot;)
+
+    # Run work
+    user_id = os.getuid()
+    run(f&quot;docker exec {project}._.{user_id} python /workspace/{project}/train.py&quot;)
+
+    # Cleanup
+    run(f&quot;container-stop {project}&quot;)
+    run(f&quot;container-remove {project} --force&quot;)
+
+    print(&quot;Done!&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x my_workflow.py
+./my_workflow.py my-thesis 2
+</code></pre>
+
+<hr />
+<h2 id="pattern-1-parallel-experiments">Pattern 1: Parallel Experiments<a class="headerlink" href="#pattern-1-parallel-experiments" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+# parallel_experiments.py
+
+import subprocess
+import os
+from concurrent.futures import ThreadPoolExecutor
+
+def run_experiment(lr):
+    &quot;&quot;&quot;Run a single experiment.&quot;&quot;&quot;
+    name = f&quot;exp-lr-{lr}&quot;
+    user_id = os.getuid()
+
+    subprocess.run(f&quot;container-create {name} --background&quot;, shell=True)
+    subprocess.run(f&quot;container-start {name}&quot;, shell=True)
+    subprocess.run(
+        f&quot;docker exec {name}._.{user_id} python /workspace/train.py --lr={lr}&quot;,
+        shell=True
+    )
+    return name
+
+def main():
+    learning_rates = [0.001, 0.01, 0.1]
+
+    # Run in parallel
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        containers = list(executor.map(run_experiment, learning_rates))
+
+    # Cleanup
+    for name in containers:
+        subprocess.run(f&quot;container-retire {name} --force&quot;, shell=True)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x parallel_experiments.py
+./parallel_experiments.py
+</code></pre>
+
+<hr />
+<h2 id="pattern-2-sequential-pipeline">Pattern 2: Sequential Pipeline<a class="headerlink" href="#pattern-2-sequential-pipeline" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+# ml_pipeline.py
+
+import subprocess
+import os
+import sys
+
+def run_stage(name, gpu=1, script=&quot;&quot;):
+    &quot;&quot;&quot;Run a pipeline stage.&quot;&quot;&quot;
+    user_id = os.getuid()
+
+    subprocess.run(f&quot;container-create {name} --gpu={gpu}&quot;, shell=True, check=True)
+    subprocess.run(f&quot;container-start {name}&quot;, shell=True, check=True)
+    subprocess.run(
+        f&quot;docker exec {name}._.{user_id} python /workspace/{script}&quot;,
+        shell=True, check=True
+    )
+    subprocess.run(f&quot;container-retire {name} --force&quot;, shell=True)
+
+def main():
+    stages = [
+        (&quot;data-prep&quot;, 0, &quot;preprocess.py&quot;),
+        (&quot;training&quot;, 2, &quot;train.py&quot;),
+        (&quot;eval&quot;, 1, &quot;evaluate.py&quot;),
+    ]
+
+    for name, gpu, script in stages:
+        print(f&quot;Running stage: {name}&quot;)
+        run_stage(name, gpu, script)
+
+    print(&quot;Pipeline complete!&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x ml_pipeline.py
+./ml_pipeline.py
+</code></pre>
+
+<hr />
+<h2 id="pattern-3-hyperparameter-grid-search">Pattern 3: Hyperparameter Grid Search<a class="headerlink" href="#pattern-3-hyperparameter-grid-search" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+# grid_search.py
+
+import subprocess
+import os
+import itertools
+
+def run_config(lr, batch_size):
+    &quot;&quot;&quot;Run a single configuration.&quot;&quot;&quot;
+    name = f&quot;exp-lr{lr}-bs{batch_size}&quot;
+    user_id = os.getuid()
+
+    print(f&quot;Running: {name}&quot;)
+
+    subprocess.run(f&quot;container-create {name} --background&quot;, shell=True, check=True)
+    subprocess.run(f&quot;container-start {name}&quot;, shell=True, check=True)
+
+    subprocess.run(
+        f&quot;docker exec {name}._.{user_id} bash -c &quot;
+        f&quot;'cd /workspace/experiments &amp;&amp; python train.py --lr={lr} --batch-size={batch_size}'&quot;,
+        shell=True, check=True
+    )
+
+    subprocess.run(f&quot;container-retire {name} --force&quot;, shell=True)
+
+def main():
+    learning_rates = [0.001, 0.01, 0.1]
+    batch_sizes = [16, 32, 64]
+
+    for lr, bs in itertools.product(learning_rates, batch_sizes):
+        run_config(lr, bs)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x grid_search.py
+./grid_search.py
+</code></pre>
+
+<hr />
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+# robust_script.py
+
+import subprocess
+import sys
+import atexit
+
+container_name = None
+
+def cleanup():
+    &quot;&quot;&quot;Cleanup on exit or error.&quot;&quot;&quot;
+    if container_name:
+        print(&quot;Cleaning up...&quot;)
+        subprocess.run(
+            f&quot;container-remove {container_name} --stop --force&quot;,
+            shell=True, stderr=subprocess.DEVNULL
+        )
+
+def main():
+    global container_name
+
+    project = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;my-project&quot;
+    container_name = f&quot;script-{project}&quot;
+
+    # Register cleanup
+    atexit.register(cleanup)
+
+    try:
+        subprocess.run(f&quot;container-create {container_name}&quot;, shell=True, check=True)
+        subprocess.run(f&quot;container-start {container_name}&quot;, shell=True, check=True)
+
+        user_id = __import__('os').getuid()
+        subprocess.run(
+            f&quot;docker exec {container_name}._.{user_id} python /workspace/train.py&quot;,
+            shell=True, check=True
+        )
+
+        print(&quot;Success!&quot;)
+
+    except subprocess.CalledProcessError as e:
+        print(f&quot;Error: Command failed with code {e.returncode}&quot;)
+        sys.exit(1)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<hr />
+<h2 id="checking-container-state">Checking Container State<a class="headerlink" href="#checking-container-state" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+def main():
+    container = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;my-project&quot;
+
+    result = subprocess.run(
+        &quot;container-list&quot;, shell=True, capture_output=True, text=True
+    )
+
+    if f&quot;{container}&quot; in result.stdout and &quot;running&quot; in result.stdout:
+        print(&quot;Container is running&quot;)
+        subprocess.run(f&quot;container-attach {container}&quot;, shell=True)
+    else:
+        print(&quot;Container not running, creating...&quot;)
+        subprocess.run(f&quot;project launch {container} --open&quot;, shell=True)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<hr />
+<h2 id="parsing-json-output">Parsing JSON Output<a class="headerlink" href="#parsing-json-output" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-python">#!/usr/bin/env python3
+
+import subprocess
+import json
+
+def main():
+    # Get container info as JSON
+    result = subprocess.run(
+        &quot;container-list --format=json&quot;,
+        shell=True, capture_output=True, text=True
+    )
+    containers = json.loads(result.stdout)
+
+    # Filter containers with GPUs
+    gpu_containers = [c['name'] for c in containers if c.get('gpu_count', 0) &gt; 0]
+    print(&quot;Containers with GPUs:&quot;, gpu_containers)
+
+    # Process each
+    for container in containers:
+        print(f&quot;Processing {container['name']}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Use <code>check=True</code></strong> - raise exceptions on errors</li>
+<li><strong>Register cleanup with <code>atexit</code></strong> - free resources on exit</li>
+<li><strong>Use <code>--force</code> flags</strong> - don't block on prompts</li>
+<li><strong>Print progress</strong> - <code>print()</code> statements for debugging</li>
+<li><strong>Validate inputs</strong> - check <code>sys.argv</code> early</li>
+</ol>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="scripting-bash.html">Scripting with Bash</a> - Alternative approach</li>
+<li><a href="atomic-commands.html">Atomic Commands</a> - Commands for scripting</li>
+<li><a href="cli-flags.html">CLI Flags</a> - Non-interactive usage</li>
+<li><a href="../advanced/">Advanced</a> - Docker-native scripting</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

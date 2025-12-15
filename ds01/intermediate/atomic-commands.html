@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Atomic Commands Reference - DS01 Documentation</title>
+  <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
+  <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/logo.jpg" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- DS01 Docs Custom Styles -->
+  <style>
+    .docs-container {
+      display: flex;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    .docs-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .docs-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .docs-sidebar > ul > li {
+      margin-bottom: 15px;
+    }
+    .docs-sidebar .section-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      padding: 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .docs-sidebar .section-title a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .docs-sidebar .section-title a:hover {
+      color: #cda45e;
+    }
+    .docs-sidebar ul ul {
+      padding-left: 15px;
+      margin-top: 5px;
+    }
+    .docs-sidebar ul ul li {
+      margin-bottom: 5px;
+    }
+    .docs-sidebar ul ul a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 4px 0;
+    }
+    .docs-sidebar ul ul a:hover,
+    .docs-sidebar ul ul a.active {
+      color: #cda45e;
+    }
+    .docs-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+    .docs-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .docs-content h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #333;
+    }
+    .docs-content pre {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .docs-content code {
+      background: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .docs-content pre code {
+      background: none;
+      padding: 0;
+    }
+    .docs-content table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+    }
+    .docs-content th,
+    .docs-content td {
+      border: 1px solid #dee2e6;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .docs-content th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .docs-content blockquote {
+      border-left: 4px solid #cda45e;
+      padding-left: 20px;
+      margin: 1rem 0;
+      color: #666;
+      font-style: italic;
+    }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 1rem;
+      padding-left: 25px;
+    }
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+    .docs-content a {
+      color: #cda45e;
+    }
+    .docs-content a:hover {
+      color: #d9ba85;
+    }
+    @media (max-width: 991px) {
+      .docs-container {
+        flex-direction: column;
+      }
+      .docs-sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex">
+      <div class="contact-info mr-auto">
+        <i class="icofont-phone"></i> +49 30 2592190 (ext. 252)
+        <span class="d-none d-lg-inline-block"><i class="icofont-clock-time icofont-rotate-180"></i> Mon-Friday: 09:00 AM - 17:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <a href="https://hertie-data-science-lab.github.io/" class="logo mr-auto"><img src="../assets/img/logo.svg" alt="" class="img-fluid"></a>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#about">About</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#work">Work</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#teaching">Teaching</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#student">Student Projects</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#contact">Contact</a></li>
+          <li class="active"><a href="index.html">DS01 Docs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>DS01 Documentation</h2>
+          <ol>
+            <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+            <li><a href="index.html">DS01 Docs</a></li>
+            <li><a href="index.html">Intermediate</a></li><li>Atomic Commands Reference</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="inner-page">
+      <div class="container">
+        <div class="docs-container">
+          <aside class="docs-sidebar">
+            <ul>
+<li><span class="section-title"><a href="index.html">Home</a></span></li>
+<li><span class="section-title"><a href="quickstart.html">Quickstart</a></span></li>
+<li><span class="section-title"><a href="quick-reference.html">Quick Reference</a></span></li>
+<li><span class="section-title"><a href="getting-started/index.html">Getting Started</a></span>
+<ul>
+<li><a href="getting-started/first-container.html">First Container</a></li>
+<li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
+<li><a href="getting-started/help-system.html">Using the Help System</a></li>
+<li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="core-guides/index.html">Core Guides</a></span>
+<ul>
+<li><a href="core-guides/collaboration.html">Collaboration</a></li>
+<li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
+<li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
+<li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
+<li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
+<li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
+<li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
+<li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
+<li><a href="core-guides/vscode-remote.html">VSCode Remote Development</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
+<ul>
+<li><a href="intermediate/atomic-commands.html" class="active">Atomic Commands Reference</a></li>
+<li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
+<li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
+<li><a href="intermediate/container-states.html">Container States</a></li>
+<li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
+<li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
+<li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
+<ul>
+<li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
+<li><a href="advanced/docker-direct.html">Docker Direct</a></li>
+<li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
+<li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
+<li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
+<li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
+<li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
+<ul>
+<li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
+<li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
+<li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
+<li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="background/index.html">Background</a></span>
+<ul>
+<li><a href="background/containers-and-docker.html">Containers & Docker</a></li>
+<li><a href="background/ephemeral-philosophy.html">Ephemeral Container Philosophy</a></li>
+<li><a href="background/industry-parallels.html">Industry Parallels</a></li>
+<li><a href="background/linux-basics.html">Linux Basics</a></li>
+<li><a href="background/resource-management.html">Resource Management</a></li>
+<li><a href="background/servers-and-hpc.html">Servers & High-Performance Computing</a></li>
+<li><a href="background/workspaces-and-persistence.html">Workspaces & Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="reference/index.html">Reference</a></span>
+<ul>
+<li><a href="reference/command-quick-ref.html">Command Quick Reference</a></li>
+<li><a href="reference/command-reference.html">Command Reference</a></li>
+<li><a href="reference/file-locations.html">File Locations</a></li>
+<li><a href="reference/glossary.html">Glossary</a></li>
+<li><a href="reference/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
+<ul>
+<li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
+<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
+<li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
+<li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
+</ul>
+</li>
+</ul>
+          </aside>
+          <article class="docs-content">
+            <h1 id="atomic-commands-reference">Atomic Commands Reference<a class="headerlink" href="#atomic-commands-reference" title="Permanent link">&para;</a></h1>
+<p>Complete reference for DS01's L2 atomic interface - single-purpose container and image commands.</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>Atomic commands = single-purpose operations.</strong></p>
+<p><strong>Orchestrators (L3) do multiple steps:</strong></p>
+<pre class="codehilite"><code class="language-bash">container deploy = create + start
+container retire = stop + remove
+</code></pre>
+
+<p><strong>Atomic (L2) do one step:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-create   # Just create
+container-start    # Just start
+container-pause    # Freeze processes (GPU stays allocated)
+container-unpause  # Resume frozen container
+container-stop     # Just stop
+container-remove   # Just remove
+</code></pre>
+
+<p><strong>Why use atomic:</strong></p>
+<ul>
+<li>
+<p><strong>Granular control:</strong> Stop a container without removing it. Create multiple containers before starting any. Pause and resume without losing GPU allocation. Orchestrators bundle steps together; atomic commands let you execute (or skip) each step individually.</p>
+</li>
+<li>
+<p><strong>Better debugging:</strong> When <code>container deploy</code> fails, you don't know if it failed during creation or startup. With atomic commands, run <code>container-create</code> first - if that succeeds, the image exists and GPU allocation worked. Then run <code>container-start</code> - if that fails, it's a runtime issue. Isolate problems to specific steps.</p>
+</li>
+<li>
+<p><strong>Required for scripting:</strong> Scripts need predictable, single-purpose commands. <code>container-create --gpu=2</code> either works or fails - no interactive prompts, no ambiguity. Chain commands with <code>&amp;&amp;</code>, handle errors with <code>$?</code>, run in parallel with <code>&amp;</code>. Orchestrators' interactive wizards break scripts.</p>
+</li>
+<li>
+<p><strong>Understand system internals:</strong> Using atomic commands teaches you what actually happens: GPU allocation at create time, process startup at start time, GPU hold timeout after stop. This knowledge transfers directly to Kubernetes pods, AWS ECS tasks, and production container systems.</p>
+</li>
+</ul>
+<hr />
+<h2 id="container-lifecycle-commands">Container Lifecycle Commands<a class="headerlink" href="#container-lifecycle-commands" title="Permanent link">&para;</a></h2>
+<h3 id="container-create-create-container"><code>container-create</code> - Create Container<a class="headerlink" href="#container-create-create-container" title="Permanent link">&para;</a></h3>
+<p><strong>Creates container from image without starting it.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-create &lt;name&gt; [options]
+container-create                    # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--image=&lt;name&gt;          # Use specific Docker image
+--project=&lt;name&gt;        # Mount specific project workspace
+--workspace=&lt;path&gt;      # Mount custom path
+--gpu=&lt;count&gt;           # Request GPUs (default: 1)
+--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Create from project image
+container-create my-thesis
+
+# Create with specific image
+container-create test --image=aime/pytorch:2.8.0-cuda12.4
+
+# Create with 2 GPUs
+container-create training --gpu=2
+
+# Create with custom workspace
+container-create analysis --workspace=/data/shared/dataset
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Allocates GPU(s) based on your limits<br />
+2. Creates Docker container (not started)<br />
+3. Saves metadata to <code>/var/lib/ds01/container-metadata/</code><br />
+4. Sets up workspace mount (not active until start)</p>
+<p><strong>Container state after:</strong> <code>created</code> (not running)</p>
+<p><strong>Next step:</strong> <code>container-start &lt;name&gt;</code></p>
+<hr />
+<h3 id="container-start-start-existing-container"><code>container-start</code> - Start Existing Container<a class="headerlink" href="#container-start-start-existing-container" title="Permanent link">&para;</a></h3>
+<p><strong>Starts a created or stopped container in background.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-start &lt;name&gt; [options]
+container-start                     # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Start container in background
+container-start my-thesis
+
+# Interactive selection
+container-start
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Validates GPU still available (if allocated)<br />
+2. Starts Docker container<br />
+3. Container runs in background<br />
+4. Clears any "stopped" timestamp</p>
+<p><strong>Container state after:</strong> <code>running</code> (detached)</p>
+<p><strong>To connect:</strong> <code>container-attach &lt;name&gt;</code></p>
+<hr />
+<h3 id="container-run-start-and-enter-container"><code>container-run</code> - Start and Enter Container<a class="headerlink" href="#container-run-start-and-enter-container" title="Permanent link">&para;</a></h3>
+<p><strong>Starts container AND opens terminal (combined start + attach).</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-run &lt;name&gt; [options]
+container-run                       # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Start and enter
+container-run my-thesis
+
+# Interactive selection
+container-run
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Starts container (like <code>container-start</code>)<br />
+2. Attaches terminal automatically<br />
+3. You're inside container ready to work</p>
+<p><strong>Container state after:</strong> <code>running</code> (attached)</p>
+<p><strong>Difference from <code>container-start</code>:</strong><br />
+- <code>container-start</code> → background, requires <code>container-attach</code><br />
+- <code>container-run</code> → foreground, terminal opens immediately</p>
+<hr />
+<h3 id="container-attach-connect-to-running-container"><code>container-attach</code> - Connect to Running Container<a class="headerlink" href="#container-attach-connect-to-running-container" title="Permanent link">&para;</a></h3>
+<p><strong>Opens terminal to running container.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-attach &lt;name&gt; [options]
+container-attach                    # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Attach to container
+container-attach my-thesis
+
+# Interactive selection (shows only running containers)
+container-attach
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Validates container is running<br />
+2. Opens bash shell inside container<br />
+3. You're at prompt in container</p>
+<p><strong>Requirements:</strong><br />
+- Container must be in <code>running</code> state<br />
+- If stopped, use <code>container-start</code> first</p>
+<p><strong>To exit without stopping:</strong> Type <code>exit</code> or Ctrl+D</p>
+<hr />
+<h3 id="container-exit-exit-container-gracefully"><code>container-exit</code> - Exit Container Gracefully<a class="headerlink" href="#container-exit-exit-container-gracefully" title="Permanent link">&para;</a></h3>
+<p><strong>Exits container terminal cleanly.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-exit          # Run inside container
+exit                    # Standard shell exit also works
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Closes current shell session<br />
+2. Container keeps running (unless it was the last process)<br />
+3. Returns you to host shell</p>
+<p><strong>Common usage:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+container-exit
+
+# Or just
+exit
+
+# Or
+Ctrl+D
+</code></pre>
+
+<p><strong>Container state after:</strong> Still <code>running</code> (if other processes exist)</p>
+<hr />
+<h3 id="container-pause-pause-container"><code>container-pause</code> - Pause Container<a class="headerlink" href="#container-pause-pause-container" title="Permanent link">&para;</a></h3>
+<p><strong>Freezes all container processes without stopping.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-pause &lt;name&gt; [options]
+container-pause                      # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--all, -a               # Pause all running containers
+--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Pause container
+container-pause my-thesis
+
+# Pause all containers
+container-pause --all
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Sends SIGSTOP to all processes<br />
+2. Processes frozen in place<br />
+3. GPU remains allocated<br />
+4. Memory state preserved</p>
+<p><strong>Container state after:</strong> <code>paused</code></p>
+<p><strong>Use case:</strong> Free CPU temporarily while keeping GPU and state</p>
+<p><strong>To resume:</strong> <code>container-unpause &lt;name&gt;</code></p>
+<hr />
+<h3 id="container-unpause-resume-container"><code>container-unpause</code> - Resume Container<a class="headerlink" href="#container-unpause-resume-container" title="Permanent link">&para;</a></h3>
+<p><strong>Resumes frozen container processes.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-unpause &lt;name&gt; [options]
+container-unpause                    # Interactive
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Resume paused container
+container-unpause my-thesis
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Sends SIGCONT to all processes<br />
+2. Processes continue where they left off</p>
+<p><strong>Container state after:</strong> <code>running</code></p>
+<hr />
+<h3 id="container-stop-stop-container"><code>container-stop</code> - Stop Container<a class="headerlink" href="#container-stop-stop-container" title="Permanent link">&para;</a></h3>
+<p><strong>Stops running container without removing it.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-stop &lt;name&gt; [options]
+container-stop                      # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--force                 # Force stop (don't prompt)
+--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Stop container
+container-stop my-thesis
+
+# Force stop (skip confirmations)
+container-stop my-thesis --force
+
+# Interactive selection
+container-stop
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Stops Docker container<br />
+2. Records stopped timestamp<br />
+3. Keeps GPU allocated (for <code>gpu_hold_after_stop</code> duration)<br />
+4. Container still exists (can restart)</p>
+<p><strong>Container state after:</strong> <code>stopped</code></p>
+<p><strong>GPU behavior:</strong><br />
+- GPU held temporarily (check your limits: <code>check-limits</code>)<br />
+- After timeout, GPU freed automatically<br />
+- To free immediately, use <code>container-remove</code></p>
+<p><strong>To restart:</strong> <code>container-start &lt;name&gt;</code> or <code>container-run &lt;name&gt;</code></p>
+<p><strong>Note:</strong> DS01 encourages <code>container-remove</code> instead of <code>container-stop</code> for resource efficiency.</p>
+<hr />
+<h3 id="container-remove-remove-container"><code>container-remove</code> - Remove Container<a class="headerlink" href="#container-remove-remove-container" title="Permanent link">&para;</a></h3>
+<p><strong>Removes stopped or created container.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-remove &lt;name&gt; [options]
+container-remove                    # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--force                 # Skip confirmations
+--stop                  # Stop first if running
+--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Remove stopped container
+container-remove my-thesis
+
+# Stop and remove in one command
+container-remove my-thesis --stop
+
+# Force remove (skip prompts)
+container-remove my-thesis --force
+
+# Interactive selection
+container-remove
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Removes Docker container<br />
+2. Frees GPU immediately<br />
+3. Deletes container metadata<br />
+4. Workspace files SAFE (on host)</p>
+<p><strong>Container state after:</strong> <code>removed</code> (doesn't exist)</p>
+<p><strong>Cannot remove running container</strong> - stop first or use <code>--stop</code> flag.</p>
+<p><strong>Note:</strong> Prefer <code>container retire</code> (orchestrator) which stops + removes in one step.</p>
+<hr />
+<h2 id="container-query-commands">Container Query Commands<a class="headerlink" href="#container-query-commands" title="Permanent link">&para;</a></h2>
+<h3 id="container-list-list-containers"><code>container-list</code> - List Containers<a class="headerlink" href="#container-list-list-containers" title="Permanent link">&para;</a></h3>
+<p><strong>Shows all your containers.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-list [options]
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--all                   # Include stopped containers
+--format=&lt;type&gt;         # Output format (table, json, simple)
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># List running containers
+container-list
+
+# List all (including stopped)
+container-list --all
+
+# JSON output (for scripting)
+container-list --format=json
+</code></pre>
+
+<p><strong>Output:</strong></p>
+<pre class="codehilite"><code>NAME           STATUS    IMAGE                          GPU      UPTIME
+my-thesis      running   ds01-12345/my-thesis:latest    GPU-0    2h 15m
+experiment     stopped   ds01-12345/experiment:latest   GPU-1    -
+</code></pre>
+
+<hr />
+<h3 id="container-stats-resource-usage"><code>container-stats</code> - Resource Usage<a class="headerlink" href="#container-stats-resource-usage" title="Permanent link">&para;</a></h3>
+<p><strong>Shows resource usage for running containers.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-stats [options]
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--watch                 # Continuous updates
+--format=&lt;type&gt;         # Output format
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># One-time stats
+container-stats
+
+# Continuous (like top)
+container-stats --watch
+</code></pre>
+
+<p><strong>Output:</strong></p>
+<pre class="codehilite"><code>NAME        CPU %    MEM USAGE     MEM %    GPU MEM    GPU %
+my-thesis   125%     8.2GB/32GB    25%      12GB/40GB  85%
+</code></pre>
+
+<hr />
+<h2 id="image-commands">Image Commands<a class="headerlink" href="#image-commands" title="Permanent link">&para;</a></h2>
+<h3 id="image-create-build-docker-image"><code>image-create</code> - Build Docker Image<a class="headerlink" href="#image-create-build-docker-image" title="Permanent link">&para;</a></h3>
+<p><strong>Builds Docker image from project Dockerfile.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-create &lt;project&gt; [options]
+image-create                        # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">-f, --framework &lt;name&gt;  # Base framework (pytorch, tensorflow, jax)
+-t, --type &lt;type&gt;       # Use case type (cv, nlp, rl, ml, custom)
+--no-cache              # Build from scratch (ignore cache)
+--guided                # Show explanations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Build from ~/workspace/my-thesis/Dockerfile
+image-create my-thesis
+
+# Force rebuild (no cache)
+image-create my-thesis --no-cache
+
+# Interactive selection
+image-create
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Reads <code>~/workspace/&lt;project&gt;/Dockerfile</code><br />
+2. Builds Docker image<br />
+3. Tags as <code>ds01-&lt;uid&gt;/&lt;project&gt;:latest</code><br />
+4. Image available for <code>container-create</code></p>
+<p><strong>Time:</strong> 2-10 minutes depending on packages.</p>
+<hr />
+<h3 id="image-update-update-image"><code>image-update</code> - Update Image<a class="headerlink" href="#image-update-update-image" title="Permanent link">&para;</a></h3>
+<p><strong>Interactive package management and image rebuilding.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-update [project] [options]
+</code></pre>
+
+<p><strong>Use when:</strong><br />
+- Need to add/remove packages<br />
+- Modified Dockerfile manually<br />
+- Want newer package versions<br />
+- Previous build had errors</p>
+<p><strong>Example:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Recommended: Interactive GUI
+image-update                  # Select image, add/remove packages
+
+# Advanced: After manual Dockerfile edit
+vim ~/workspace/my-thesis/Dockerfile
+image-update my-thesis --rebuild
+
+# Recreate containers to use new image
+container-remove my-thesis
+container-create my-thesis
+</code></pre>
+
+<hr />
+<h3 id="image-list-list-images"><code>image-list</code> - List Images<a class="headerlink" href="#image-list-list-images" title="Permanent link">&para;</a></h3>
+<p><strong>Shows your Docker images.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-list [options]
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--all                   # Include system images
+--format=&lt;type&gt;         # Output format
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Your images
+image-list
+
+# All images (including AIME base images)
+image-list --all
+</code></pre>
+
+<p><strong>Output:</strong></p>
+<pre class="codehilite"><code>REPOSITORY                    TAG      SIZE     CREATED
+ds01-12345/my-thesis          latest   8.2GB    2 days ago
+ds01-12345/experiment         latest   6.5GB    1 week ago
+</code></pre>
+
+<hr />
+<h3 id="image-delete-delete-image"><code>image-delete</code> - Delete Image<a class="headerlink" href="#image-delete-delete-image" title="Permanent link">&para;</a></h3>
+<p><strong>Removes Docker image.</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-delete &lt;name&gt; [options]
+image-delete                        # Interactive
+</code></pre>
+
+<p><strong>Common flags:</strong></p>
+<pre class="codehilite"><code class="language-bash">--force                 # Skip confirmations
+-h, --help              # Show help
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Delete image
+image-delete my-thesis
+
+# Force delete
+image-delete my-thesis --force
+
+# Interactive selection
+image-delete
+</code></pre>
+
+<p><strong>Warning:</strong> Cannot delete if containers exist using this image. Remove containers first.</p>
+<hr />
+<h2 id="state-transitions">State Transitions<a class="headerlink" href="#state-transitions" title="Permanent link">&para;</a></h2>
+<p><strong>Full container lifecycle:</strong></p>
+<pre class="codehilite"><code>                container-create
+                    ↓
+              ┌──────────┐
+              │ created  │
+              └──────────┘
+                    ↓
+          container-start / container-run
+                    ↓
+              ┌──────────┐
+          ┌──→│ running  │←──┐
+          │   └──────────┘   │
+          │         ↓         │
+          │  container-stop   │
+          │         ↓         │
+          │   ┌──────────┐   │
+          │   │ stopped  │   │
+          │   └──────────┘   │
+          │         ↓         │
+          │  container-start  │
+          └──────────────────-┘
+                    ↓
+            container-remove
+                    ↓
+              ┌──────────┐
+              │ removed  │
+              └──────────┘
+</code></pre>
+
+<p><strong>GPU allocation:</strong><br />
+- Allocated: <code>created</code>, <code>running</code>, <code>stopped</code> (temporarily)<br />
+- Freed: <code>removed</code> or after <code>gpu_hold_after_stop</code> timeout</p>
+<hr />
+<h2 id="comparison-orchestrators-vs-atomic">Comparison: Orchestrators vs Atomic<a class="headerlink" href="#comparison-orchestrators-vs-atomic" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Orchestrator (L3)</th>
+<th>Atomic (L2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Create and start</strong></td>
+<td><code>container deploy</code></td>
+<td><code>container-create</code> + <code>container-start</code></td>
+</tr>
+<tr>
+<td><strong>Start and enter</strong></td>
+<td><code>container deploy --open</code></td>
+<td><code>container-run</code></td>
+</tr>
+<tr>
+<td><strong>Stop and remove</strong></td>
+<td><code>container retire</code></td>
+<td><code>container-stop</code> + <code>container-remove</code></td>
+</tr>
+<tr>
+<td><strong>Just create</strong></td>
+<td>N/A</td>
+<td><code>container-create</code></td>
+</tr>
+<tr>
+<td><strong>Just stop</strong></td>
+<td>N/A</td>
+<td><code>container-stop</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Orchestrators = convenience</strong></p>
+<p><strong>Atomic = control</strong></p>
+<hr />
+<h2 id="common-workflows">Common Workflows<a class="headerlink" href="#common-workflows" title="Permanent link">&para;</a></h2>
+<h3 id="workflow-1-debug-container-creation">Workflow 1: Debug Container Creation<a class="headerlink" href="#workflow-1-debug-container-creation" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Create container (test GPU allocation, image exists)
+container-create my-project
+
+# Check it was created
+container-list --all
+
+# Try starting
+container-start my-project
+
+# Success! Now use it
+container-attach my-project
+</code></pre>
+
+<h3 id="workflow-2-pause-work-briefly">Workflow 2: Pause Work Briefly<a class="headerlink" href="#workflow-2-pause-work-briefly" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Stop container, keep GPU allocation temporarily
+exit
+container-stop my-project
+
+# Resume within GPU hold timeout
+container-start my-project
+container-attach my-project
+</code></pre>
+
+<h3 id="workflow-3-create-multiple-containers">Workflow 3: Create Multiple Containers<a class="headerlink" href="#workflow-3-create-multiple-containers" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Create 3 containers
+container-create exp-1
+container-create exp-2
+container-create exp-3
+
+# Start all
+container-start exp-1
+container-start exp-2
+container-start exp-3
+
+# Work in one
+container-attach exp-1
+
+# When done, clean up
+container-stop exp-1 &amp;&amp; container-remove exp-1
+container-stop exp-2 &amp;&amp; container-remove exp-2
+container-stop exp-3 &amp;&amp; container-remove exp-3
+</code></pre>
+
+<h3 id="workflow-4-rebuild-and-recreate">Workflow 4: Rebuild and Recreate<a class="headerlink" href="#workflow-4-rebuild-and-recreate" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Modify environment (option 1: interactive GUI)
+image-update                  # Select image, add/remove packages
+
+# Modify environment (option 2: manual Dockerfile edit)
+vim ~/workspace/my-thesis/Dockerfile
+image-update my-thesis --rebuild
+
+# Remove old container
+container-remove my-thesis --stop
+
+# Create new container from updated image
+container-create my-thesis
+container-run my-thesis
+</code></pre>
+
+<hr />
+<h2 id="scripting-examples">Scripting Examples<a class="headerlink" href="#scripting-examples" title="Permanent link">&para;</a></h2>
+<h3 id="script-1-parallel-experiments">Script 1: Parallel Experiments<a class="headerlink" href="#script-1-parallel-experiments" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# run-experiments.sh
+
+for config in configs/*.yaml; do
+  name=$(basename $config .yaml)
+
+  # Create and start container
+  container-create exp-$name --background
+  container-start exp-$name
+
+  # Run experiment
+  container-attach exp-$name &lt;&lt;EOF
+cd /workspace/experiments
+python train.py --config $config
+exit
+EOF
+
+  # Cleanup
+  container-stop exp-$name
+  container-remove exp-$name
+done
+</code></pre>
+
+<h3 id="script-2-automated-testing">Script 2: Automated Testing<a class="headerlink" href="#script-2-automated-testing" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# test-image.sh
+
+PROJECT=$1
+
+# Build image
+image-create $PROJECT || exit 1
+
+# Create test container
+container-create test-$PROJECT || exit 1
+container-start test-$PROJECT || exit 1
+
+# Run tests
+container-attach test-$PROJECT &lt;&lt;EOF
+cd /workspace/$PROJECT
+pytest tests/
+EXIT_CODE=$?
+exit $EXIT_CODE
+EOF
+
+TEST_RESULT=$?
+
+# Cleanup
+container-remove test-$PROJECT --stop
+
+# Report
+if [ $TEST_RESULT -eq 0 ]; then
+  echo &quot;Tests passed!&quot;
+else
+  echo &quot;Tests failed!&quot;
+  exit 1
+fi
+</code></pre>
+
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-use-orchestrators-for-daily-work">1. Use Orchestrators for Daily Work<a class="headerlink" href="#1-use-orchestrators-for-daily-work" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Simple daily workflow - use orchestrators
+project launch my-thesis --open    # Not container-create + container-start
+container retire my-thesis         # Not container-stop + container-remove
+</code></pre>
+
+<p><strong>Reserve atomic for:</strong><br />
+- Debugging<br />
+- Scripting<br />
+- Special workflows</p>
+<h3 id="2-dont-leave-containers-stopped">2. Don't Leave Containers Stopped<a class="headerlink" href="#2-dont-leave-containers-stopped" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Bad - wastes allocation
+container-stop my-project
+# ... forget about it for days
+
+# Good - free resources
+container-retire my-project
+</code></pre>
+
+<p><strong>Stopped containers hold GPU temporarily</strong> - remove when done.</p>
+<h3 id="3-check-state-before-commands">3. Check State Before Commands<a class="headerlink" href="#3-check-state-before-commands" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Before starting
+container-list
+# Is it created? running? stopped?
+
+# Then choose correct command
+container-start &lt;name&gt;    # If created or stopped
+container-attach &lt;name&gt;   # If already running
+</code></pre>
+
+<h3 id="4-clean-up-after-scripting">4. Clean Up After Scripting<a class="headerlink" href="#4-clean-up-after-scripting" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># At end of script
+container-remove $CONTAINER_NAME --stop --force
+
+# Or trap errors
+trap &quot;container-remove $CONTAINER_NAME --stop --force&quot; EXIT
+</code></pre>
+
+<hr />
+<h2 id="flags-reference">Flags Reference<a class="headerlink" href="#flags-reference" title="Permanent link">&para;</a></h2>
+<h3 id="common-across-commands">Common Across Commands<a class="headerlink" href="#common-across-commands" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">--help, -h              Quick reference
+--info                  Full reference
+--concepts              Learn concepts first
+--guided                Interactive learning
+--force                 Skip confirmations
+</code></pre>
+
+<h3 id="container-create">Container Create<a class="headerlink" href="#container-create" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">--image=&lt;name&gt;          Docker image to use
+--project=&lt;name&gt;        Project workspace to mount
+--workspace=&lt;path&gt;      Custom workspace path
+--gpu=&lt;count&gt;           Number of GPUs (default: 1)
+</code></pre>
+
+<h3 id="container-remove">Container Remove<a class="headerlink" href="#container-remove" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">--stop                  Stop before removing (if running)
+--force                 Skip confirmations
+</code></pre>
+
+<h3 id="list-commands">List Commands<a class="headerlink" href="#list-commands" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">--all                   Include stopped/all items
+--format=&lt;type&gt;         Output format (table, json, simple)
+</code></pre>
+
+<h3 id="image-build">Image Build<a class="headerlink" href="#image-build" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">--no-cache              Build from scratch (no layer cache)
+-f, --framework &lt;name&gt;  Base framework (pytorch, tensorflow, jax)
+</code></pre>
+
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p><strong>Learn CLI efficiency:</strong></p>
+<ul>
+<li>→ <a href="cli-flags.html">CLI Flags Guide</a> - Use flags instead of interactive mode</li>
+</ul>
+<p><strong>Understand state model:</strong></p>
+<ul>
+<li>→ <a href="container-states.html">Container States</a> - Full lifecycle explained</li>
+</ul>
+<p><strong>Automate workflows:</strong></p>
+<ul>
+<li>→ <a href="scripting.html">Scripting Guide</a> - Write scripts with atomic commands</li>
+</ul>
+<p><strong>Go deeper:</strong></p>
+<ul>
+<li>→ <a href="../advanced/">Advanced Guide</a> - Docker-native workflows</li>
+</ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <a href="https://hertie-data-science-lab.github.io/"><img src="../assets/img/logo.svg" alt="" title=""></a>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/thehertieschool/" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/thehertieschool" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/thehertieschool/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://www.youtube.com/user/hertieschoolberlin/" class="youtube"><i class="bx bxl-youtube"></i></a>
+                <a href="https://de.linkedin.com/edu/hertie-school-of-governance-153040" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Site Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#about">About Us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#work">Our Work</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#teaching">Our Teaching</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://hertie-school.org/en/" target="_blank">Hertie School</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.hertie-school.org/en/mds" target="_blank">MSc Data Science for Public Policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://civica-data-science.github.io/" target="_blank">CIVICA Data Science Seminar Series</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>DS01 Documentation</h4>
+            <p>User documentation for the Hertie Data Science Lab GPU server.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Hertie School Data Science Lab</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Collaboration - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Core Guides</a></li><li>Collaboration</li>
           </ol>
         </div>
       </div>
@@ -242,7 +242,7 @@
 </li>
 <li><span class="section-title"><a href="core-guides/index.html">Core Guides</a></span>
 <ul>
-<li><a href="core-guides/collaboration.html">Collaboration</a></li>
+<li><a href="core-guides/collaboration.html" class="active">Collaboration</a></li>
 <li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
@@ -316,22 +316,62 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="collaboration">Collaboration<a class="headerlink" href="#collaboration" title="Permanent link">&para;</a></h1>
+<p>Working with others on DS01.</p>
+<h2 id="sharing-code">Sharing Code<a class="headerlink" href="#sharing-code" title="Permanent link">&para;</a></h2>
+<p><strong>Use Git (basic):</strong></p>
+<p><em>NB: git configuration and connectiong to a remote is automatically configured as standard in <code>project init</code></em></p>
+<pre class="codehilite"><code class="language-bash">cd ~/workspace/my-project
+git init
+git remote add origin &lt;repo-url&gt;
+git push -u origin main
+</code></pre>
+
+<p><strong>Colleagues can:</strong></p>
+<pre class="codehilite"><code class="language-bash">cd ~/workspace
+git clone &lt;repo-url&gt;
+image-create my-project  # Build same image
+container-deploy my-project
+</code></pre>
+
+<h2 id="sharing-data">Sharing Data<a class="headerlink" href="#sharing-data" title="Permanent link">&para;</a></h2>
+<p>DS01 will be developing collaborative shared-access directories for data-sharing.</p>
+<h2 id="reproducibility">Reproducibility<a class="headerlink" href="#reproducibility" title="Permanent link">&para;</a></h2>
+<p><strong>Essential files:</strong><br />
+- <code>requirements.txt</code> - Python packages <em>(the basis for <code>image create</code> to build a Dockerfile with)</em><br />
+- <code>Dockerfile</code> - Environment setup for containers <em>(built with <code>image create</code> or directly edit)</em><br />
+- <code>README.md</code> - Instructions for users, displays on GitHub repos<br />
+- <code>.gitignore</code> - Exclude large files</p>
+<h3 id="a-note-on-readmemd">A note on <code>README.md</code><a class="headerlink" href="#a-note-on-readmemd" title="Permanent link">&para;</a></h3>
+<p><code>project init</code> creates a <code>README.md</code> on your behalf, but it is recommended to edit it immediately and iteratively.</p>
+<pre class="codehilite"><code class="language-bash"># Edit README immediately
+vim ~/workspace/my-thesis/README.md
+</code></pre>
+
+<p>Suggested to include:<br />
+- What this project does<br />
+- How to reproduce experiments<br />
+- Dataset locations<br />
+- Key results</p>
+<h3 id="a-note-on-dockerfiles">A note on Dockerfiles<a class="headerlink" href="#a-note-on-dockerfiles" title="Permanent link">&para;</a></h3>
+<p>Keep Dockerfiles simple</p>
+<pre class="codehilite"><code class="language-dockerfile"># Good - clear, minimal
+RUN pip install transformers datasets
+
+# Avoid - overly complex
+RUN pip install transformers &amp;&amp; \
+    wget https://... &amp;&amp; \
+    tar -xzf ... &amp;&amp; \
+    cd ... &amp;&amp; \
+    python setup.py install &amp;&amp; \
+    ...
+</code></pre>
+
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>→ <a href="creating-projects.html">Creating Projects</a></li>
+<li>→ <a href="../core-guides/creating-projects.html">Project Structure</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

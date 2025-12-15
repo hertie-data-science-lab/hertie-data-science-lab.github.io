@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>System Commands - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Reference</a></li><li>System Commands</li>
           </ol>
         </div>
       </div>
@@ -316,22 +316,316 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="system-commands">System Commands<a class="headerlink" href="#system-commands" title="Permanent link">&para;</a></h1>
+<p>Commands for system status, user setup, and configuration.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># System dashboard
+dashboard
+
+# First-time setup
+user-setup
+
+# Check your limits
+check-limits
+
+# SSH and VSCode setup
+ssh-setup
+vscode-setup
+
+# Help and info
+help                     # List all commands
+version                  # Show version
+</code></pre>
+
+<hr />
+<h2 id="dashboard">dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h2>
+<p><strong>System status dashboard</strong></p>
+<pre class="codehilite"><code class="language-bash">dashboard [SECTION] [OPTIONS]
+</code></pre>
+
+<p>View GPU availability, container status, and system resources.</p>
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--watch</code>, <code>-w</code> | Watch mode (2s refresh) |<br />
+| <code>--full</code> | Show all sections expanded |<br />
+| <code>--json</code> | JSON output for scripting |</p>
+<p><strong>Modular Sections:</strong><br />
+| Section | Description |<br />
+|---------|-------------|<br />
+| <code>gpu</code> | GPU/MIG utilization diagram |<br />
+| <code>cpu</code> | CPU usage by user diagram |<br />
+| <code>system</code> | CPU, Memory, Disk bars |<br />
+| <code>mig-config</code> | MIG partition configuration |<br />
+| <code>containers</code> | All containers with stats |<br />
+| <code>users</code> | Per-user resource summary |<br />
+| <code>temp</code> | GPU temperatures and power |</p>
+<p><strong>Additional Views:</strong><br />
+| Command | Description |<br />
+|---------|-------------|<br />
+| <code>allocations [N]</code> | Recent N GPU allocations (default: 10) |<br />
+| <code>alerts</code> | Active alerts and warnings (idle containers, etc.) |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">dashboard                    # Default compact view (GPU, CPU by user, system)
+dashboard --full             # All sections expanded
+dashboard --watch            # Live monitoring
+dashboard --json             # JSON output for scripting
+
+# Individual sections
+dashboard gpu                # GPU/MIG utilization
+dashboard cpu                # CPU usage by user
+dashboard system             # System resources
+dashboard containers         # All containers
+dashboard users              # Per-user summary
+dashboard temp               # GPU temperatures
+
+# Additional views
+dashboard alerts             # Check for issues
+dashboard allocations 20     # Last 20 GPU allocations
+</code></pre>
+
+<hr />
+<h2 id="user-setup">user-setup<a class="headerlink" href="#user-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Complete onboarding wizard</strong> (L4 wizard)</p>
+<pre class="codehilite"><code class="language-bash">user-setup [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--quick</code> | Expert mode: skip skill assessment, minimal prompts |</p>
+<p><strong>Aliases:</strong> <code>user setup</code>, <code>new-user</code></p>
+<p><strong>What it does:</strong><br />
+1. <code>ssh-setup</code> - Creates SSH keys<br />
+2. <code>project-init</code> - Initializes first project<br />
+3. <code>vscode-setup</code> - Configures VSCode Remote (optional)</p>
+<p><strong>Time:</strong> 15-20 minutes</p>
+<p><strong>See:</strong> <a href="../../getting-started/first-time-setup.html">First-Time Setup Guide</a></p>
+<hr />
+<h2 id="check-limits">check-limits<a class="headerlink" href="#check-limits" title="Permanent link">&para;</a></h2>
+<p><strong>View your resource limits and usage</strong></p>
+<pre class="codehilite"><code class="language-bash">check-limits
+</code></pre>
+
+<p><strong>Example output:</strong></p>
+<pre class="codehilite"><code>=== Your Resource Limits ===
+Max GPUs:       2
+Max Containers: 3
+Memory/Container: 64GB
+Max Runtime:    24h (varies by user)
+Idle Timeout:   0.5h (varies by user)
+
+=== Current Usage ===
+GPUs:       1 / 2
+Containers: 2 / 3
+</code></pre>
+
+<hr />
+<h2 id="ssh-config">ssh-config<a class="headerlink" href="#ssh-config" title="Permanent link">&para;</a></h2>
+<p><strong>SSH configuration utility</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh-config &lt;command&gt;
+</code></pre>
+
+<p><strong>Commands:</strong><br />
+| Command | Description |<br />
+|---------|-------------|<br />
+| <code>generate</code> | Generate new SSH keys (ed25519) |<br />
+| <code>test</code> | Test SSH connection to localhost |<br />
+| <code>show</code> | Display public key and connection info |<br />
+| <code>vscode</code> | Show VS Code Remote-SSH setup instructions |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh-config generate    # Create new SSH keys
+ssh-config test        # Test if SSH is working
+ssh-config show        # Display your public key
+ssh-config vscode      # Get VS Code setup instructions
+</code></pre>
+
+<hr />
+<h2 id="ssh-setup">ssh-setup<a class="headerlink" href="#ssh-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure SSH keys</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">ssh-setup [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--guided</code> | Show detailed explanations for beginners |<br />
+| <code>--force</code> | Regenerate keys even if they exist |<br />
+| <code>--verify</code> | Just verify existing setup |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">ssh-setup              # Interactive setup
+ssh-setup --guided     # With explanations
+ssh-setup --verify     # Check existing setup
+</code></pre>
+
+<p><strong>What it does:</strong><br />
+1. Generates SSH key pair (ed25519)<br />
+2. Displays public key (add to GitHub/GitLab)<br />
+3. Verifies configuration</p>
+<hr />
+<h2 id="vscode-setup">vscode-setup<a class="headerlink" href="#vscode-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure VSCode Remote</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">vscode-setup [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--project=NAME</code> | Project-specific instructions |<br />
+| <code>--container=NAME</code> | Container-specific instructions |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">vscode-setup                        # General setup guide
+vscode-setup --project=my-thesis    # Project-specific instructions
+vscode-setup --guided               # With explanations
+</code></pre>
+
+<p><strong>See:</strong> <a href="../../core-guides/vscode-remote.html">VSCode Remote Guide</a></p>
+<hr />
+<h2 id="shell-setup">shell-setup<a class="headerlink" href="#shell-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Fix PATH configuration</strong></p>
+<pre class="codehilite"><code class="language-bash">shell-setup [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--check</code> | Verify PATH only |<br />
+| <code>--force</code> | Reconfigure even if PATH already correct |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">shell-setup --check   # Verify PATH
+shell-setup           # Fix PATH
+shell-setup --guided  # With explanations
+</code></pre>
+
+<p><strong>Use when:</strong> DS01 commands not found in PATH</p>
+<hr />
+<h2 id="jupyter-setup">jupyter-setup<a class="headerlink" href="#jupyter-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure Jupyter Lab access</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter-setup [OPTIONS]
+</code></pre>
+
+<p>Configures Jupyter Lab access for the DS01 server.</p>
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--guided</code> | Full setup with detailed explanations |<br />
+| <code>--port-forward</code> | Show SSH port forwarding commands only |<br />
+| <code>--brief</code> | Minimal output (for orchestrators) |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">jupyter-setup                 # Quick VS Code Jupyter extension setup
+jupyter-setup --guided        # Full guided setup
+jupyter-setup --port-forward  # Just port forwarding commands
+</code></pre>
+
+<p><strong>Use when:</strong> Setting up Jupyter Lab access from your local machine.</p>
+<hr />
+<h2 id="help">help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h2>
+<p><strong>Show all available commands</strong></p>
+<pre class="codehilite"><code class="language-bash">help [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--atomic</code> | Show atomic container commands (advanced) |<br />
+| <code>--admin</code> | Show admin commands (ds01-* prefix) |<br />
+| <code>--inside</code> | Show inside-container commands |<br />
+| <code>--full</code> | Show everything |</p>
+<p><strong>Alias:</strong> <code>commands</code> (identical functionality)</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">help              # Show main commands
+help --atomic     # Show advanced L2 commands
+help --admin      # Show admin tools
+help --full       # Show all commands
+</code></pre>
+
+<hr />
+<h2 id="version">version<a class="headerlink" href="#version" title="Permanent link">&para;</a></h2>
+<p><strong>Show DS01 version information</strong></p>
+<pre class="codehilite"><code class="language-bash">version
+</code></pre>
+
+<p>Displays the current DS01 infrastructure version and build information.</p>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<h3 id="command-help">Command Help<a class="headerlink" href="#command-help" title="Permanent link">&para;</a></h3>
+<p>All commands support <code>--help</code>:</p>
+<pre class="codehilite"><code class="language-bash">container-deploy --help
+image-create --help
+</code></pre>
+
+<h3 id="guided-mode">Guided Mode<a class="headerlink" href="#guided-mode" title="Permanent link">&para;</a></h3>
+<p>Most commands support <code>--guided</code>:</p>
+<pre class="codehilite"><code class="language-bash">container-deploy my-project --guided
+image-create --guided
+</code></pre>
+
+<p><strong>Guided mode:</strong><br />
+- Explains each step<br />
+- Educational prompts<br />
+- Recommended for beginners</p>
+<hr />
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<h3 id="ds01-variables">DS01 Variables<a class="headerlink" href="#ds01-variables" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">DS01_INSTALL_DIR=/opt/ds01-infra
+DS01_WORKSPACE=~/workspace
+</code></pre>
+
+<h3 id="docker-variables">Docker Variables<a class="headerlink" href="#docker-variables" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">DOCKER_HOST=unix:///var/run/docker.sock
+</code></pre>
+
+<hr />
+<h2 id="exit-codes">Exit Codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>1</td>
+<td>General error</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Invalid arguments</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Resource unavailable (no GPUs, quota exceeded)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Container/image not found</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Permission denied</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Check exit code:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy my-project
+echo $?
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="container-commands.html">Container Commands</a></li>
+<li><a href="../../getting-started/">Getting Started</a></li>
+<li><a href="../../troubleshooting/">Troubleshooting</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

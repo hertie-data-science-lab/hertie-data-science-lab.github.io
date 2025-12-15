@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Container Issues - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Troubleshooting</a></li><li>Container Issues</li>
           </ol>
         </div>
       </div>
@@ -308,7 +308,7 @@
 <li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
 <ul>
 <li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
-<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
+<li><a href="troubleshooting/container-issues.html" class="active">Container Issues</a></li>
 <li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
 <li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
 </ul>
@@ -316,22 +316,196 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="container-issues">Container Issues<a class="headerlink" href="#container-issues" title="Permanent link">&para;</a></h1>
+<p>Solutions for container startup, runtime, and lifecycle problems.</p>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
+</blockquote>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="container-wont-start-wont-start">Container Won't Start {#wont-start}<a class="headerlink" href="#container-wont-start-wont-start" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-start my-project
+Error: Container failed to start
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- GPU no longer exists (was reallocated)<br />
+- Resource limits exceeded<br />
+- Container configuration issue</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check container status:</strong><br />
+<code>bash
+   docker ps -a | grep &lt;project-name&gt;
+   docker logs &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Recreate container:</strong><br />
+<code>bash
+   container-remove my-project
+   container-create my-project</code></p>
+</li>
+<li>
+<p><strong>Check resource limits:</strong><br />
+<code>bash
+   check-limits</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="container-stopped-unexpectedly-stopped-unexpectedly">Container Stopped Unexpectedly {#stopped-unexpectedly}<a class="headerlink" href="#container-stopped-unexpectedly-stopped-unexpectedly" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong><br />
+- Container was running, now shows as stopped<br />
+- Processes terminated</p>
+<p><strong>Causes:</strong><br />
+1. <strong>Idle timeout reached</strong> (30min-2h, varies by user)<br />
+2. <strong>Out of memory</strong> (OOM killer)<br />
+3. <strong>Max runtime exceeded</strong><br />
+4. <strong>Code crashed</strong></p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check logs:</strong><br />
+<code>bash
+   docker logs &lt;project-name&gt;._.$(whoami) | tail -100</code></p>
+</li>
+<li>
+<p><strong>Check for OOM:</strong><br />
+<code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep OOMKilled</code></p>
+</li>
+<li>
+<p><strong>Prevent idle timeout:</strong><br />
+<code>bash
+   touch ~/workspace/&lt;project-name&gt;/.keep-alive</code></p>
+</li>
+</ol>
+<blockquote>
+<p><strong>⚠️ Contact DSL First:</strong> The <code>.keep-alive</code> workaround is available but should be a <strong>last resort</strong> as it can disrupt the system for other users. Please <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">open an issue on DS01 Hub</a> first to find a better solution together.</p>
+</blockquote>
+<ol>
+<li><strong>Restart container:</strong><br />
+<code>bash
+   container-start my-project</code><br />
+   Or recreate:<br />
+<code>bash
+   container-retire my-project
+   container-deploy my-project</code></li>
+</ol>
+<hr />
+<h2 id="cant-find-container-not-found">Can't Find Container {#not-found}<a class="headerlink" href="#cant-find-container-not-found" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-run my-project
+Error: Container not found
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Container was removed<br />
+- Wrong project name<br />
+- Container never created</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>List containers:</strong><br />
+<code>bash
+   container-list --all
+   docker ps -a --filter "name=._.$(whoami)"</code></p>
+</li>
+<li>
+<p><strong>Recreate if needed:</strong><br />
+<code>bash
+   container-deploy my-project</code></p>
+</li>
+<li>
+<p><strong>Check project name spelling</strong></p>
+</li>
+</ol>
+<hr />
+<h2 id="container-performance-performance">Container Performance {#performance}<a class="headerlink" href="#container-performance-performance" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong><br />
+- Container running slowly<br />
+- High latency</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check resource usage:</strong><br />
+<code>bash
+   container-stats my-project</code></p>
+</li>
+<li>
+<p><strong>Check if swapping:</strong><br />
+<code>bash
+   docker exec &lt;project-name&gt;._.$(whoami) free -h</code></p>
+</li>
+<li>
+<p><strong>Check GPU utilisation:</strong><br />
+<code>bash
+   docker exec &lt;project-name&gt;._.$(whoami) nvidia-smi</code></p>
+</li>
+<li>
+<p><strong>Reduce memory pressure:</strong></p>
+</li>
+<li>Close unused processes</li>
+<li>Use smaller batch sizes</li>
+<li>Process data in chunks</li>
+</ol>
+<hr />
+<h2 id="container-wont-stop-wont-stop">Container Won't Stop {#wont-stop}<a class="headerlink" href="#container-wont-stop-wont-stop" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong><br />
+- <code>container-stop</code> hangs<br />
+- Container stuck in stopping state</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Force stop:</strong><br />
+<code>bash
+   docker stop -t 1 &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Force kill:</strong><br />
+<code>bash
+   docker kill &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Remove forcefully:</strong><br />
+<code>bash
+   container-remove my-project --force</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="maximum-containers-reached-max-containers">Maximum Containers Reached {#max-containers}<a class="headerlink" href="#maximum-containers-reached-max-containers" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-deploy new-project
+Error: Maximum containers reached (3/3)
+</code></pre>
+
+<p><strong>Solution:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Check current containers
+container-list
+
+# Retire unused containers
+container-retire old-project-1
+container-retire old-project-2
+
+# Now can deploy new one
+container-deploy new-project
+</code></pre>
+
+<hr />
+<h2 id="general-recovery">General Recovery<a class="headerlink" href="#general-recovery" title="Permanent link">&para;</a></h2>
+<p>When in doubt, recreate:</p>
+<pre class="codehilite"><code class="language-bash">container-retire my-project
+container-deploy my-project --open
+</code></pre>
+
+<p>Your workspace files are <strong>always safe</strong> - recreating won't lose data.</p>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="gpu-issues.html">GPU Issues</a></li>
+<li><a href="../reference/commands/container-commands.html">Container Commands</a></li>
+<li><a href="../core-guides/daily-workflow.html">Daily Workflow</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

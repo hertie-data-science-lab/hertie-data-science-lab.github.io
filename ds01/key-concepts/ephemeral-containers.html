@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Ephemeral Containers - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Key Concepts</a></li><li>Ephemeral Containers</li>
           </ol>
         </div>
       </div>
@@ -280,7 +280,7 @@
 <li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
 <ul>
 <li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
-<li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
+<li><a href="key-concepts/ephemeral-containers.html" class="active">Ephemeral Containers</a></li>
 <li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
 <li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
 </ul>
@@ -316,22 +316,108 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="ephemeral-containers">Ephemeral Containers<a class="headerlink" href="#ephemeral-containers" title="Permanent link">&para;</a></h1>
+<p><strong>Why containers are temporary, and why that's a feature.</strong></p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="the-core-idea">The Core Idea<a class="headerlink" href="#the-core-idea" title="Permanent link">&para;</a></h2>
+<p><strong>Containers = temporary compute sessions</strong><br />
+<strong>Workspaces = permanent storage</strong></p>
+<p>Like shutting down your laptop when done - your files are safe on the disk.</p>
+<hr />
+<h2 id="the-ds01-workflow">The DS01 Workflow<a class="headerlink" href="#the-ds01-workflow" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Need GPU? Spin up a container
+project launch my-thesis --open
+
+# Do your compute-intensive work
+# (files saved to /workspace/)
+
+# Done? Clean up
+exit
+container retire my-thesis    # Frees GPU for others
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash"># Need GPU again later? Spin up another container
+project launch my-thesis --open
+# All your files are exactly where you left them
+</code></pre>
+
+<p><strong>Container is new. Workspace files persist.</strong></p>
+<hr />
+<h2 id="whats-temporary-vs-permanent">What's Temporary vs Permanent<a class="headerlink" href="#whats-temporary-vs-permanent" title="Permanent link">&para;</a></h2>
+<p><strong>Temporary (lost on retire):</strong><br />
+- Container instance, running processes, pip packages, files outside <code>/workspace/</code>, GPU allocation</p>
+<p><strong>Permanent (always safe):</strong><br />
+- Files in <code>/workspace/</code>, Dockerfile, Docker images, Git history on host</p>
+<hr />
+<h2 id="quick-commands">Quick Commands<a class="headerlink" href="#quick-commands" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Deploy (create + start)
+project launch my-project
+
+# Retire (stop + remove + free GPU)
+container retire my-project
+
+# Check what you have running
+container-list
+</code></pre>
+
+<hr />
+<h2 id="mental-model">Mental Model<a class="headerlink" href="#mental-model" title="Permanent link">&para;</a></h2>
+<p>Think of it like a laptop:</p>
+<table>
+<thead>
+<tr>
+<th>Laptop</th>
+<th>DS01</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shut down when done</td>
+<td><code>container retire</code></td>
+</tr>
+<tr>
+<td>Files on SSD</td>
+<td>Files in <code>/workspace/</code></td>
+</tr>
+<tr>
+<td>Boot takes 30 sec</td>
+<td>Deploy takes 30 sec</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-questions">Common Questions<a class="headerlink" href="#common-questions" title="Permanent link">&para;</a></h2>
+<p><strong>"Will I lose work?"</strong></p>
+<blockquote>
+<p>No, if you save to <code>/workspace/</code>. That's the whole point of the workspace.</p>
+</blockquote>
+<p><strong>"How long does recreating take?"</strong></p>
+<blockquote>
+<p>About 30 seconds. Image is already built.</p>
+</blockquote>
+<p><strong>"What if I need a GPU for 3 days?"</strong></p>
+<blockquote>
+<p>Keep the container running. Retire when actually done.</p>
+</blockquote>
+<p><strong>"What if container stops unexpectedly?"</strong></p>
+<blockquote>
+<p>Load your checkpoint and resume. Save progress frequently.</p>
+</blockquote>
+<hr />
+<h2 id="want-deeper-understanding">Want Deeper Understanding?<a class="headerlink" href="#want-deeper-understanding" title="Permanent link">&para;</a></h2>
+<p>This is a brief introduction to the ephemeral model. For comprehensive explanation of:<br />
+- <strong>Why</strong> this design (fairness, reproducibility, industry standards)<br />
+- <strong>How</strong> to handle long-running jobs and checkpointing<br />
+- <strong>When</strong> to use different strategies<br />
+- <strong>Industry context</strong> (AWS, Kubernetes, HPC)</p>
+<p>See <a href="../background/ephemeral-philosophy.html">Ephemeral Philosophy</a> in Educational Computing Context (20 min read).</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="workspaces-persistence.html">Workspaces and Persistence</a> - Where to save files</li>
+<li><a href="containers-and-images.html">Containers and Images</a> - How images work</li>
+<li><a href="../core-guides/long-running-jobs.html">Long-Running Jobs</a> - Multi-day training</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Efficiency Tips - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>Efficiency Tips</li>
           </ol>
         </div>
       </div>
@@ -270,7 +270,7 @@
 <li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
 <li><a href="advanced/docker-direct.html">Docker Direct</a></li>
 <li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
-<li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
+<li><a href="advanced/efficiency-tips.html" class="active">Efficiency Tips</a></li>
 <li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
 <li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
 <li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
@@ -316,22 +316,200 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="efficiency-tips">Efficiency Tips<a class="headerlink" href="#efficiency-tips" title="Permanent link">&para;</a></h1>
+<p>Speed up your DS01 workflow with keyboard shortcuts and workflow optimizations.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Permanent link">&para;</a></h2>
+<h3 id="inside-containers">Inside Containers<a class="headerlink" href="#inside-containers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+D</code></td>
+<td>Exit container (same as <code>exit</code>)</td>
+</tr>
+<tr>
+<td><code>Ctrl+C</code></td>
+<td>Cancel current command</td>
+</tr>
+<tr>
+<td><code>Ctrl+Z</code></td>
+<td>Suspend current process</td>
+</tr>
+<tr>
+<td><code>Ctrl+L</code></td>
+<td>Clear terminal</td>
+</tr>
+<tr>
+<td><code>Ctrl+R</code></td>
+<td>Search command history</td>
+</tr>
+</tbody>
+</table>
+<h3 id="terminal-navigation">Terminal Navigation<a class="headerlink" href="#terminal-navigation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+A</code></td>
+<td>Jump to line start</td>
+</tr>
+<tr>
+<td><code>Ctrl+E</code></td>
+<td>Jump to line end</td>
+</tr>
+<tr>
+<td><code>Ctrl+W</code></td>
+<td>Delete word backward</td>
+</tr>
+<tr>
+<td><code>Ctrl+U</code></td>
+<td>Delete to line start</td>
+</tr>
+<tr>
+<td><code>Ctrl+K</code></td>
+<td>Delete to line end</td>
+</tr>
+<tr>
+<td><code>Alt+B</code></td>
+<td>Move word backward</td>
+</tr>
+<tr>
+<td><code>Alt+F</code></td>
+<td>Move word forward</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tmux-if-using">Tmux (if using)<a class="headerlink" href="#tmux-if-using" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+B D</code></td>
+<td>Detach session</td>
+</tr>
+<tr>
+<td><code>Ctrl+B C</code></td>
+<td>New window</td>
+</tr>
+<tr>
+<td><code>Ctrl+B N</code></td>
+<td>Next window</td>
+</tr>
+<tr>
+<td><code>Ctrl+B P</code></td>
+<td>Previous window</td>
+</tr>
+<tr>
+<td><code>Ctrl+B %</code></td>
+<td>Split vertical</td>
+</tr>
+<tr>
+<td><code>Ctrl+B "</code></td>
+<td>Split horizontal</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="command-history">Command History<a class="headerlink" href="#command-history" title="Permanent link">&para;</a></h2>
+<h3 id="search-history">Search History<a class="headerlink" href="#search-history" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Search backward
+Ctrl+R
+# Type partial command, press Ctrl+R again for older matches
+
+# Search forward (after Ctrl+R)
+Ctrl+S
+</code></pre>
+
+<h3 id="history-shortcuts">History Shortcuts<a class="headerlink" href="#history-shortcuts" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">!!          # Repeat last command
+!$          # Last argument of previous command
+!*          # All arguments of previous command
+!-2         # Run command 2 back
+!container  # Run last command starting with &quot;container&quot;
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy my-thesis
+container-attach !$           # Uses &quot;my-thesis&quot;
+
+vim ~/workspace/project/train.py
+python !$                     # Runs the same file
+</code></pre>
+
+<hr />
+<h2 id="tab-completion">Tab Completion<a class="headerlink" href="#tab-completion" title="Permanent link">&para;</a></h2>
+<p>DS01 commands support tab completion:</p>
+<pre class="codehilite"><code class="language-bash">container-&lt;TAB&gt;
+# Shows: container-create  container-start  container-stop ...
+
+container-deploy my-&lt;TAB&gt;
+# Completes project name if unique
+</code></pre>
+
+<hr />
+<h2 id="time-saving-patterns">Time-Saving Patterns<a class="headerlink" href="#time-saving-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="pattern-1-quick-restart">Pattern 1: Quick Restart<a class="headerlink" href="#pattern-1-quick-restart" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Restart container (retire + deploy)
+container retire my-project --force &amp;&amp; container deploy my-project --open
+</code></pre>
+
+<h3 id="pattern-2-image-rebuild-cycle">Pattern 2: Image Rebuild Cycle<a class="headerlink" href="#pattern-2-image-rebuild-cycle" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Interactive: Use GUI to add packages then recreate
+image-update &amp;&amp; container retire my-project --force &amp;&amp; container deploy my-project --open
+
+# Advanced: Manual Dockerfile edit, rebuild, recreate
+vim ~/workspace/my-project/Dockerfile
+image-update my-project --rebuild &amp;&amp; container retire my-project --force &amp;&amp; container deploy my-project --open
+</code></pre>
+
+<h3 id="pattern-3-multi-container-cleanup">Pattern 3: Multi-Container Cleanup<a class="headerlink" href="#pattern-3-multi-container-cleanup" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Remove all stopped containers
+container-list --all | grep stopped | awk '{print $1}' | xargs -I {} container-remove {} --force
+</code></pre>
+
+<hr />
+<h2 id="environment-customisation">Environment Customisation<a class="headerlink" href="#environment-customisation" title="Permanent link">&para;</a></h2>
+<h3 id="bashrc-additions">Bashrc Additions<a class="headerlink" href="#bashrc-additions" title="Permanent link">&para;</a></h3>
+<p>Add to <code>~/.bashrc</code>:</p>
+<pre class="codehilite"><code class="language-bash"># DS01 status on prompt (optional)
+export PS1='[\u@ds01 \W]$ '
+
+# Quick project navigation
+alias cdw='cd ~/workspace'
+alias cdp='cd ~/workspace/$(ls ~/workspace | fzf)'  # requires fzf
+</code></pre>
+
+<h3 id="container-environment">Container Environment<a class="headerlink" href="#container-environment" title="Permanent link">&para;</a></h3>
+<p>Add to your Dockerfile:</p>
+<pre class="codehilite"><code class="language-dockerfile"># Useful aliases inside container
+RUN echo 'alias ll=&quot;ls -la&quot;' &gt;&gt; ~/.bashrc
+RUN echo 'alias ..=&quot;cd ..&quot;' &gt;&gt; ~/.bashrc
+</code></pre>
+
+<p>Many others possible - depends on your workflow</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="shell-aliases.html">Shell Aliases</a> - Command shortcuts</li>
+<li><a href="scripting-bash.html">Scripting (Bash)</a> - Automate workflows</li>
+<li><a href="cli-flags.html">CLI Flags</a> - All available flags</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

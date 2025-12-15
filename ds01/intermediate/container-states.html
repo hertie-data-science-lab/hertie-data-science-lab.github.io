@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Container States - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Intermediate</a></li><li>Container States</li>
           </ol>
         </div>
       </div>
@@ -259,7 +259,7 @@
 <li><a href="intermediate/atomic-commands.html">Atomic Commands Reference</a></li>
 <li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
 <li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
-<li><a href="intermediate/container-states.html">Container States</a></li>
+<li><a href="intermediate/container-states.html" class="active">Container States</a></li>
 <li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
 <li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
 <li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
@@ -316,22 +316,229 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="container-states">Container States<a class="headerlink" href="#container-states" title="Permanent link">&para;</a></h1>
+<p>Understanding the full DS01 container lifecycle.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="state-models">State Models<a class="headerlink" href="#state-models" title="Permanent link">&para;</a></h2>
+<h3 id="beginner-model-orchestrators">Beginner Model (Orchestrators)<a class="headerlink" href="#beginner-model-orchestrators" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>running ←→ removed
+</code></pre>
+
+<p>With orchestrators like <code>container deploy</code> and <code>container retire</code>, you only see two states.</p>
+<h3 id="intermediate-model-atomic">Intermediate Model (Atomic)<a class="headerlink" href="#intermediate-model-atomic" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>created → running → stopped → removed
+</code></pre>
+
+<p>With atomic commands, you have full control over each transition.</p>
+<hr />
+<h2 id="state-diagram">State Diagram<a class="headerlink" href="#state-diagram" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>                container-create
+                      ↓
+                ┌──────────┐
+                │ created  │  GPU allocated, not running
+                └──────────┘
+                      ↓
+            container-start / container-run
+                      ↓
+                ┌──────────┐
+            ┌──→│ running  │←──┐  Active, GPU in use
+            │   └──────────┘   │
+            │         ↓         │
+            │  container-stop   │
+            │         ↓         │
+            │   ┌──────────┐   │
+            │   │ stopped  │   │  Paused, GPU held temporarily
+            │   └──────────┘   │
+            │         ↓         │
+            │  container-start  │
+            └───────────────────┘
+                      ↓
+              container-remove
+                      ↓
+                ┌──────────┐
+                │ removed  │  Container deleted, GPU freed
+                └──────────┘
+</code></pre>
+
+<hr />
+<h2 id="state-details">State Details<a class="headerlink" href="#state-details" title="Permanent link">&para;</a></h2>
+<h3 id="created">Created<a class="headerlink" href="#created" title="Permanent link">&para;</a></h3>
+<p><strong>What it means:</strong> Container exists but hasn't started yet.</p>
+<pre class="codehilite"><code class="language-bash">container-create my-project
+container-list --all  # Shows &quot;created&quot;
+</code></pre>
+
+<p><strong>GPU:</strong> Allocated (reserved for you)<br />
+<strong>Processes:</strong> None running<br />
+<strong>Workspace:</strong> Configured but not mounted</p>
+<p><strong>Transitions:</strong><br />
+- → <code>running</code>: <code>container-start</code> or <code>container-run</code><br />
+- → <code>removed</code>: <code>container-remove</code></p>
+<hr />
+<h3 id="running">Running<a class="headerlink" href="#running" title="Permanent link">&para;</a></h3>
+<p><strong>What it means:</strong> Container is active and usable.</p>
+<pre class="codehilite"><code class="language-bash">container-start my-project
+container-list  # Shows &quot;running&quot;
+</code></pre>
+
+<p><strong>GPU:</strong> Allocated and in use<br />
+<strong>Processes:</strong> Active<br />
+<strong>Workspace:</strong> Mounted at <code>/workspace</code></p>
+<p><strong>Transitions:</strong><br />
+- → <code>stopped</code>: <code>container-stop</code><br />
+- → <code>removed</code>: <code>container-remove --stop</code></p>
+<hr />
+<h3 id="stopped">Stopped<a class="headerlink" href="#stopped" title="Permanent link">&para;</a></h3>
+<p><strong>What it means:</strong> Container paused, can be restarted.</p>
+<pre class="codehilite"><code class="language-bash">container-stop my-project
+container-list --all  # Shows &quot;stopped&quot;
+</code></pre>
+
+<p><strong>GPU:</strong> Held temporarily (see GPU Hold Timeout below)<br />
+<strong>Processes:</strong> None running<br />
+<strong>Workspace:</strong> Not mounted (files safe on host)</p>
+<p><strong>Transitions:</strong><br />
+- → <code>running</code>: <code>container-start</code> or <code>container-run</code><br />
+- → <code>removed</code>: <code>container-remove</code></p>
+<hr />
+<h3 id="removed">Removed<a class="headerlink" href="#removed" title="Permanent link">&para;</a></h3>
+<p><strong>What it means:</strong> Container no longer exists.</p>
+<pre class="codehilite"><code class="language-bash">container-remove my-project
+container-list --all  # Not shown
+</code></pre>
+
+<p><strong>GPU:</strong> Freed immediately<br />
+<strong>Processes:</strong> N/A<br />
+<strong>Workspace:</strong> Files still safe in <code>~/workspace/&lt;project&gt;/</code></p>
+<p><strong>To recreate:</strong> <code>container-create my-project</code></p>
+<hr />
+<h2 id="gpu-hold-timeout">GPU Hold Timeout<a class="headerlink" href="#gpu-hold-timeout" title="Permanent link">&para;</a></h2>
+<p>When you stop a container, the GPU isn't freed immediately.</p>
+<p><strong>Why?</strong> So you can restart quickly without losing your allocation.</p>
+<p><strong>How long?</strong> Check your limits:</p>
+<pre class="codehilite"><code class="language-bash">check-limits
+# Shows: gpu_hold_after_stop: 15m
+</code></pre>
+
+<p><strong>What happens:</strong><br />
+1. <code>container-stop my-project</code> → GPU held<br />
+2. Within 15 minutes: <code>container-start</code> works, same GPU<br />
+3. After 15 minutes: GPU freed automatically</p>
+<p><strong>To free GPU immediately:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-remove my-project
+# Or
+container retire my-project
+</code></pre>
+
+<hr />
+<h2 id="pause-vs-stop">Pause vs Stop<a class="headerlink" href="#pause-vs-stop" title="Permanent link">&para;</a></h2>
+<p>Both pause work, but differently:</p>
+<h3 id="pause-container-pause">Pause (container-pause)<a class="headerlink" href="#pause-container-pause" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">container-pause my-project
+</code></pre>
+
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>Freezes processes in place (SIGSTOP)</li>
+<li>GPU stays allocated (no timeout)</li>
+<li>Memory state preserved</li>
+<li>Processes resume exactly where they left off</li>
 </ul>
+<p><strong>Use for:</strong> Brief breaks, meetings, lunch</p>
+<h3 id="stop-container-stop">Stop (container-stop)<a class="headerlink" href="#stop-container-stop" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">container-stop my-project
+</code></pre>
+
+<ul>
+<li>Terminates all processes</li>
+<li>GPU held temporarily (timeout applies)</li>
+<li>State lost (but files saved)</li>
+<li>Must restart from scratch</li>
+</ul>
+<p><strong>Use for:</strong> Longer breaks, overnight</p>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="common-scenarios">Common Scenarios<a class="headerlink" href="#common-scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="scenario-1-quick-break-15-minutes">Scenario 1: Quick Break (15 minutes)<a class="headerlink" href="#scenario-1-quick-break-15-minutes" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Pause - keeps everything frozen
+container-pause my-project
+
+# Resume
+container-unpause my-project
+container-attach my-project
+</code></pre>
+
+<h3 id="scenario-2-lunch-break-1-hour">Scenario 2: Lunch Break (1 hour)<a class="headerlink" href="#scenario-2-lunch-break-1-hour" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Stop - processes end, GPU held briefly
+exit
+container-stop my-project
+
+# Resume (if within gpu_hold_after_stop)
+container-start my-project
+container-attach my-project
+</code></pre>
+
+<h3 id="scenario-3-done-with-gpu-work">Scenario 3: Done with GPU Work<a class="headerlink" href="#scenario-3-done-with-gpu-work" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Retire - clean up everything
+container retire my-project
+
+# Later when needed - fresh start
+container deploy my-project --open
+</code></pre>
+
+<h3 id="scenario-4-debugging">Scenario 4: Debugging<a class="headerlink" href="#scenario-4-debugging" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Check what state it's in
+container-list --all
+
+# If stuck in &quot;created&quot;
+container-start my-project
+
+# If stuck in &quot;stopped&quot;
+container-start my-project
+# or
+container-remove my-project  # clean slate
+</code></pre>
+
+<hr />
+<h2 id="state-vs-orchestrator-commands">State vs Orchestrator Commands<a class="headerlink" href="#state-vs-orchestrator-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>State Transition</th>
+<th>Orchestrator</th>
+<th>Atomic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>→ created</td>
+<td>N/A</td>
+<td><code>container-create</code></td>
+</tr>
+<tr>
+<td>→ running</td>
+<td><code>container deploy</code></td>
+<td><code>container-start</code></td>
+</tr>
+<tr>
+<td>→ stopped</td>
+<td>N/A</td>
+<td><code>container-stop</code></td>
+</tr>
+<tr>
+<td>→ removed</td>
+<td><code>container retire</code></td>
+<td><code>container-remove</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Orchestrators skip states:</strong><br />
+- <code>container deploy</code> = create + start (skips "created")<br />
+- <code>container retire</code> = stop + remove (skips "stopped")</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="atomic-commands.html">Atomic Commands</a> - Commands for each transition</li>
+<li><a href="cli-flags.html">CLI Flags</a> - Non-interactive usage</li>
+</ul>
           </article>
         </div>
       </div>

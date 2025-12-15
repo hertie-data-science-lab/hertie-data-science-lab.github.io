@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Image Commands - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Reference</a></li><li>Image Commands</li>
           </ol>
         </div>
       </div>
@@ -316,22 +316,219 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="image-commands">Image Commands<a class="headerlink" href="#image-commands" title="Permanent link">&para;</a></h1>
+<p>Commands for Docker image management.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<p>All image commands support these flags:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--help</code></td>
+<td>Quick reference (usage, main options)</td>
+</tr>
+<tr>
+<td><code>--info</code></td>
+<td>Full reference (all options, examples)</td>
+</tr>
+<tr>
+<td><code>--concepts</code></td>
+<td>Pre-run education (what is an image?)</td>
+</tr>
+<tr>
+<td><code>--guided</code></td>
+<td>Interactive learning (explanations during)</td>
+</tr>
+</tbody>
+</table>
+<pre class="codehilite"><code class="language-bash">image-create --concepts   # Learn about images before creating
+image-update --info       # See all update options
+</code></pre>
+
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Build custom image
+image-create my-project
+
+# List your images
+image-list
+
+# Update image (interactive GUI - recommended)
+image-update                  # Select image, add/remove packages
+
+# Rebuild after manual Dockerfile edit (advanced)
+image-update my-project --rebuild
+
+# Delete image
+image-delete my-project
+</code></pre>
+
+<hr />
+<h2 id="image-create">image-create<a class="headerlink" href="#image-create" title="Permanent link">&para;</a></h2>
+<p><strong>Build custom Docker image</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">image-create [project-name] [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>-f, --framework NAME</code> | Base framework (pytorch, tensorflow, jax) |<br />
+| <code>-t, --type TYPE</code> | Use case type: ml, cv, nlp, rl, audio, ts, llm, custom |<br />
+| <code>-p, --packages "pkg1 pkg2"</code> | Additional Python packages |<br />
+| <code>-s, --system "pkg1 pkg2"</code> | System packages via apt |<br />
+| <code>-r, --requirements FILE</code> | Import from requirements.txt |<br />
+| <code>--dockerfile PATH</code> | Use existing Dockerfile (skip creation) |<br />
+| <code>--project-dockerfile</code> | Store Dockerfile in project dir |<br />
+| <code>--no-build</code> | Create Dockerfile only, don't build |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-create                                    # Interactive
+image-create my-project -f pytorch -t cv        # CV project with PyTorch
+image-create nlp-exp -t nlp -p &quot;wandb optuna&quot;   # NLP with extra packages
+image-create my-proj -r ~/workspace/my-proj/requirements.txt  # From requirements
+image-create custom --no-build                  # Just create Dockerfile
+</code></pre>
+
+<p><strong>Use case types:</strong><br />
+- <code>ml</code> - General ML (xgboost, lightgbm, shap, optuna)<br />
+- <code>cv</code> - Computer Vision (timm, ultralytics, kornia)<br />
+- <code>nlp</code> - NLP (transformers, peft, safetensors)<br />
+- <code>rl</code> - Reinforcement Learning (gymnasium, stable-baselines3)<br />
+- <code>audio</code> - Audio/Speech (librosa, soundfile)<br />
+- <code>ts</code> - Time Series (statsmodels, prophet, darts)<br />
+- <code>llm</code> - LLM/GenAI (vllm, bitsandbytes, langchain)<br />
+- <code>custom</code> - Specify packages manually</p>
+<p><strong>Result:</strong> Image tagged as <code>ds01-&lt;user&gt;/&lt;project&gt;:latest</code></p>
+<p><strong>Time:</strong> 5-15 minutes (first build), faster with cached layers</p>
+<hr />
+<h2 id="image-list">image-list<a class="headerlink" href="#image-list" title="Permanent link">&para;</a></h2>
+<p><strong>List your Docker images</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">image-list [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>-a, --all</code> | Show all images (not just yours) |<br />
+| <code>-s, --size</code> | Show image sizes |<br />
+| <code>-d, --detailed</code> | Show detailed info with Dockerfile locations |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-list              # List your images
+image-list --all        # List all images on server
+image-list --detailed   # Show detailed info with Dockerfile locations
+image-list --size       # Include image sizes
+</code></pre>
+
+<p><strong>Example output:</strong></p>
+<pre class="codehilite"><code>REPOSITORY              TAG      SIZE     CREATED
+ds01-alice/my-project   latest   8.2GB    2 days ago
+ds01-alice/experiment   latest   7.9GB    1 week ago
+</code></pre>
+
+<hr />
+<h2 id="image-update">image-update<a class="headerlink" href="#image-update" title="Permanent link">&para;</a></h2>
+<p><strong>Update existing image with package management</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">image-update [project-name] [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--add "pkg1 pkg2"</code> | Add Python packages directly |<br />
+| <code>--add-system "pkg1"</code> | Add system packages via apt |<br />
+| <code>-r, --requirements FILE</code> | Import from requirements.txt |<br />
+| <code>--rebuild</code> | Rebuild image without modifying Dockerfile |<br />
+| <code>--no-cache</code> | Force rebuild without cache |<br />
+| <code>--edit</code> | Edit Dockerfile manually (advanced) |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Recommended: Interactive GUI
+image-update                         # Select image, add/remove packages
+
+# Advanced: After manual Dockerfile edit
+image-update my-project --rebuild    # Rebuild without prompts
+image-update my-project --no-cache   # Force complete rebuild
+image-update my-project --add &quot;wandb optuna&quot;  # Quick add from CLI
+</code></pre>
+
+<p><strong>When to use:</strong><br />
+- <strong>No arguments</strong> (recommended): Interactive GUI to add/remove packages<br />
+- <code>--rebuild</code>: Dockerfile was edited manually, or base image updated<br />
+- <code>--add</code>: Quick package additions from command line</p>
+<p><strong>Note:</strong> Uses existing Dockerfile at <code>~/dockerfiles/&lt;project&gt;.Dockerfile</code> or <code>~/workspace/&lt;project&gt;/Dockerfile</code></p>
+<hr />
+<h2 id="image-delete">image-delete<a class="headerlink" href="#image-delete" title="Permanent link">&para;</a></h2>
+<p><strong>Remove Docker image</strong> (L2 atomic)</p>
+<pre class="codehilite"><code class="language-bash">image-delete [image-name...] [OPTIONS]
+</code></pre>
+
+<p><strong>Options:</strong><br />
+| Option | Description |<br />
+|--------|-------------|<br />
+| <code>--all</code> | Delete all your images (with confirmation) |<br />
+| <code>-f, --force</code> | Force removal (stop/remove containers first) |<br />
+| <code>--keep-dockerfile</code> | Don't delete the associated Dockerfile |<br />
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">image-delete my-project                    # Remove image (with confirmation)
+image-delete img1 img2 img3                # Bulk delete multiple images
+image-delete --all                         # Remove all your images
+image-delete my-project --force            # Force remove (stops containers first)
+image-delete my-project --keep-dockerfile  # Keep Dockerfile for later rebuild
+</code></pre>
+
+<p><strong>Note:</strong> Containers using this image must be removed first (or use --force)</p>
+<hr />
+<h2 id="image-naming-convention">Image Naming Convention<a class="headerlink" href="#image-naming-convention" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>ds01-&lt;username&gt;/&lt;project-name&gt;:latest
+      ↑              ↑           ↑
+      Your user ID   Project     Tag
+</code></pre>
+
+<p><strong>Examples:</strong><br />
+- <code>ds01-alice/thesis:latest</code><br />
+- <code>ds01-bob/experiment-42:latest</code></p>
+<hr />
+<h2 id="image-tagging">Image Tagging<a class="headerlink" href="#image-tagging" title="Permanent link">&para;</a></h2>
+<p>Tag images to save working environments:</p>
+<pre class="codehilite"><code class="language-bash"># Tag current state
+docker tag ds01-alice/project:latest ds01-alice/project:working-v1
+
+# List tags
+docker images ds01-alice/project
+
+# Use specific tag
+container-deploy --image ds01-alice/project:working-v1
+</code></pre>
+
+<hr />
+<h2 id="dockerfile-location">Dockerfile Location<a class="headerlink" href="#dockerfile-location" title="Permanent link">&para;</a></h2>
+<p>Images are built from Dockerfiles at:</p>
+<pre class="codehilite"><code>~/dockerfiles/&lt;project-name&gt;.Dockerfile
+# or
+~/workspace/&lt;project-name&gt;/Dockerfile
+</code></pre>
+
+<p><strong>Recommended:</strong> Use <code>image-update</code> interactive GUI to manage packages.</p>
+<p><strong>Advanced:</strong> Edit Dockerfile directly:</p>
+<pre class="codehilite"><code class="language-bash">vim ~/dockerfiles/my-project.Dockerfile
+image-update my-project --rebuild
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="container-commands.html">Container Commands</a></li>
+<li><a href="../../core-guides/custom-images.html">Custom Images Guide</a></li>
+<li><a href="../../advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

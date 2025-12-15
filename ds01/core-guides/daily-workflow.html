@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Daily Workflow - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Core Guides</a></li><li>Daily Workflow</li>
           </ol>
         </div>
       </div>
@@ -246,7 +246,7 @@
 <li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
-<li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/daily-workflow.html" class="active">Daily Workflow</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -316,22 +316,128 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="daily-workflow">Daily Workflow<a class="headerlink" href="#daily-workflow" title="Permanent link">&para;</a></h1>
+<p>Your typical routine for working with DS01 containers.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="the-core-pattern">The Core Pattern<a class="headerlink" href="#the-core-pattern" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Start your work session
+project launch my-project --open
+
+# ... do your work in the container ...
+
+# End your session
+exit
+container retire my-project
+</code></pre>
+
+<p>That's it. Two commands to start, two to finish.</p>
+<hr />
+<h2 id="starting-your-session">Starting Your Session<a class="headerlink" href="#starting-your-session" title="Permanent link">&para;</a></h2>
+<h3 id="option-1-project-launch-recommended">Option 1: project launch (Recommended)<a class="headerlink" href="#option-1-project-launch-recommended" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">project launch my-project --open
+</code></pre>
+
+<p><strong>Smart:</strong> Checks if image exists, offers to build if needed, then launches.</p>
+<h3 id="option-2-container-deploy-direct">Option 2: container deploy (Direct)<a class="headerlink" href="#option-2-container-deploy-direct" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">container deploy my-project --open
+</code></pre>
+
+<p><strong>Direct:</strong> Requires image to already exist.</p>
+<p><strong>Difference:</strong> Use <code>project launch</code> if you're not sure whether the image exists.</p>
+<hr />
+<h2 id="working-in-your-container">Working in Your Container<a class="headerlink" href="#working-in-your-container" title="Permanent link">&para;</a></h2>
+<p>Once inside your container:</p>
+<pre class="codehilite"><code class="language-bash"># You're at /workspace - your project files
+cd /workspace
+
+# Run Python scripts
+python train.py
+
+# Start Jupyter
+jlab
+
+# Use Git normally
+git status
+git commit -m &quot;progress&quot;
+</code></pre>
+
+<p><strong>Your files are at <code>/workspace</code></strong> - this maps to <code>~/workspace/my-project/</code> on the host.</p>
+<hr />
+<h2 id="ending-your-session">Ending Your Session<a class="headerlink" href="#ending-your-session" title="Permanent link">&para;</a></h2>
+<h3 id="exit-the-container">Exit the container<a class="headerlink" href="#exit-the-container" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">exit
+# or press Ctrl+D
+</code></pre>
+
+<p>The container keeps running in the background.</p>
+<h3 id="choose-what-to-do-next">Choose what to do next<a class="headerlink" href="#choose-what-to-do-next" title="Permanent link">&para;</a></h3>
+<p><strong>Keep running</strong> (default): Container stays active, GPU allocated</p>
+<pre class="codehilite"><code class="language-bash"># Reconnect anytime
+container-attach my-project
+</code></pre>
+
+<p><strong>Retire</strong> (recommended when done): Frees GPU for others</p>
+<pre class="codehilite"><code class="language-bash">container retire my-project
+</code></pre>
+
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start working</td>
+<td><code>project launch my-project --open</code></td>
+</tr>
+<tr>
+<td>Exit container</td>
+<td><code>exit</code> or Ctrl+D</td>
+</tr>
+<tr>
+<td>Reconnect</td>
+<td><code>container-attach my-project</code></td>
+</tr>
+<tr>
+<td>Done for the day</td>
+<td><code>container retire my-project</code></td>
+</tr>
+<tr>
+<td>Check running containers</td>
+<td><code>container-list</code></td>
+</tr>
+<tr>
+<td>Check resource usage</td>
+<td><code>container-stats</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
+<h3 id="save-work-frequently">Save work frequently<a class="headerlink" href="#save-work-frequently" title="Permanent link">&para;</a></h3>
+<p>Files in <code>/workspace</code> persist. Container changes (pip installs) don't.</p>
+<h3 id="add-packages-permanently">Add packages permanently<a class="headerlink" href="#add-packages-permanently" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">image-update my-project --add &quot;wandb optuna&quot;
+container retire my-project
+project launch my-project --open
+</code></pre>
+
+<h3 id="background-mode">Background mode<a class="headerlink" href="#background-mode" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash">project launch my-project --background
+# Access via VS Code Remote or container-attach
+</code></pre>
+
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="launching-containers.html">Launching Containers</a> - Detailed command comparison</li>
+<li><a href="long-running-jobs.html">Long-Running Jobs</a> - Multi-day training</li>
+<li><a href="custom-images.html">Custom Images</a> - Adding packages permanently</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Image Issues - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Troubleshooting</a></li><li>Image Issues</li>
           </ol>
         </div>
       </div>
@@ -310,28 +310,195 @@
 <li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
 <li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
 <li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
-<li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
+<li><a href="troubleshooting/image-issues.html" class="active">Image Issues</a></li>
 </ul>
 </li>
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="image-issues">Image Issues<a class="headerlink" href="#image-issues" title="Permanent link">&para;</a></h1>
+<p>Solutions for Docker image building and package problems.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="image-build-fails-build-fails">Image Build Fails {#build-fails}<a class="headerlink" href="#image-build-fails-build-fails" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ image-create my-project
+Error: Failed to build image
+</code></pre>
+
+<p><strong>Common causes and solutions:</strong></p>
+<h3 id="network-issues">Network Issues<a class="headerlink" href="#network-issues" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Retry build
+image-create my-project
+
+# Check if base image cached
+docker images | grep aime-pytorch
+</code></pre>
+
+<h3 id="package-installation-fails">Package Installation Fails<a class="headerlink" href="#package-installation-fails" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Use interactive GUI to fix packages
+image-update                  # Select image, fix package names/versions
+
+# Or check Dockerfile manually
+cat ~/dockerfiles/my-project.Dockerfile
+vim ~/dockerfiles/my-project.Dockerfile
+image-update my-project --rebuild
+</code></pre>
+
+<h3 id="disk-space">Disk Space<a class="headerlink" href="#disk-space" title="Permanent link">&para;</a></h3>
+<p>Best to notify DSL admin by raising an issue ticket in <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">ds01-hub repo</a>. Most user permissions are restricted so you will not be able to do a full clean of docker except from those files related to you (limited). </p>
+<pre class="codehilite"><code class="language-bash">df -h
+docker system df
+docker system prune  # Free space
+</code></pre>
+
+<h3 id="invalid-dockerfile-syntax">Invalid Dockerfile Syntax<a class="headerlink" href="#invalid-dockerfile-syntax" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># Validate Dockerfile
+docker build --no-cache -f ~/dockerfiles/my-project.Dockerfile . 2&gt;&amp;1 | less
+</code></pre>
+
+<hr />
+<h2 id="package-not-found-package-not-found">Package Not Found {#package-not-found}<a class="headerlink" href="#package-not-found-package-not-found" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-python">ModuleNotFoundError: No module named 'transformers'
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Package not in image<br />
+- Package name typo</p>
+<blockquote>
+<p><strong>Note:</strong> DS01 containers ARE your Python environment - you don't need venv or conda. See <a href="../key-concepts/python-environments.html">Python Environments</a>.</p>
+</blockquote>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check if installed:</strong><br />
+<code>bash
+   pip list | grep transformers</code></p>
+</li>
+<li>
+<p><strong>Temporary install:</strong><br />
+<code>bash
+   pip install transformers</code></p>
+</li>
+<li>
+<p><strong>Permanent fix (add to image):</strong><br />
+<code>bash
+   exit  # Exit container
+   image-update                  # Select image, add package
+   container-retire &lt;project-name&gt;
+   container-deploy &lt;project-name&gt;</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="image-too-large-image-size">Image Too Large {#image-size}<a class="headerlink" href="#image-too-large-image-size" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong><br />
+- Build takes very long<br />
+- "No space left on device"</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check image size:</strong><br />
+<code>bash
+   docker images | grep my-project</code></p>
+</li>
+<li>
+<p><strong>Use .dockerignore:</strong><br />
+<code>bash
+   echo "data/" &gt;&gt; ~/workspace/&lt;my-project&gt;/.dockerignore
+   echo "*.csv" &gt;&gt; ~/workspace/&lt;my-project&gt;/.dockerignore
+   echo "models/" &gt;&gt; ~/workspace/&lt;my-project&gt;/.dockerignore</code></p>
+</li>
+<li>
+<p><strong>Combine RUN commands:</strong><br />
+   ```dockerfile<br />
+   # Bad (creates extra layers)<br />
+   RUN pip install package1<br />
+   RUN pip install package2</p>
+</li>
+</ol>
+<p># Good (single layer)<br />
+   RUN pip install package1 package2<br />
+   ```</p>
+<ol>
+<li><strong>Clean up in same layer:</strong><br />
+<code>dockerfile
+   RUN pip install --no-cache-dir packages &amp;&amp; \
+       apt-get clean &amp;&amp; \
+       rm -rf /var/lib/apt/lists/*</code></li>
+</ol>
+<hr />
+<h2 id="image-wont-update-wont-update">Image Won't Update {#wont-update}<a class="headerlink" href="#image-wont-update-wont-update" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong><br />
+- Changes to Dockerfile not reflected<br />
+- Old packages still installed</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Rebuild without cache:</strong><br />
+<code>bash
+   image-update my-project --no-cache</code></li>
+<li><strong>Recreate container after rebuild:</strong><br />
+<code>bash
+   container-deploy my-project</code></li>
+</ol>
+<hr />
+<h2 id="base-image-not-found-base-not-found">Base Image Not Found {#base-not-found}<a class="headerlink" href="#base-image-not-found-base-not-found" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code>Error: manifest for henrycgbaker/aime-pytorch:2.8.0-cuda12.4-ubuntu22.04 not found
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check available base images:</strong><br />
+<code>bash
+   docker images | grep aime</code></p>
+</li>
+<li>
+<p><strong>Pull base image:</strong><br />
+<code>bash
+   docker pull henrycgbaker/aime-pytorch:2.8.0-cuda12.4-ubuntu22.04</code></p>
+</li>
+<li>
+<p><strong>Use different base image version:</strong><br />
+<code>bash
+   # Edit Dockerfile
+   vim ~/workspace/my-project/Dockerfile
+   # Change FROM line to available image</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="dependency-conflicts-conflicts">Dependency Conflicts {#conflicts}<a class="headerlink" href="#dependency-conflicts-conflicts" title="Permanent link">&para;</a></h2>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code>ERROR: Cannot install package-a and package-b because these package versions have conflicting dependencies
+</code></pre>
+
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Pin specific versions:</strong><br />
+<code>dockerfile
+   RUN pip install transformers==4.30.0 datasets==2.14.0</code></p>
+</li>
+<li>
+<p><strong>Install in order:</strong><br />
+<code>dockerfile
+   RUN pip install torch==2.0.0 &amp;&amp; \
+       pip install transformers</code></p>
+</li>
+<li>
+<p><strong>Create fresh environment:</strong><br />
+<code>dockerfile
+   RUN pip install --upgrade pip &amp;&amp; \
+       pip install package1 package2</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="container-issues.html">Container Issues</a></li>
+<li><a href="../core-guides/custom-images.html">Custom Images Guide</a></li>
+<li><a href="../advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

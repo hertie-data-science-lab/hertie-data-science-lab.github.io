@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Python Environments in Containers - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Key Concepts</a></li><li>Python Environments in Containers</li>
           </ol>
         </div>
       </div>
@@ -281,7 +281,7 @@
 <ul>
 <li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
 <li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
-<li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
+<li><a href="key-concepts/python-environments.html" class="active">Python Environments in Containers</a></li>
 <li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
 </ul>
 </li>
@@ -316,22 +316,192 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="python-environments-in-containers">Python Environments in Containers<a class="headerlink" href="#python-environments-in-containers" title="Permanent link">&para;</a></h1>
+<p><strong>Why you don't need venv/conda in DS01.</strong></p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="the-key-insight">The Key Insight<a class="headerlink" href="#the-key-insight" title="Permanent link">&para;</a></h2>
+<p><strong>DS01 containers ARE your Python environment.</strong></p>
+<p>Each container provides complete isolation - you don't need venv, conda, or virtualenv inside containers.</p>
+<hr />
+<h2 id="containers-vs-virtual-environments">Containers vs Virtual Environments<a class="headerlink" href="#containers-vs-virtual-environments" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Traditional Setup</th>
+<th>DS01 Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create venv/conda env</td>
+<td>Container provides isolation</td>
+</tr>
+<tr>
+<td><code>pip install</code> in venv</td>
+<td>Packages installed at image build time</td>
+</tr>
+<tr>
+<td>Activate environment</td>
+<td>Just select the container's Python</td>
+</tr>
+<tr>
+<td>Manage multiple Python versions</td>
+<td>Each project has its own container/image</td>
+</tr>
+<tr>
+<td>requirements.txt + manual setup</td>
+<td>Dockerfile defines everything</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="what-you-dont-need">What You DON'T Need<a class="headerlink" href="#what-you-dont-need" title="Permanent link">&para;</a></h2>
+<p><strong>Inside DS01 containers, you don't need to:</strong></p>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p><strong>Create virtual environments (<code>python -m venv</code>):</strong> The container itself is your isolated environment. There's no system Python to protect, no other projects to conflict with. Every package you install affects only this container.</p>
+</li>
+<li>
+<p><strong>Use conda environments (<code>conda create</code>):</strong> Conda's main value is managing Python versions and compiled dependencies. Your container already has a specific Python version and pre-compiled CUDA libraries. Adding conda just adds complexity.</p>
+</li>
+<li>
+<p><strong>Worry about environment activation:</strong> No <code>source venv/bin/activate</code>, no <code>conda activate myenv</code>. When you enter a container, you're already in the environment. <code>python</code> just works.</p>
+</li>
+<li>
+<p><strong>Manage multiple Python versions:</strong> Your image specifies the Python version. Different project needs Python 3.10 while another needs 3.11? Different images, different containers. No pyenv, no version conflicts.</p>
+</li>
+<li>
+<p><strong>Deal with PATH issues:</strong> No more "which python am I using?" confusion. The container has one Python at <code>/usr/bin/python</code>. Your packages are in the system site-packages. Everything is where you expect it.</p>
+</li>
 </ul>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="installing-packages">Installing Packages<a class="headerlink" href="#installing-packages" title="Permanent link">&para;</a></h2>
+<h3 id="at-image-build-time-recommended">At Image Build Time (Recommended)<a class="headerlink" href="#at-image-build-time-recommended" title="Permanent link">&para;</a></h3>
+<p>Use the interactive package manager:</p>
+<pre class="codehilite"><code class="language-bash">image-update                  # Select image, add packages
+container-deploy
+</code></pre>
+
+<p><strong>Advanced:</strong> Edit Dockerfile directly:</p>
+<pre class="codehilite"><code class="language-bash">vim ~/workspace/&lt;project-name&gt;/Dockerfile
+# Add: RUN pip install transformers datasets torch
+image-update &lt;project-name&gt; --rebuild
+</code></pre>
+
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>
+<p><strong>Packages persist across container restarts:</strong> When packages are baked into the image, they're there every time you deploy a new container. No reinstalling transformers for the 50th time.</p>
+</li>
+<li>
+<p><strong>Reproducible environment:</strong> Your Dockerfile is a complete specification. Run <code>image-create</code> on any machine with Docker and you get the identical environment - same Python version, same package versions, same CUDA setup.</p>
+</li>
+<li>
+<p><strong>Fast container startup:</strong> Packages are already installed in the image. Container deployment takes 30 seconds, not 10 minutes of <code>pip install</code>. You're working immediately.</p>
+</li>
+</ul>
+<h3 id="at-runtime-temporary">At Runtime (Temporary)<a class="headerlink" href="#at-runtime-temporary" title="Permanent link">&para;</a></h3>
+<p>For quick experiments:</p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+pip install package-name
+</code></pre>
+
+<p>Or in Jupyter notebooks:</p>
+<pre class="codehilite"><code class="language-python"># Use %pip (Jupyter magic), not !pip
+%pip install package-name
+</code></pre>
+
+<blockquote>
+<p><strong>Why <code>%pip</code>?</strong> The <code>%pip</code> magic ensures the running kernel can find newly installed packages. Using <code>!pip</code> may require a kernel restart.</p>
+</blockquote>
+<p><strong>Note:</strong> Runtime installs are lost when container is removed. Add frequently-used packages to your Dockerfile.</p>
+<h2 id="container-retire-offers-you-the-option-to-write-newly-installed-pkgs-back-into-the-image-this-is-only-a-half-way-house-as-the-underlying-dockerfile-remains-unchanged">&gt; <code>container retire</code> offers you the option to write newly-installed pkgs back into the image. This is only a half-way house, as the underlying Dockerfile remains unchanged.<a class="headerlink" href="#container-retire-offers-you-the-option-to-write-newly-installed-pkgs-back-into-the-image-this-is-only-a-half-way-house-as-the-underlying-dockerfile-remains-unchanged" title="Permanent link">&para;</a></h2>
+<h2 id="selecting-python-in-vs-code">Selecting Python in VS Code<a class="headerlink" href="#selecting-python-in-vs-code" title="Permanent link">&para;</a></h2>
+<p>When working with notebooks in VS Code:</p>
+<ol>
+<li>Click "Select Kernel" or the kernel indicator</li>
+<li>Choose "Python Environments"</li>
+<li>Select <code>/usr/bin/python</code></li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> You may see both <code>/usr/bin/python</code> and <code>/bin/python</code> listed - they're identical (symlinks). Either works.</p>
+</blockquote>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="module-not-found-after-pip-install">"Module not found" after pip install<a class="headerlink" href="#module-not-found-after-pip-install" title="Permanent link">&para;</a></h3>
+<p><strong>In Jupyter:</strong><br />
+- If you used <code>!pip install</code>, restart the kernel<br />
+- Better: use <code>%pip install</code> next time</p>
+<p><strong>In terminal:</strong><br />
+- Verify you're inside the container, not on the host<br />
+- Check with <code>which python</code> - should be <code>/usr/bin/python</code></p>
+<h3 id="package-installed-but-not-importable">Package installed but not importable<a class="headerlink" href="#package-installed-but-not-importable" title="Permanent link">&para;</a></h3>
+<p><strong>Check you're in the right environment:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Inside container
+which python    # Should be /usr/bin/python
+pip list | grep &lt;package-name&gt;
+</code></pre>
+
+<h3 id="kernel-wont-connect-vs-code">Kernel won't connect (VS Code)<a class="headerlink" href="#kernel-wont-connect-vs-code" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Reload VS Code window: <code>Ctrl+Shift+P</code> → "Developer: Reload Window"</li>
+<li>Check Jupyter output: <code>Ctrl+Shift+P</code> → "Jupyter: Show Output"</li>
+</ul>
+<hr />
+<h2 id="why-this-approach">Why This Approach?<a class="headerlink" href="#why-this-approach" title="Permanent link">&para;</a></h2>
+<h3 id="industry-standard">Industry Standard<a class="headerlink" href="#industry-standard" title="Permanent link">&para;</a></h3>
+<p>This is how production ML works:</p>
+<ul>
+<li><strong>Docker</strong>: Standard for ML deployment</li>
+<li><strong>Kubernetes</strong>: Containers are the unit of deployment</li>
+<li><strong>Cloud ML</strong>: SageMaker, Vertex AI, etc. use containers</li>
+</ul>
+<h3 id="reproducibility">Reproducibility<a class="headerlink" href="#reproducibility" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-dockerfile"># This Dockerfile IS your environment
+FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+RUN pip install transformers==4.30.0 datasets==2.13.0
+</code></pre>
+
+<p>Share the Dockerfile, anyone can recreate your exact environment.</p>
+<h3 id="isolation">Isolation<a class="headerlink" href="#isolation" title="Permanent link">&para;</a></h3>
+<p>Each project gets its own container:<br />
+- No package conflicts between projects<br />
+- No "it works on my machine" problems<br />
+- Clean separation of concerns</p>
+<hr />
+<h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="per-project-environments">Per-Project Environments<a class="headerlink" href="#per-project-environments" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code>~/workspace/
+├── thesis/
+│   ├── Dockerfile          # PyTorch + transformers
+│   └── ...
+├── course-ml/
+│   ├── Dockerfile          # sklearn + pandas
+│   └── ...
+└── experiment/
+    ├── Dockerfile          # JAX + optax
+    └── ...
+</code></pre>
+
+<p>Each project has its own Dockerfile = its own environment.</p>
+<h3 id="sharing-environments">Sharing Environments<a class="headerlink" href="#sharing-environments" title="Permanent link">&para;</a></h3>
+<p><strong>Same base, different projects:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile"># Both projects can use same base
+FROM aime/pytorch:24.09
+</code></pre>
+
+<p><strong>Exact reproduction:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Share your Dockerfile
+cp ~/workspace/project/Dockerfile ~/shared/
+</code></pre>
+
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../core-guides/custom-environments.html">Custom Environments</a> - Practical how-to</li>
+<li><a href="../advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a> - Advanced patterns</li>
+<li><a href="containers-and-images.html">Containers and Images</a> - Why this works</li>
+</ul>
           </article>
         </div>
       </div>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>VSCode Remote Development - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Core Guides</a></li><li>VSCode Remote Development</li>
           </ol>
         </div>
       </div>
@@ -251,7 +251,7 @@
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
 <li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
-<li><a href="core-guides/vscode-remote.html">VSCode Remote Development</a></li>
+<li><a href="core-guides/vscode-remote.html" class="active">VSCode Remote Development</a></li>
 </ul>
 </li>
 <li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
@@ -316,22 +316,93 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="vscode-remote-development">VSCode Remote Development<a class="headerlink" href="#vscode-remote-development" title="Permanent link">&para;</a></h1>
+<p>Setting up VSCode for remote development on DS01.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>VS Code installed locally</li>
+<li>Remote-SSH extension</li>
+<li>SSH key configured</li>
 </ul>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<h3 id="1-install-extension">1. Install Extension<a class="headerlink" href="#1-install-extension" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Open VS Code</li>
+<li>Extensions → Search "Remote - SSH"</li>
+<li>Install "Remote - SSH" by Microsoft</li>
+</ul>
+<h3 id="2-configure-ssh">2. Configure SSH<a class="headerlink" href="#2-configure-ssh" title="Permanent link">&para;</a></h3>
+<p>First, <a href="../advanced/ssh-setup.html">set up SSH</a> if you haven't already. You need <code>~/.ssh/config</code> with your DS01 connection details configured.</p>
+<h3 id="3-connect">3. Connect<a class="headerlink" href="#3-connect" title="Permanent link">&para;</a></h3>
+<ul>
+<li>VS Code: Command Palette (Cmd+Shift+P or Ctrl+Shift+P)</li>
+<li>"Remote-SSH: Connect to Host"</li>
+<li>Select "ds01"</li>
+</ul>
+<h3 id="4-open-workspace">4. Open Workspace<a class="headerlink" href="#4-open-workspace" title="Permanent link">&para;</a></h3>
+<ul>
+<li>File → Open Folder</li>
+<li>Navigate to <code>/home/your-username/workspace/my-project</code></li>
+</ul>
+<h2 id="working-with-containers">Working with Containers<a class="headerlink" href="#working-with-containers" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>⚠️ Container must be running first.</strong> Start your container via terminal before connecting:<br />
+<code>bash
+ssh ds01
+container-deploy &lt;project-name&gt; --background</code></p>
+</blockquote>
+<p><strong>Option 1: SSH into container</strong></p>
+<p>Add to <code>~/.ssh/config</code>:</p>
+<pre class="codehilite"><code>Host ds01-container
+    HostName 10.1.23.20
+    User &lt;student-id&gt;@students.hertie-school.org
+    RemoteCommand docker exec -it &lt;project-name&gt;._.&lt;user-id&gt; bash
+    RequestTTY yes
+</code></pre>
+
+<p>Replace <code>&lt;project-name&gt;</code> and <code>&lt;user-id&gt;</code> with your actual values (e.g., <code>my-thesis._.12345</code>).</p>
+<p><strong>Option 2: Dev Containers extension</strong></p>
+<ul>
+<li>Install "Dev Containers" extension</li>
+<li>Use attach to running container</li>
+</ul>
+<h2 id="running-notebooks-in-vs-code">Running Notebooks in VS Code<a class="headerlink" href="#running-notebooks-in-vs-code" title="Permanent link">&para;</a></h2>
+<h3 id="selecting-a-kernel">Selecting a Kernel<a class="headerlink" href="#selecting-a-kernel" title="Permanent link">&para;</a></h3>
+<p>When opening a notebook, VS Code prompts you to select a kernel:</p>
+<ol>
+<li>Click "Select Kernel" or the kernel indicator in the top-right</li>
+<li>Choose "Python Environments"</li>
+<li>Select <code>/usr/bin/python</code> (Python 3.10.12)</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> You may see both <code>/usr/bin/python</code> and <code>/bin/python</code> listed - they're identical (symlinks). Either works.</p>
+</blockquote>
+<h3 id="python-environment">Python Environment<a class="headerlink" href="#python-environment" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 containers replace virtual environments</strong> - you don't need venv or conda inside containers.</p>
+<p>For details on installing packages and environment management:<br />
+- → <a href="../key-concepts/python-environments.html">Python Environments in Containers</a></p>
 <hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
+<h3 id="python-extension">Python Extension<a class="headerlink" href="#python-extension" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Install Python extension on remote</li>
+<li>Select interpreter: <code>/usr/bin/python</code></li>
+</ul>
+<h3 id="git-integration">Git Integration<a class="headerlink" href="#git-integration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Works automatically if SSH keys set up</li>
+<li>Can commit/push from VS Code</li>
+</ul>
+<h3 id="port-forwarding">Port Forwarding<a class="headerlink" href="#port-forwarding" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Jupyter running? VS Code auto-forwards ports</li>
+<li>Or manually: Ports tab → Forward Port</li>
+</ul>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li>→ <a href="ssh-setup.html">SSH Setup</a></li>
+<li>→ <a href="../core-guides/daily-workflow.html">Daily Usage Patterns</a></li>
+</ul>
           </article>
         </div>
       </div>

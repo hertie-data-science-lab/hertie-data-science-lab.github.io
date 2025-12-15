@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Industry Parallels - DS01 Documentation</title>
+  <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
+  <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/logo.jpg" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- DS01 Docs Custom Styles -->
+  <style>
+    .docs-container {
+      display: flex;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    .docs-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .docs-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .docs-sidebar > ul > li {
+      margin-bottom: 15px;
+    }
+    .docs-sidebar .section-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      padding: 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .docs-sidebar .section-title a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .docs-sidebar .section-title a:hover {
+      color: #cda45e;
+    }
+    .docs-sidebar ul ul {
+      padding-left: 15px;
+      margin-top: 5px;
+    }
+    .docs-sidebar ul ul li {
+      margin-bottom: 5px;
+    }
+    .docs-sidebar ul ul a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 4px 0;
+    }
+    .docs-sidebar ul ul a:hover,
+    .docs-sidebar ul ul a.active {
+      color: #cda45e;
+    }
+    .docs-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+    .docs-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .docs-content h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #333;
+    }
+    .docs-content pre {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .docs-content code {
+      background: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .docs-content pre code {
+      background: none;
+      padding: 0;
+    }
+    .docs-content table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+    }
+    .docs-content th,
+    .docs-content td {
+      border: 1px solid #dee2e6;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .docs-content th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .docs-content blockquote {
+      border-left: 4px solid #cda45e;
+      padding-left: 20px;
+      margin: 1rem 0;
+      color: #666;
+      font-style: italic;
+    }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 1rem;
+      padding-left: 25px;
+    }
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+    .docs-content a {
+      color: #cda45e;
+    }
+    .docs-content a:hover {
+      color: #d9ba85;
+    }
+    @media (max-width: 991px) {
+      .docs-container {
+        flex-direction: column;
+      }
+      .docs-sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex">
+      <div class="contact-info mr-auto">
+        <i class="icofont-phone"></i> +49 30 2592190 (ext. 252)
+        <span class="d-none d-lg-inline-block"><i class="icofont-clock-time icofont-rotate-180"></i> Mon-Friday: 09:00 AM - 17:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <a href="https://hertie-data-science-lab.github.io/" class="logo mr-auto"><img src="../assets/img/logo.svg" alt="" class="img-fluid"></a>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#about">About</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#work">Work</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#teaching">Teaching</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#student">Student Projects</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#contact">Contact</a></li>
+          <li class="active"><a href="index.html">DS01 Docs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>DS01 Documentation</h2>
+          <ol>
+            <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+            <li><a href="index.html">DS01 Docs</a></li>
+            <li><a href="index.html">Background</a></li><li>Industry Parallels</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="inner-page">
+      <div class="container">
+        <div class="docs-container">
+          <aside class="docs-sidebar">
+            <ul>
+<li><span class="section-title"><a href="index.html">Home</a></span></li>
+<li><span class="section-title"><a href="quickstart.html">Quickstart</a></span></li>
+<li><span class="section-title"><a href="quick-reference.html">Quick Reference</a></span></li>
+<li><span class="section-title"><a href="getting-started/index.html">Getting Started</a></span>
+<ul>
+<li><a href="getting-started/first-container.html">First Container</a></li>
+<li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
+<li><a href="getting-started/help-system.html">Using the Help System</a></li>
+<li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="core-guides/index.html">Core Guides</a></span>
+<ul>
+<li><a href="core-guides/collaboration.html">Collaboration</a></li>
+<li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
+<li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
+<li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
+<li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
+<li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
+<li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
+<li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
+<li><a href="core-guides/vscode-remote.html">VSCode Remote Development</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
+<ul>
+<li><a href="intermediate/atomic-commands.html">Atomic Commands Reference</a></li>
+<li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
+<li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
+<li><a href="intermediate/container-states.html">Container States</a></li>
+<li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
+<li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
+<li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
+<ul>
+<li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
+<li><a href="advanced/docker-direct.html">Docker Direct</a></li>
+<li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
+<li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
+<li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
+<li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
+<li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
+<ul>
+<li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
+<li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
+<li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
+<li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="background/index.html">Background</a></span>
+<ul>
+<li><a href="background/containers-and-docker.html">Containers & Docker</a></li>
+<li><a href="background/ephemeral-philosophy.html">Ephemeral Container Philosophy</a></li>
+<li><a href="background/industry-parallels.html" class="active">Industry Parallels</a></li>
+<li><a href="background/linux-basics.html">Linux Basics</a></li>
+<li><a href="background/resource-management.html">Resource Management</a></li>
+<li><a href="background/servers-and-hpc.html">Servers & High-Performance Computing</a></li>
+<li><a href="background/workspaces-and-persistence.html">Workspaces & Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="reference/index.html">Reference</a></span>
+<ul>
+<li><a href="reference/command-quick-ref.html">Command Quick Reference</a></li>
+<li><a href="reference/command-reference.html">Command Reference</a></li>
+<li><a href="reference/file-locations.html">File Locations</a></li>
+<li><a href="reference/glossary.html">Glossary</a></li>
+<li><a href="reference/troubleshooting.html">Troubleshooting Guide</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
+<ul>
+<li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
+<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
+<li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
+<li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
+</ul>
+</li>
+</ul>
+          </aside>
+          <article class="docs-content">
+            <h1 id="industry-parallels">Industry Parallels<a class="headerlink" href="#industry-parallels" title="Permanent link">&para;</a></h1>
+<p><strong>How DS01 prepares you for AWS, Kubernetes, and production ML.</strong></p>
+<blockquote>
+<p><strong>Part of <a href="index.html">Educational Computing Context</a></strong> - Career-relevant knowledge beyond DS01 basics.</p>
+</blockquote>
+<p>DS01 is designed around industry-standard practices used in production ML systems, cloud platforms, and enterprise software. This guide shows how your DS01 skills transfer to professional work.</p>
+<hr />
+<h2 id="the-big-picture">The Big Picture<a class="headerlink" href="#the-big-picture" title="Permanent link">&para;</a></h2>
+<p><strong>DS01 skills transfer directly to:</strong><br />
+- Cloud platforms (AWS, Google Cloud, Azure)<br />
+- Container orchestration (Kubernetes, Docker Swarm)<br />
+- ML platforms (SageMaker, Vertex AI, Databricks)<br />
+- Production ML systems (MLOps, model serving)<br />
+- Software engineering (microservices, CI/CD)</p>
+<hr />
+<h2 id="core-industry-concepts-in-ds01">Core Industry Concepts in DS01<a class="headerlink" href="#core-industry-concepts-in-ds01" title="Permanent link">&para;</a></h2>
+<h3 id="1-containerisation-docker">1. Containerisation (Docker)<a class="headerlink" href="#1-containerisation-docker" title="Permanent link">&para;</a></h3>
+<p><strong>Industry usage:</strong><br />
+- <strong>Development:</strong> Dev containers, consistent environments<br />
+- <strong>CI/CD:</strong> Build and test in containers<br />
+- <strong>Production:</strong> Deploy applications in containers<br />
+- <strong>ML:</strong> Training jobs, model serving APIs</p>
+<p><strong>DS01 parallel:</strong></p>
+<pre class="codehilite"><code class="language-bash"># DS01
+container-deploy my-project
+
+# AWS Elastic Container Service
+aws ecs run-task --task-definition my-task
+
+# Kubernetes
+kubectl run my-pod --image=my-image
+</code></pre>
+
+<p><strong>Skills you're learning:</strong><br />
+- Docker images and containers<br />
+- Dockerfiles (reproducible environments)<br />
+- Container lifecycle management<br />
+- Volume mounts (persistent storage)<br />
+- Resource limits (CPU, memory, GPU)</p>
+<p><strong>Where you'll use this:</strong><br />
+- <strong>Data Scientist:</strong> Deploy models as containerised APIs<br />
+- <strong>ML Engineer:</strong> Build training pipelines in containers<br />
+- <strong>Software Engineer:</strong> Microservices architecture<br />
+- <strong>DevOps:</strong> Container orchestration</p>
+<hr />
+<h3 id="2-ephemeral-compute">2. Ephemeral Compute<a class="headerlink" href="#2-ephemeral-compute" title="Permanent link">&para;</a></h3>
+<p><strong>Industry principle:</strong> Compute is temporary and cheap, storage is permanent</p>
+<p><strong>DS01:</strong></p>
+<pre class="codehilite"><code class="language-bash">container-deploy my-project  # Spin up compute
+# Do work
+container-retire my-project  # Terminate compute
+# Workspace persists
+</code></pre>
+
+<p><strong>AWS EC2:</strong></p>
+<pre class="codehilite"><code class="language-bash">aws ec2 run-instances        # Launch instance
+# Do work
+aws ec2 terminate-instances  # Stop paying
+# EBS volumes persist
+</code></pre>
+
+<p><strong>Kubernetes:</strong></p>
+<pre class="codehilite"><code class="language-yaml">kind: Job                    # Ephemeral pod
+spec:
+  restartPolicy: Never       # Run once, terminate
+  volumes:
+    - persistentVolumeClaim  # Data persists
+</code></pre>
+
+<hr />
+<h3 id="3-infrastructure-as-code">3. Infrastructure as Code<a class="headerlink" href="#3-infrastructure-as-code" title="Permanent link">&para;</a></h3>
+<p><strong>Industry principle:</strong> Define infrastructure in version-controlled files</p>
+<p><strong>DS01 Dockerfile:</strong></p>
+<pre class="codehilite"><code class="language-dockerfile">FROM henrycgbaker/aime-pytorch:2.8.0-cuda12.4-ubuntu22.04
+WORKDIR /workspace
+RUN pip install transformers datasets accelerate
+EXPOSE 8888
+</code></pre>
+
+<p><strong>This is exactly what you'd use in:</strong><br />
+- AWS ECS task definitions<br />
+- Kubernetes pod specs<br />
+- Google Cloud Run<br />
+- Azure Container Instances</p>
+<p><strong>Benefits:</strong><br />
+- <strong>Reproducible:</strong> Same Dockerfile = same environment<br />
+- <strong>Version controlled:</strong> Track changes in Git<br />
+- <strong>Collaborative:</strong> Share with team<br />
+- <strong>Automated:</strong> CI/CD can rebuild automatically</p>
+<hr />
+<h3 id="4-resource-management-fair-scheduling">4. Resource Management &amp; Fair Scheduling<a class="headerlink" href="#4-resource-management-fair-scheduling" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 quotas:</strong></p>
+<pre class="codehilite"><code class="language-yaml"># config/resource-limits.yaml
+defaults:
+  max_gpus: 2
+  max_cpus: 16
+  memory: 64GB
+  priority: 50
+</code></pre>
+
+<p><strong>Kubernetes equivalent:</strong></p>
+<pre class="codehilite"><code class="language-yaml"># ResourceQuota
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: user-quota
+spec:
+  hard:
+    requests.nvidia.com/gpu: &quot;2&quot;
+    requests.cpu: &quot;16&quot;
+    requests.memory: &quot;64Gi&quot;
+</code></pre>
+
+<p><strong>AWS equivalent:</strong><br />
+- Service quotas (max instances, max vCPUs)<br />
+- Budget alerts<br />
+- Cost allocation tags</p>
+<hr />
+<h3 id="5-separation-of-concerns">5. Separation of Concerns<a class="headerlink" href="#5-separation-of-concerns" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 architecture:</strong></p>
+<pre class="codehilite"><code>├── Compute (Container)     ← Ephemeral, scalable
+├── Storage (Workspace)     ← Persistent, backed up
+├── Images (Environment)    ← Versioned, reproducible
+└── Orchestration (DS01)    ← Scheduling, limits
+</code></pre>
+
+<p><strong>Cloud architecture:</strong></p>
+<pre class="codehilite"><code>├── Compute (EC2, Lambda)   ← Ephemeral, scalable
+├── Storage (S3, EBS)       ← Persistent, backed up
+├── Images (ECR, Artifact Registry) ← Versioned
+└── Orchestration (ECS, K8s) ← Scheduling, auto-scaling
+</code></pre>
+
+<p><strong>Benefits:</strong><br />
+- <strong>Scale independently:</strong> Add storage without changing compute<br />
+- <strong>Cost optimise:</strong> Different tiers for compute vs storage<br />
+- <strong>Resilience:</strong> Compute fails? Recreate. Data always safe.</p>
+<hr />
+<h2 id="real-world-workflow-parallels">Real-World Workflow Parallels<a class="headerlink" href="#real-world-workflow-parallels" title="Permanent link">&para;</a></h2>
+<h3 id="ml-model-training">ML Model Training<a class="headerlink" href="#ml-model-training" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 workflow:</strong></p>
+<pre class="codehilite"><code class="language-bash"># 1. Build environment
+image-create
+
+# 2. Launch training container
+container-deploy training --background
+
+# 3. Monitor progress
+container-stats
+docker logs training._.$(whoami)
+
+# 4. Training complete, free resources
+container-retire training
+
+# 5. Model saved to workspace
+ls ~/workspace/training/models/
+</code></pre>
+
+<p><strong>AWS SageMaker workflow:</strong></p>
+<pre class="codehilite"><code class="language-python"># 1. Define environment
+estimator = PyTorch(
+    image_uri=&quot;pytorch-training-image&quot;,
+    ...
+)
+
+# 2. Launch training job
+estimator.fit(inputs)
+# Job runs on ephemeral instances
+
+# 3. Monitor
+estimator.logs()
+
+# 4. Training complete, instances terminated
+# (automatic)
+
+# 5. Model saved to S3
+model_artifacts = estimator.model_data
+</code></pre>
+
+<p><strong>Same conceptual workflow!</strong></p>
+<hr />
+<h3 id="model-serving-api-deployment">Model Serving (API Deployment)<a class="headerlink" href="#model-serving-api-deployment" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 approach (simplified):</strong></p>
+<pre class="codehilite"><code class="language-bash"># Build image with model serving code
+docker build -t model-api .
+
+# Run API container
+container-deploy model-api --background
+
+# Inside container
+python api.py  # Flask/FastAPI app
+</code></pre>
+
+<p><strong>Production (Kubernetes):</strong></p>
+<pre class="codehilite"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-api
+spec:
+  replicas: 3  # Auto-scaling
+  template:
+    spec:
+      containers:
+      - name: api
+        image: model-api:latest
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+</code></pre>
+
+<hr />
+<h3 id="cicd-pipeline">CI/CD Pipeline<a class="headerlink" href="#cicd-pipeline" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 testing:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Build test environment
+docker build -f test.Dockerfile .
+
+# Run tests in container
+docker run test-image pytest
+</code></pre>
+
+<p><strong>GitHub Actions (Production):</strong></p>
+<pre class="codehilite"><code class="language-yaml">name: Test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: pytorch:2.8.0
+    steps:
+      - uses: actions/checkout@v2
+      - run: pip install -r requirements.txt
+      - run: pytest
+</code></pre>
+
+<p><strong>Same principle:</strong> Isolated test environment, reproducible results</p>
+<hr />
+<h2 id="industry-tools-platforms">Industry Tools &amp; Platforms<a class="headerlink" href="#industry-tools-platforms" title="Permanent link">&para;</a></h2>
+<h3 id="cloud-platforms">Cloud Platforms<a class="headerlink" href="#cloud-platforms" title="Permanent link">&para;</a></h3>
+<p><strong>Amazon Web Services (AWS):</strong><br />
+- <strong>ECS/EKS:</strong> Container orchestration (like DS01 + Kubernetes)<br />
+- <strong>SageMaker:</strong> ML platform (training, serving, monitoring)<br />
+- <strong>EC2 + GPUs:</strong> Elastic compute (on-demand, spot instances)<br />
+- <strong>S3:</strong> Object storage (like persistent workspace)</p>
+<p><strong>Google Cloud Platform (GCP):</strong><br />
+- <strong>GKE:</strong> Kubernetes engine<br />
+- <strong>Vertex AI:</strong> ML platform<br />
+- <strong>Compute Engine + GPUs:</strong> VM instances<br />
+- <strong>Cloud Storage:</strong> Object storage</p>
+<p><strong>Microsoft Azure:</strong><br />
+- <strong>AKS:</strong> Azure Kubernetes Service<br />
+- <strong>Azure ML:</strong> ML platform<br />
+- <strong>Azure VMs + GPUs:</strong> Compute<br />
+- <strong>Blob Storage:</strong> Object storage</p>
+<p><strong>DS01 skills apply to all of them.</strong></p>
+<hr />
+<h3 id="container-orchestration">Container Orchestration<a class="headerlink" href="#container-orchestration" title="Permanent link">&para;</a></h3>
+<p><strong>Kubernetes:</strong><br />
+- Most popular container orchestrator<br />
+- Runs in production at Google, Amazon, Microsoft, etc.<br />
+- Concepts directly map to DS01:<br />
+  - Pods = Containers<br />
+  - PersistentVolumes = Workspace<br />
+  - ResourceQuotas = DS01 limits<br />
+  - Jobs = Ephemeral compute</p>
+<p><strong>Docker Swarm:</strong><br />
+- Simpler orchestrator<br />
+- Good for smaller deployments<br />
+- Docker compose for multi-container apps</p>
+<p><strong>Learning DS01 = Foundation for Kubernetes</strong></p>
+<hr />
+<h3 id="ml-platforms">ML Platforms<a class="headerlink" href="#ml-platforms" title="Permanent link">&para;</a></h3>
+<p><strong>AWS SageMaker:</strong><br />
+- Managed ML platform<br />
+- Notebook instances (like Jupyter containers)<br />
+- Training jobs (ephemeral compute)<br />
+- Model registry (like Docker images)<br />
+- Endpoints (model serving)</p>
+<p><strong>Google Vertex AI:</strong><br />
+- Similar to SageMaker<br />
+- Training jobs in containers<br />
+- Model deployment<br />
+- Feature store</p>
+<p><strong>Databricks:</strong><br />
+- Data + ML platform<br />
+- Notebooks in containers<br />
+- Spark clusters (ephemeral)<br />
+- MLflow integration</p>
+<p><strong>Azure ML:</strong><br />
+- Microsoft's ML platform<br />
+- Compute instances/clusters<br />
+- Training jobs<br />
+- Model deployment</p>
+<p><strong>All use containerisation and ephemeral compute.</strong></p>
+<hr />
+<h3 id="mlops-tools">MLOps Tools<a class="headerlink" href="#mlops-tools" title="Permanent link">&para;</a></h3>
+<p><strong>Experiment Tracking:</strong><br />
+- <strong>Weights &amp; Biases:</strong> Log metrics from containers<br />
+- <strong>MLflow:</strong> Track experiments, models, parameters<br />
+- <strong>TensorBoard:</strong> Visualize training</p>
+<p><strong>Model Serving:</strong><br />
+- <strong>TorchServe:</strong> PyTorch model serving<br />
+- <strong>TensorFlow Serving:</strong> TensorFlow models<br />
+- <strong>Seldon Core:</strong> Multi-framework serving on K8s<br />
+- <strong>BentoML:</strong> Package models as APIs</p>
+<p><strong>Workflow Orchestration:</strong><br />
+- <strong>Airflow:</strong> Data pipeline orchestration<br />
+- <strong>Kubeflow:</strong> ML workflows on Kubernetes<br />
+- <strong>Prefect:</strong> Modern workflow engine</p>
+<p><strong>All deploy workloads in containers.</strong></p>
+<hr />
+<h2 id="best-practices-from-industry">Best Practices from Industry<a class="headerlink" href="#best-practices-from-industry" title="Permanent link">&para;</a></h2>
+<h3 id="1-immutable-infrastructure">1. Immutable Infrastructure<a class="headerlink" href="#1-immutable-infrastructure" title="Permanent link">&para;</a></h3>
+<p><strong>Principle:</strong> Never modify running systems. Replace with new version.</p>
+<p><strong>DS01:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Don't: Modify running container
+container-run my-project
+pip install new-package  # Bad: Not reproducible
+
+# Do: Update image, recreate container
+image-update                  # Add package via interactive GUI
+container-retire my-project
+container-deploy my-project
+</code></pre>
+
+<p><strong>Production equivalent:</strong></p>
+<ul>
+<li>
+<p><strong>Blue/green deployments:</strong> Run two identical environments ("blue" = current, "green" = new). Deploy changes to green, test it, then switch traffic. If something breaks, instantly switch back to blue. You never modify blue while it's serving users.</p>
+</li>
+<li>
+<p><strong>Rolling updates:</strong> Instead of updating all servers at once (risky), update them one-by-one. If server #3 fails after update, stop the rollout - servers #4-10 still run the old version. Users experience zero downtime.</p>
+</li>
+<li>
+<p><strong>No SSH into production:</strong> Never log into a running server to "fix" something. That fix isn't reproducible, isn't tracked, and will vanish when the server restarts. Instead, fix it in code, build a new image, and deploy that image.</p>
+</li>
+</ul>
+<h3 id="2-everything-in-version-control">2. Everything in Version Control<a class="headerlink" href="#2-everything-in-version-control" title="Permanent link">&para;</a></h3>
+<p><strong>DS01:</strong></p>
+<pre class="codehilite"><code class="language-bash">~/workspace/my-project/
+├── .git/               # Code in Git
+├── Dockerfile          # Environment in Git
+├── requirements.txt    # Dependencies in Git
+├── src/                # Source code in Git
+└── README.md           # Documentation in Git
+</code></pre>
+
+<p><strong>Production equivalent:</strong></p>
+<ul>
+<li>
+<p><strong>Application code in Git:</strong> Every line of code is tracked. You can see who changed what, when, and why. You can revert bad changes. Multiple people can work on the same codebase without overwriting each other.</p>
+</li>
+<li>
+<p><strong>Infrastructure as Code (Terraform, CloudFormation):</strong> Your servers, databases, and networks are defined in code files, not clicked together in a web console. Need 10 identical servers? Change <code>count = 10</code> and run <code>terraform apply</code>. The entire infrastructure is reproducible and auditable.</p>
+</li>
+<li>
+<p><strong>CI/CD configs:</strong> Your build and deployment process is also in Git. A <code>.github/workflows/deploy.yml</code> file defines exactly how code goes from commit to production. No manual steps, no tribal knowledge, no "ask Dave how to deploy".</p>
+</li>
+<li>
+<p><strong>Documentation:</strong> READMEs, architecture diagrams, and runbooks live alongside the code. When the code changes, the docs change in the same commit. Documentation that lives in a wiki gets stale; documentation in the repo stays current.</p>
+</li>
+</ul>
+<h3 id="3-observability">3. Observability<a class="headerlink" href="#3-observability" title="Permanent link">&para;</a></h3>
+<p><strong>DS01:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Logs
+docker logs container-name
+
+# Metrics
+container-stats
+
+# GPU monitoring
+nvidia-smi
+</code></pre>
+
+<p><strong>Production:</strong></p>
+<ul>
+<li>
+<p><strong>Logging (ELK stack, CloudWatch):</strong> Every application writes structured logs (JSON, not plain text). These flow to a central system where you can search across thousands of containers: "show me all errors from the payment service in the last hour". ELK = Elasticsearch (storage) + Logstash (processing) + Kibana (visualisation).</p>
+</li>
+<li>
+<p><strong>Metrics (Prometheus, Datadog):</strong> Numeric measurements collected every few seconds: request latency, error rates, CPU usage, queue depth. Displayed on dashboards so you can see trends. "Response time increased 50% after yesterday's deploy" - you'd never spot this in logs.</p>
+</li>
+<li>
+<p><strong>Tracing (Jaeger, X-Ray):</strong> Follow a single request as it travels through multiple services. User clicks "buy" → API gateway → auth service → payment service → inventory service → notification service. Tracing shows you exactly where the 2-second delay is happening.</p>
+</li>
+<li>
+<p><strong>Alerting (PagerDuty, Opsgenie):</strong> Automated systems that wake you up at 3am when something breaks. "Error rate &gt; 5% for 5 minutes" → page the on-call engineer. Connects to your phone, escalates if you don't respond, tracks incident resolution.</p>
+</li>
+</ul>
+<h3 id="4-least-privilege">4. Least Privilege<a class="headerlink" href="#4-least-privilege" title="Permanent link">&para;</a></h3>
+<p><strong>DS01:</strong><br />
+- User namespace isolation (not root on host)<br />
+- Resource limits (can't monopolise)<br />
+- GPU pinning (can't access others' GPUs)</p>
+<p><strong>Production:</strong></p>
+<ul>
+<li>
+<p><strong>IAM roles (minimal permissions):</strong> Your ML training job needs to read from S3 and write to a model registry - nothing else. It can't delete databases, can't access other teams' data, can't spin up Bitcoin miners. Every service gets exactly the permissions it needs and no more.</p>
+</li>
+<li>
+<p><strong>Network policies (limit connectivity):</strong> Your frontend can talk to the API. The API can talk to the database. But the frontend cannot talk directly to the database. Even if an attacker compromises one service, they can't reach everything else.</p>
+</li>
+<li>
+<p><strong>Pod security policies:</strong> Containers can't run as root, can't mount the host filesystem, can't use privileged mode. A compromised container is contained - it can't escape to the host machine or other containers.</p>
+</li>
+<li>
+<p><strong>Secrets management:</strong> Database passwords, API keys, and certificates are never in code or environment variables. They're stored in a vault (HashiCorp Vault, AWS Secrets Manager) and injected at runtime. Secrets are rotated automatically. If someone leaks a config file, they don't get your credentials.</p>
+</li>
+</ul>
+<h3 id="5-cost-optimisation">5. Cost Optimisation<a class="headerlink" href="#5-cost-optimisation" title="Permanent link">&para;</a></h3>
+<p><strong>DS01 equivalent:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Free resources when done
+container-retire my-project
+
+# Use appropriate resources
+# (Don't request max if you need less)
+</code></pre>
+
+<p><strong>Production:</strong></p>
+<ul>
+<li>
+<p><strong>Spot instances (70% savings):</strong> Cloud providers have spare capacity they sell at huge discounts (60-90% off). The catch: they can terminate your instance with 2 minutes notice. Perfect for training jobs - if interrupted, just restart from a checkpoint. Most ML teams use spot for training, on-demand only for serving.</p>
+</li>
+<li>
+<p><strong>Auto-scaling (pay for what you use):</strong> At 3am, your API gets 10 requests/minute - you need 1 server. At 3pm, it gets 10,000 requests/minute - you need 50 servers. Auto-scaling adds/removes servers based on load. You pay for 1 server at night, 50 during peaks, not 50 all the time.</p>
+</li>
+<li>
+<p><strong>Reserved instances (commitment discounts):</strong> If you know you'll need a GPU server for a year, pay upfront for 30-50% off. Like buying a gym membership vs paying per visit. Good for baseline capacity (the minimum you always need), bad for spiky workloads.</p>
+</li>
+<li>
+<p><strong>S3 lifecycle policies (move to cheaper tiers):</strong> Data you access daily stays in "standard" storage ($0.023/GB/month). Data untouched for 30 days moves to "infrequent access" ($0.0125/GB). After 90 days, it moves to "glacier" ($0.004/GB). Old training runs don't need instant access - automatic tiering cuts storage costs 80%+.</p>
+</li>
+</ul>
+<hr />
+<h2 id="bridging-to-production">Bridging to Production<a class="headerlink" href="#bridging-to-production" title="Permanent link">&para;</a></h2>
+<h3 id="from-ds01-to-aws">From DS01 to AWS<a class="headerlink" href="#from-ds01-to-aws" title="Permanent link">&para;</a></h3>
+<p><strong>Training job:</strong></p>
+<pre class="codehilite"><code class="language-bash"># DS01
+container-deploy training --background
+
+# AWS SageMaker
+import sagemaker
+estimator = sagemaker.estimator.Estimator(...)
+estimator.fit()
+</code></pre>
+
+<p><strong>Model serving:</strong></p>
+<pre class="codehilite"><code class="language-bash"># DS01 (simple API)
+container-deploy api
+# Inside: Flask app
+
+# AWS
+# Deploy to SageMaker Endpoint or ECS
+</code></pre>
+
+<p><strong>Skills transfer:</strong><br />
+- Dockerfile → SageMaker image<br />
+- Workspace → S3 bucket<br />
+- container-deploy → boto3 API calls</p>
+<h3 id="from-ds01-to-kubernetes">From DS01 to Kubernetes<a class="headerlink" href="#from-ds01-to-kubernetes" title="Permanent link">&para;</a></h3>
+<p><strong>Single container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># DS01
+container-deploy my-app
+
+# Kubernetes
+kubectl run my-app --image=my-image
+</code></pre>
+
+<p><strong>With resources:</strong></p>
+<pre class="codehilite"><code class="language-bash"># DS01 (configured in YAML)
+# max_gpus: 1, memory: 64GB
+
+# Kubernetes
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: my-app
+    image: my-image
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+        memory: &quot;64Gi&quot;
+</code></pre>
+
+<p><strong>Concepts map directly.</strong></p>
+<hr />
+<h2 id="learning-path-to-production">Learning Path to Production<a class="headerlink" href="#learning-path-to-production" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-ds01-you-are-here">Phase 1: DS01 (You are here)<a class="headerlink" href="#phase-1-ds01-you-are-here" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Learn containerisation</li>
+<li>Practice resource management</li>
+<li>Build reproducible environments</li>
+<li>Understand ephemeral compute</li>
+</ul>
+<h3 id="phase-2-cloud-fundamentals">Phase 2: Cloud Fundamentals<a class="headerlink" href="#phase-2-cloud-fundamentals" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AWS/GCP free tier accounts</li>
+<li>Deploy simple container to ECS/Cloud Run</li>
+<li>Use S3/GCS for storage</li>
+<li>Try SageMaker/Vertex AI free tier</li>
+</ul>
+<h3 id="phase-3-kubernetes">Phase 3: Kubernetes<a class="headerlink" href="#phase-3-kubernetes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Local K8s (minikube, kind)</li>
+<li>Deploy pods, services</li>
+<li>Learn resource management</li>
+<li>Try managed K8s (EKS, GKE)</li>
+</ul>
+<h3 id="phase-4-mlops">Phase 4: MLOps<a class="headerlink" href="#phase-4-mlops" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Experiment tracking (W&amp;B, MLflow)</li>
+<li>Model serving (TorchServe, Seldon)</li>
+<li>CI/CD (GitHub Actions)</li>
+<li>Monitoring (Prometheus, Grafana)</li>
+</ul>
+<h3 id="phase-5-production-scale">Phase 5: Production Scale<a class="headerlink" href="#phase-5-production-scale" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Multi-region deployments</li>
+<li>Auto-scaling</li>
+<li>Cost optimisation</li>
+<li>Security hardening</li>
+</ul>
+<p><strong>DS01 is your foundation for all of this.</strong></p>
+<hr />
+<h2 id="industry-jargon-decoder">Industry Jargon Decoder<a class="headerlink" href="#industry-jargon-decoder" title="Permanent link">&para;</a></h2>
+<p><strong>Terms you'll hear in jobs:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Industry Term</th>
+<th>DS01 Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Container orchestration</td>
+<td>DS01 management layer</td>
+</tr>
+<tr>
+<td>Pod (K8s)</td>
+<td>Container</td>
+</tr>
+<tr>
+<td>Persistent Volume</td>
+<td>Workspace</td>
+</tr>
+<tr>
+<td>Job (K8s)</td>
+<td>Ephemeral container</td>
+</tr>
+<tr>
+<td>Image registry (ECR, GCR)</td>
+<td>Docker images</td>
+</tr>
+<tr>
+<td>Resource quota</td>
+<td>Resource limits YAML</td>
+</tr>
+<tr>
+<td>Node (K8s)</td>
+<td>DS01 server</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Container deploy/retire</td>
+</tr>
+<tr>
+<td>Service mesh</td>
+<td>(Advanced, not in DS01)</td>
+</tr>
+<tr>
+<td>Ingress</td>
+<td>(Network routing, not in DS01)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li>→ <a href="ephemeral-philosophy.html">Ephemeral Containers</a> - Understand the philosophy</li>
+<li>→ <a href="../core-guides/daily-workflow.html">Daily Usage Patterns</a> - Put skills into practice</li>
+</ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <a href="https://hertie-data-science-lab.github.io/"><img src="../assets/img/logo.svg" alt="" title=""></a>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/thehertieschool/" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/thehertieschool" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/thehertieschool/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://www.youtube.com/user/hertieschoolberlin/" class="youtube"><i class="bx bxl-youtube"></i></a>
+                <a href="https://de.linkedin.com/edu/hertie-school-of-governance-153040" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Site Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#about">About Us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#work">Our Work</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#teaching">Our Teaching</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://hertie-school.org/en/" target="_blank">Hertie School</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.hertie-school.org/en/mds" target="_blank">MSc Data Science for Public Policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://civica-data-science.github.io/" target="_blank">CIVICA Data Science Seminar Series</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>DS01 Documentation</h4>
+            <p>User documentation for the Hertie Data Science Lab GPU server.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Hertie School Data Science Lab</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>

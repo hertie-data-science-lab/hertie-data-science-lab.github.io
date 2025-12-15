@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Natural Language Dispatchers - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Reference</a></li><li>Natural Language Dispatchers</li>
           </ol>
         </div>
       </div>
@@ -316,22 +316,295 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="natural-language-dispatchers">Natural Language Dispatchers<a class="headerlink" href="#natural-language-dispatchers" title="Permanent link">&para;</a></h1>
+<p>DS01 supports natural language command syntax using dispatchers.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Instead of hyphenated commands like <code>container-deploy</code>, you can use space-separated syntax:</p>
+<pre class="codehilite"><code class="language-bash">container deploy my-project    # Same as container-deploy my-project
+image create my-project        # Same as image-create my-project
+</code></pre>
+
+<p>Both syntaxes work identically and support all the same options.</p>
+<hr />
+<h2 id="why-both-syntaxes">Why Both Syntaxes?<a class="headerlink" href="#why-both-syntaxes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>container deploy</code></td>
+<td>Typing at terminal (feels natural)</td>
+</tr>
+<tr>
+<td><code>container-deploy</code></td>
+<td>Scripts, tab completion, muscle memory</td>
+</tr>
+</tbody>
+</table>
+<p>Both work identically - use whichever you prefer.</p>
+<hr />
+<h2 id="available-dispatchers">Available Dispatchers<a class="headerlink" href="#available-dispatchers" title="Permanent link">&para;</a></h2>
+<h3 id="container">container<a class="headerlink" href="#container" title="Permanent link">&para;</a></h3>
+<p>Dispatch container lifecycle commands.</p>
+<pre class="codehilite"><code class="language-bash">container &lt;subcommand&gt; [args] [options]
+</code></pre>
+
+<p><strong>Subcommands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploy</code></td>
+<td><code>container-deploy</code></td>
+<td>Create + start container</td>
+</tr>
+<tr>
+<td><code>retire</code></td>
+<td><code>container-retire</code></td>
+<td>Stop + remove + free GPU</td>
+</tr>
+<tr>
+<td><code>create</code></td>
+<td><code>container-create</code></td>
+<td>Create container only</td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td><code>container-start</code></td>
+<td>Start in background</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td><code>container-run</code></td>
+<td>Start and enter</td>
+</tr>
+<tr>
+<td><code>attach</code></td>
+<td><code>container-attach</code></td>
+<td>Attach to running</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td><code>container-stop</code></td>
+<td>Stop container</td>
+</tr>
+<tr>
+<td><code>remove</code></td>
+<td><code>container-remove</code></td>
+<td>Remove container</td>
+</tr>
+<tr>
+<td><code>pause</code></td>
+<td><code>container-pause</code></td>
+<td>Pause processes</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td><code>container-list</code></td>
+<td>List containers</td>
+</tr>
+<tr>
+<td><code>stats</code></td>
+<td><code>container-stats</code></td>
+<td>Resource usage</td>
+</tr>
+<tr>
+<td><code>exit</code></td>
+<td><code>container-exit</code></td>
+<td>Exit info</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td><code>container --help</code></td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">container deploy my-project --open
+container list
+container stats my-project
+container retire my-project --force
+</code></pre>
+
+<hr />
+<h3 id="image">image<a class="headerlink" href="#image" title="Permanent link">&para;</a></h3>
+<p>Dispatch image management commands.</p>
+<pre class="codehilite"><code class="language-bash">image &lt;subcommand&gt; [args] [options]
+</code></pre>
+
+<p><strong>Subcommands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create</code></td>
+<td><code>image-create</code></td>
+<td>Build custom image</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td><code>image-update</code></td>
+<td>Rebuild image</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td><code>image-list</code></td>
+<td>List images</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td><code>image-delete</code></td>
+<td>Remove image</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td><code>image --help</code></td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">image create my-project
+image list
+image update my-project --no-cache
+image update my-project --add &quot;pandas numpy&quot;
+</code></pre>
+
+<hr />
+<h3 id="project">project<a class="headerlink" href="#project" title="Permanent link">&para;</a></h3>
+<p>Dispatch project setup commands.</p>
+<pre class="codehilite"><code class="language-bash">project &lt;subcommand&gt; [args] [options]
+</code></pre>
+
+<p><strong>Subcommands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init</code></td>
+<td><code>project-init</code></td>
+<td>Initialize new project</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td><code>project --help</code></td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">project init my-thesis
+project init my-experiment --guided
+</code></pre>
+
+<hr />
+<h3 id="user">user<a class="headerlink" href="#user" title="Permanent link">&para;</a></h3>
+<p>Dispatch user setup commands.</p>
+<pre class="codehilite"><code class="language-bash">user &lt;subcommand&gt; [args] [options]
+</code></pre>
+
+<p><strong>Subcommands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setup</code></td>
+<td><code>user-setup</code></td>
+<td>Complete onboarding</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td><code>user --help</code></td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">user setup
+user setup --guided
+</code></pre>
+
+<hr />
+<h3 id="check">check<a class="headerlink" href="#check" title="Permanent link">&para;</a></h3>
+<p>Dispatch resource checking commands.</p>
+<pre class="codehilite"><code class="language-bash">check &lt;subcommand&gt; [args]
+</code></pre>
+
+<p><strong>Subcommands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>limits</code></td>
+<td><code>check-limits</code></td>
+<td>Show your resource limits and usage</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td><code>check --help</code></td>
+<td>Show help</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aliases:</strong> <code>get limits</code> also works (routes to same command).</p>
+<p><strong>Examples:</strong></p>
+<pre class="codehilite"><code class="language-bash">check limits           # Show your resource limits and current usage
+check-limits           # Same as above (hyphenated version)
+</code></pre>
+
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<p>Each dispatcher shows available subcommands:</p>
+<pre class="codehilite"><code class="language-bash">container help       # or: container --help
+image help          # or: image --help
+project help        # or: project --help
+user help           # or: user --help
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="container-commands.html">Container Commands</a> - Full container command reference</li>
+<li><a href="image-commands.html">Image Commands</a> - Full image command reference</li>
+<li><a href="project-commands.html">Project Commands</a> - Full project command reference</li>
+<li><a href="system-commands.html">System Commands</a> - System and user setup commands</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

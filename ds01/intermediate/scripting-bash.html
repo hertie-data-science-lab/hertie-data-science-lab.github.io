@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Scripting with Bash - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Intermediate</a></li><li>Scripting with Bash</li>
           </ol>
         </div>
       </div>
@@ -260,7 +260,7 @@
 <li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
 <li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
 <li><a href="intermediate/container-states.html">Container States</a></li>
-<li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
+<li><a href="intermediate/scripting-bash.html" class="active">Scripting with Bash</a></li>
 <li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
 <li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
 </ul>
@@ -316,22 +316,268 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="scripting-with-bash">Scripting with Bash<a class="headerlink" href="#scripting-with-bash" title="Permanent link">&para;</a></h1>
+<p>Automate DS01 workflows with bash scripts.</p>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="why-bash">Why Bash?<a class="headerlink" href="#why-bash" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native to DS01 commands</td>
+<td>Complex string manipulation</td>
+</tr>
+<tr>
+<td>No dependencies</td>
+<td>Error handling is verbose</td>
+</tr>
+<tr>
+<td>Fast for simple tasks</td>
+<td>Harder to debug</td>
+</tr>
+<tr>
+<td>Direct shell integration</td>
+<td>Limited data structures</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Best for:</strong> Simple workflows, quick automation, cron jobs.</p>
+<hr />
+<h2 id="why-script">Why Script?<a class="headerlink" href="#why-script" title="Permanent link">&para;</a></h2>
+<p><strong>Manual (tedious):</strong></p>
+<pre class="codehilite"><code class="language-bash"># Run 10 experiments
+container deploy exp-1 --open
+python train.py --lr=0.001
+exit
+container retire exp-1
+
+container deploy exp-2 --open
+python train.py --lr=0.01
+exit
+container retire exp-2
+# ... 8 more times
+</code></pre>
+
+<p><strong>Scripted (efficient):</strong></p>
+<pre class="codehilite"><code class="language-bash">./run-experiments.sh
+# Runs all 10 automatically
+</code></pre>
+
+<hr />
+<h2 id="basic-script-template">Basic Script Template<a class="headerlink" href="#basic-script-template" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# my-workflow.sh
+
+set -e  # Exit on error
+
+PROJECT=$1
+GPU_COUNT=${2:-1}
+
+# Deploy container
+container-create $PROJECT --gpu=$GPU_COUNT
+container-start $PROJECT
+
+# Run work
+container-attach $PROJECT &lt;&lt;EOF
+cd /workspace/$PROJECT
+python train.py
+exit
+EOF
+
+# Cleanup
+container-stop $PROJECT
+container-remove $PROJECT --force
+
+echo &quot;Done!&quot;
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x my-workflow.sh
+./my-workflow.sh my-thesis 2
+</code></pre>
+
+<hr />
+<h2 id="pattern-1-parallel-experiments">Pattern 1: Parallel Experiments<a class="headerlink" href="#pattern-1-parallel-experiments" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# parallel-experiments.sh
+
+for lr in 0.001 0.01 0.1; do
+  NAME=&quot;exp-lr-$lr&quot;
+
+  container-create $NAME --background
+  container-start $NAME
+
+  docker exec $NAME._.$(id -u) \
+    python /workspace/train.py --lr=$lr &amp;
+done
+
+wait  # Wait for all to finish
+
+# Cleanup
+for lr in 0.001 0.01 0.1; do
+  container-retire &quot;exp-lr-$lr&quot; --force
+done
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x parallel-experiments.sh
+./parallel-experiments.sh
+</code></pre>
+
+<hr />
+<h2 id="pattern-2-sequential-pipeline">Pattern 2: Sequential Pipeline<a class="headerlink" href="#pattern-2-sequential-pipeline" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# ml-pipeline.sh
+
+PROJECT=$1
+
+# Stage 1: Data prep
+container deploy data-prep --open &lt;&lt;EOF
+python preprocess.py
+exit
+EOF
+
+# Stage 2: Training
+container deploy training --gpu=2 --open &lt;&lt;EOF
+python train.py
+exit
+EOF
+
+# Stage 3: Evaluation
+container deploy eval --open &lt;&lt;EOF
+python evaluate.py
+exit
+EOF
+
+# Cleanup
+container retire data-prep --force
+container retire training --force
+container retire eval --force
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x ml-pipeline.sh
+./ml-pipeline.sh my-thesis
+</code></pre>
+
+<hr />
+<h2 id="pattern-3-hyperparameter-grid-search">Pattern 3: Hyperparameter Grid Search<a class="headerlink" href="#pattern-3-hyperparameter-grid-search" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# grid-search.sh
+
+for lr in 0.001 0.01 0.1; do
+  for batch_size in 16 32 64; do
+    NAME=&quot;exp-lr${lr}-bs${batch_size}&quot;
+
+    echo &quot;Running: $NAME&quot;
+
+    container-create $NAME --background
+    container-start $NAME
+
+    docker exec $NAME._.$(id -u) bash -c &quot;
+      cd /workspace/experiments
+      python train.py --lr=$lr --batch-size=$batch_size
+    &quot;
+
+    container-retire $NAME --force
+  done
+done
+</code></pre>
+
+<p><strong>Usage:</strong></p>
+<pre class="codehilite"><code class="language-bash">chmod +x grid-search.sh
+./grid-search.sh
+</code></pre>
+
+<hr />
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+# robust-script.sh
+
+set -e  # Exit on error
+
+PROJECT=$1
+CONTAINER_NAME=&quot;script-$PROJECT&quot;
+
+# Cleanup on exit or error
+cleanup() {
+  echo &quot;Cleaning up...&quot;
+  container-remove $CONTAINER_NAME --stop --force 2&gt;/dev/null || true
+}
+trap cleanup EXIT
+
+# Main workflow
+container-create $CONTAINER_NAME
+container-start $CONTAINER_NAME
+
+docker exec $CONTAINER_NAME._.$(id -u) \
+  python /workspace/train.py
+
+echo &quot;Success!&quot;
+</code></pre>
+
+<hr />
+<h2 id="checking-container-state">Checking Container State<a class="headerlink" href="#checking-container-state" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+
+CONTAINER=$1
+
+# Check if running
+if container-list | grep -q &quot;$CONTAINER.*running&quot;; then
+  echo &quot;Container is running&quot;
+  container-attach $CONTAINER
+else
+  echo &quot;Container not running, creating...&quot;
+  project launch $CONTAINER --open
+fi
+</code></pre>
+
+<hr />
+<h2 id="parsing-json-output">Parsing JSON Output<a class="headerlink" href="#parsing-json-output" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
+
+# Get container info as JSON
+CONTAINERS=$(container-list --format=json)
+
+# Parse with jq
+echo &quot;$CONTAINERS&quot; | jq -r '.[] | select(.gpu_count &gt; 0) | .name'
+
+# Or iterate
+echo &quot;$CONTAINERS&quot; | jq -r '.[].name' | while read container; do
+  echo &quot;Processing $container&quot;
+done
+</code></pre>
+
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Always use <code>set -e</code>:</strong> Without this, bash continues executing after errors. Your script creates a container, the creation fails, but the script still tries to start and attach to a non-existent container - generating confusing cascading errors. With <code>set -e</code>, the script stops at the first failure with a clear error message.</p>
+</li>
+<li>
+<p><strong>Add cleanup traps:</strong> If your script fails mid-execution, you've left a container running and a GPU allocated. Use <code>trap "container-remove $NAME --stop --force 2&gt;/dev/null" EXIT</code> at the start - this runs automatically whether the script succeeds, fails, or is interrupted with Ctrl+C. No orphaned resources.</p>
+</li>
+<li>
+<p><strong>Use <code>--force</code> flags:</strong> DS01 commands prompt for confirmation by default ("Are you sure you want to remove this container?"). Interactive prompts break scripts - they hang waiting for input that never comes. <code>--force</code> skips all confirmations, making commands scriptable.</p>
+</li>
+<li>
+<p><strong>Log progress:</strong> Scripts that run silently for 20 minutes leave you wondering "is it stuck or working?" Add <code>echo "Starting container $NAME..."</code> before significant operations. When something fails at 3am, you'll know exactly which step it was on.</p>
+</li>
+<li>
+<p><strong>Validate inputs:</strong> If your script expects <code>./run.sh my-project 2</code> but someone runs <code>./run.sh</code>, the script will create containers named "" with undefined GPU counts. Check early: <code>[ -z "$1" ] &amp;&amp; echo "Usage: $0 &lt;project&gt; [gpus]" &amp;&amp; exit 1</code>.</p>
+</li>
+</ol>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li><a href="scripting-python.html">Scripting with Python</a> - Alternative approach</li>
+<li><a href="../advanced/">Advanced</a> - Docker-native scripting</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Troubleshooting Guide - DS01 Documentation</title>
+  <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
+  <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/logo.jpg" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- DS01 Docs Custom Styles -->
+  <style>
+    .docs-container {
+      display: flex;
+      gap: 30px;
+      padding: 20px 0;
+    }
+    .docs-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .docs-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .docs-sidebar > ul > li {
+      margin-bottom: 15px;
+    }
+    .docs-sidebar .section-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      padding: 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .docs-sidebar .section-title a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .docs-sidebar .section-title a:hover {
+      color: #cda45e;
+    }
+    .docs-sidebar ul ul {
+      padding-left: 15px;
+      margin-top: 5px;
+    }
+    .docs-sidebar ul ul li {
+      margin-bottom: 5px;
+    }
+    .docs-sidebar ul ul a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      padding: 4px 0;
+    }
+    .docs-sidebar ul ul a:hover,
+    .docs-sidebar ul ul a.active {
+      color: #cda45e;
+    }
+    .docs-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+    .docs-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .docs-content h3 {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #333;
+    }
+    .docs-content pre {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .docs-content code {
+      background: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .docs-content pre code {
+      background: none;
+      padding: 0;
+    }
+    .docs-content table {
+      width: 100%;
+      margin: 1rem 0;
+      border-collapse: collapse;
+    }
+    .docs-content th,
+    .docs-content td {
+      border: 1px solid #dee2e6;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .docs-content th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .docs-content blockquote {
+      border-left: 4px solid #cda45e;
+      padding-left: 20px;
+      margin: 1rem 0;
+      color: #666;
+      font-style: italic;
+    }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 1rem;
+      padding-left: 25px;
+    }
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+    .docs-content a {
+      color: #cda45e;
+    }
+    .docs-content a:hover {
+      color: #d9ba85;
+    }
+    @media (max-width: 991px) {
+      .docs-container {
+        flex-direction: column;
+      }
+      .docs-sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex">
+      <div class="contact-info mr-auto">
+        <i class="icofont-phone"></i> +49 30 2592190 (ext. 252)
+        <span class="d-none d-lg-inline-block"><i class="icofont-clock-time icofont-rotate-180"></i> Mon-Friday: 09:00 AM - 17:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <a href="https://hertie-data-science-lab.github.io/" class="logo mr-auto"><img src="../assets/img/logo.svg" alt="" class="img-fluid"></a>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#about">About</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#work">Work</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#teaching">Teaching</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#student">Student Projects</a></li>
+          <li><a href="https://hertie-data-science-lab.github.io/#contact">Contact</a></li>
+          <li class="active"><a href="index.html">DS01 Docs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>DS01 Documentation</h2>
+          <ol>
+            <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+            <li><a href="index.html">DS01 Docs</a></li>
+            <li><a href="index.html">Reference</a></li><li>Troubleshooting Guide</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="inner-page">
+      <div class="container">
+        <div class="docs-container">
+          <aside class="docs-sidebar">
+            <ul>
+<li><span class="section-title"><a href="index.html">Home</a></span></li>
+<li><span class="section-title"><a href="quickstart.html">Quickstart</a></span></li>
+<li><span class="section-title"><a href="quick-reference.html">Quick Reference</a></span></li>
+<li><span class="section-title"><a href="getting-started/index.html">Getting Started</a></span>
+<ul>
+<li><a href="getting-started/first-container.html">First Container</a></li>
+<li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
+<li><a href="getting-started/help-system.html">Using the Help System</a></li>
+<li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="core-guides/index.html">Core Guides</a></span>
+<ul>
+<li><a href="core-guides/collaboration.html">Collaboration</a></li>
+<li><a href="core-guides/creating-projects.html">Creating Projects</a></li>
+<li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
+<li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
+<li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
+<li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
+<li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
+<li><a href="core-guides/long-running-jobs.html">Long-Running Jobs</a></li>
+<li><a href="core-guides/vscode-remote.html">VSCode Remote Development</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="intermediate/index.html">Intermediate</a></span>
+<ul>
+<li><a href="intermediate/atomic-commands.html">Atomic Commands Reference</a></li>
+<li><a href="intermediate/cli-flags.html">CLI Flags and Efficiency</a></li>
+<li><a href="intermediate/command-hierarchy.html">Command Hierarchy</a></li>
+<li><a href="intermediate/container-states.html">Container States</a></li>
+<li><a href="intermediate/scripting-bash.html">Scripting with Bash</a></li>
+<li><a href="intermediate/scripting-python.html">Scripting with Python</a></li>
+<li><a href="intermediate/shell-aliases.html">Shell Aliases</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="advanced/index.html">Advanced</a></span>
+<ul>
+<li><a href="advanced/batch-jobs.html">Batch Jobs and Non-Interactive Execution</a></li>
+<li><a href="advanced/docker-direct.html">Docker Direct</a></li>
+<li><a href="advanced/dockerfile-complete-guide.html">Complete Dockerfile Guide</a></li>
+<li><a href="advanced/efficiency-tips.html">Efficiency Tips</a></li>
+<li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
+<li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
+<li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
+<li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
+<ul>
+<li><a href="key-concepts/containers-and-images.html">Containers and Images</a></li>
+<li><a href="key-concepts/ephemeral-containers.html">Ephemeral Containers</a></li>
+<li><a href="key-concepts/python-environments.html">Python Environments in Containers</a></li>
+<li><a href="key-concepts/workspaces-persistence.html">Workspaces and Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="background/index.html">Background</a></span>
+<ul>
+<li><a href="background/containers-and-docker.html">Containers & Docker</a></li>
+<li><a href="background/ephemeral-philosophy.html">Ephemeral Container Philosophy</a></li>
+<li><a href="background/industry-parallels.html">Industry Parallels</a></li>
+<li><a href="background/linux-basics.html">Linux Basics</a></li>
+<li><a href="background/resource-management.html">Resource Management</a></li>
+<li><a href="background/servers-and-hpc.html">Servers & High-Performance Computing</a></li>
+<li><a href="background/workspaces-and-persistence.html">Workspaces & Persistence</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="reference/index.html">Reference</a></span>
+<ul>
+<li><a href="reference/command-quick-ref.html">Command Quick Reference</a></li>
+<li><a href="reference/command-reference.html">Command Reference</a></li>
+<li><a href="reference/file-locations.html">File Locations</a></li>
+<li><a href="reference/glossary.html">Glossary</a></li>
+<li><a href="reference/troubleshooting.html" class="active">Troubleshooting Guide</a></li>
+</ul>
+</li>
+<li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
+<ul>
+<li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
+<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
+<li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
+<li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
+</ul>
+</li>
+</ul>
+          </aside>
+          <article class="docs-content">
+            <h1 id="troubleshooting-guide">Troubleshooting Guide<a class="headerlink" href="#troubleshooting-guide" title="Permanent link">&para;</a></h1>
+<p>Common issues and solutions for DS01. Check here before asking for help.</p>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
+</blockquote>
+<hr />
+<h2 id="container-issues">Container Issues<a class="headerlink" href="#container-issues" title="Permanent link">&para;</a></h2>
+<h3 id="no-gpus-available">"No GPUs available"<a class="headerlink" href="#no-gpus-available" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-deploy my-project
+Error: No GPUs available for allocation
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- All GPUs currently allocated<br />
+- System maintenance<br />
+- GPU hardware issues</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check availability:</strong><br />
+<code>bash
+   dashboard
+   # or
+   python3 /opt/ds01-infra/scripts/docker/gpu_allocator.py status</code></p>
+<ol>
+<li>
+<p><strong>Wait for GPU to free up</strong> - Other users may be finishing soon</p>
+</li>
+<li>
+<p><strong>Check for idle containers:</strong><br />
+<code>bash
+   # Retire your idle containers
+   container-list
+   container-retire old-project</code></p>
+</li>
+<li>
+<p><strong>Contact admin</strong> if GPUs show available but allocation fails</p>
+</li>
+</ol>
+<hr />
+<h3 id="container-wont-start">"Container won't start"<a class="headerlink" href="#container-wont-start" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-start my-project
+Error: Container failed to start
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- GPU no longer exists (was reallocated)<br />
+- Resource limits exceeded<br />
+- Container configuration issue</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check container status:</strong><br />
+<code>bash
+   docker ps -a | grep my-project
+   docker logs &lt;project-name&gt;._.$(whoami)</code></p>
+<ol>
+<li>
+<p><strong>Recreate container:</strong><br />
+<code>bash
+   container-remove my-project
+   container-create my-project</code></p>
+</li>
+<li>
+<p><strong>Check resource limits:</strong><br />
+<code>bash
+   check-limits</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="container-stopped-unexpectedly">"Container stopped unexpectedly"<a class="headerlink" href="#container-stopped-unexpectedly" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Container was running, now shows as stopped<br />
+- Processes terminated</p>
+<p><strong>Causes:</strong><br />
+1. <strong>Idle timeout reached</strong> (30min-2h, varies by user)<br />
+2. <strong>Out of memory</strong> (OOM killer)<br />
+3. <strong>Max runtime exceeded</strong><br />
+4. <strong>Code crashed</strong></p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check logs:</strong><br />
+<code>bash
+   docker logs &lt;project-name&gt;._.$(whoami) | tail -100</code></p>
+<ol>
+<li>
+<p><strong>Check for OOM:</strong><br />
+<code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep OOMKilled</code></p>
+</li>
+<li>
+<p><strong>Prevent idle timeout:</strong><br />
+<code>bash
+   touch ~/workspace/&lt;project-name&gt;/.keep-alive</code></p>
+</li>
+</ol>
+<blockquote>
+<p><strong>⚠️ Contact DSL First:</strong> The <code>.keep-alive</code> workaround is available but should be a <strong>last resort</strong> as it can disrupt the system for other users. Please <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">open an issue on DS01 Hub</a> first to find a better solution together.</p>
+</blockquote>
+<ol>
+<li><strong>Restart container:</strong><br />
+<code>bash
+   container-start my-project
+   # or recreate
+   container-retire my-project
+   container-deploy my-project</code></li>
+</ol>
+<hr />
+<h3 id="cant-enter-container">"Can't enter container"<a class="headerlink" href="#cant-enter-container" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-run my-project
+Error: Container not found
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Container was removed<br />
+- Wrong project name<br />
+- Container never created</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>List containers:</strong><br />
+<code>bash
+   container-list --all
+   docker ps -a --filter "name=._.$(whoami)"</code></p>
+<ol>
+<li>
+<p><strong>Recreate if needed:</strong><br />
+<code>bash
+   container-deploy my-project</code></p>
+</li>
+<li>
+<p><strong>Check project name spelling</strong></p>
+</li>
+</ol>
+<hr />
+<h2 id="file-storage-issues">File &amp; Storage Issues<a class="headerlink" href="#file-storage-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-find-my-files">"Can't find my files"<a class="headerlink" href="#cant-find-my-files" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Files missing from container<br />
+- Workspace appears empty</p>
+<p><strong>Causes:</strong><br />
+- Looking in wrong location<br />
+- Files saved outside workspace<br />
+- Permissions issue</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check both locations:</strong><br />
+   ```bash<br />
+   # On host<br />
+   ls ~/workspace/<project-name>/</p>
+<p># In container<br />
+   docker exec <project-name>._.$(whoami) ls /workspace/<br />
+   ```</p>
+<ol>
+<li>
+<p><strong>Verify workspace mount:</strong><br />
+<code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep -A 5 "Mounts"</code></p>
+</li>
+<li>
+<p><strong>Remember the mapping:</strong></p>
+</li>
+<li>Host: <code>~/workspace/&lt;project-name&gt;/</code></li>
+<li>Container: <code>/workspace/</code></li>
+</ol>
+<hr />
+<h3 id="permission-denied-on-files">"Permission denied" on files<a class="headerlink" href="#permission-denied-on-files" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ touch /workspace/file.txt
+Permission denied
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Directory ownership issue<br />
+- Incorrect mount<br />
+- Filesystem full</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check ownership:</strong><br />
+<code>bash
+   ls -ld ~/workspace/&lt;project-name&gt;/
+   # Should be owned by you</code></p>
+<ol>
+<li>
+<p><strong>Fix permissions (on host):</strong><br />
+<code>bash
+   sudo chown -R $(whoami):$(whoami) ~/workspace/&lt;project-name&gt;/</code></p>
+</li>
+<li>
+<p><strong>Check disk space:</strong><br />
+<code>bash
+   df -h | grep home</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="out-of-disk-space">"Out of disk space"<a class="headerlink" href="#out-of-disk-space" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ cp large-file.dat /workspace/
+No space left on device
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Workspace full<br />
+- Docker images consuming space<br />
+- Quota exceeded</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check usage:</strong><br />
+   ```bash<br />
+   # Workspace<br />
+   du -sh ~/workspace/*</p>
+<p># Docker<br />
+   docker system df</p>
+<p># Quota (if enforced)<br />
+   quota -s<br />
+   ```</p>
+<ol>
+<li><strong>Clean up:</strong><br />
+   ```bash<br />
+   # Remove old projects<br />
+   rm -rf ~/workspace/old-project/</li>
+</ol>
+<p># Clean Docker<br />
+   docker image prune<br />
+   docker system prune</p>
+<p># Remove old checkpoints<br />
+   find ~/workspace -name "checkpoint-*.pt" -mtime +30 -delete<br />
+   ```</p>
+<ol>
+<li><strong>Contact admin</strong> if quota too small</li>
+</ol>
+<hr />
+<h2 id="image-issues">Image Issues<a class="headerlink" href="#image-issues" title="Permanent link">&para;</a></h2>
+<h3 id="image-build-fails">"Image build fails"<a class="headerlink" href="#image-build-fails" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ image-create my-project
+Error: Failed to build image
+</code></pre>
+
+<p><strong>Common causes and solutions:</strong></p>
+<p><strong>1. Network issues (downloading base image)</strong></p>
+<pre class="codehilite"><code class="language-bash"># Retry build
+image-create my-project
+
+# Or use cached base
+docker images | grep aime-pytorch
+</code></pre>
+
+<p><strong>2. Package installation fails</strong></p>
+<pre class="codehilite"><code class="language-bash"># Use interactive GUI to fix packages
+image-update                  # Select image, fix package names/versions
+
+# Or check Dockerfile manually
+cat ~/dockerfiles/my-project.Dockerfile
+vim ~/dockerfiles/my-project.Dockerfile
+image-update my-project --rebuild
+</code></pre>
+
+<p><strong>3. Disk space</strong></p>
+<pre class="codehilite"><code class="language-bash">df -h
+docker system df
+docker system prune  # Free space
+</code></pre>
+
+<p><strong>4. Invalid Dockerfile syntax</strong></p>
+<pre class="codehilite"><code class="language-bash"># Validate Dockerfile
+docker build --no-cache -f ~/dockerfiles/my-project.Dockerfile . 2&gt;&amp;1 | less
+</code></pre>
+
+<hr />
+<h3 id="package-not-found-in-container">"Package not found in container"<a class="headerlink" href="#package-not-found-in-container" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ python -c &quot;import transformers&quot;
+ModuleNotFoundError: No module named 'transformers'
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Package not in image<br />
+- Package name typo</p>
+<blockquote>
+<p><strong>Note:</strong> DS01 containers ARE your Python environment - you don't need venv or conda. See <a href="../key-concepts/python-environments.html">Python Environments</a>.</p>
+</blockquote>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check if installed:</strong><br />
+<code>bash
+   pip list | grep transformers</code></p>
+<ol>
+<li>
+<p><strong>Temporary install:</strong><br />
+<code>bash
+   pip install transformers</code></p>
+</li>
+<li>
+<p><strong>Permanent fix (add to image):</strong><br />
+<code>bash
+   exit  # Exit container
+   image-update                  # Select image, add package
+   container-retire &lt;project-name&gt;
+   container-deploy &lt;project-name&gt;</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="gpu-issues">GPU Issues<a class="headerlink" href="#gpu-issues" title="Permanent link">&para;</a></h2>
+<h3 id="nvidia-smi-command-not-found">"nvidia-smi: command not found"<a class="headerlink" href="#nvidia-smi-command-not-found" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ nvidia-smi
+bash: nvidia-smi: command not found
+</code></pre>
+
+<p><strong>Cause:</strong> Not inside container, or container not started with GPU</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Enter container:</strong><br />
+<code>bash
+   container-run my-project
+   nvidia-smi  # Should work now</code></p>
+<ol>
+<li>
+<p><strong>Check GPU allocation:</strong><br />
+<code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep -i gpu</code></p>
+</li>
+<li>
+<p><strong>Recreate container:</strong><br />
+<code>bash
+   container-retire my-project
+   container-deploy my-project</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="cuda-out-of-memory">"CUDA out of memory"<a class="headerlink" href="#cuda-out-of-memory" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">RuntimeError: CUDA out of memory. Tried to allocate X.XX GiB
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Model too large for GPU<br />
+- Batch size too large<br />
+- Memory leak in code</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Reduce batch size:</strong><br />
+<code>python
+   batch_size = 32  # Try 16, 8, or smaller</code></p>
+<ol>
+<li>
+<p><strong>Use gradient accumulation:</strong><br />
+<code>python
+   # Effective batch size = batch_size * accumulation_steps
+   accumulation_steps = 4</code></p>
+</li>
+<li>
+<p><strong>Use mixed precision:</strong><br />
+   ```python<br />
+   from torch.cuda.amp import autocast, GradScaler<br />
+   scaler = GradScaler()</p>
+</li>
+</ol>
+<p>with autocast():<br />
+       output = model(input)<br />
+   ```</p>
+<ol>
+<li>
+<p><strong>Clear cache:</strong><br />
+<code>python
+   import torch
+   torch.cuda.empty_cache()</code></p>
+</li>
+<li>
+<p><strong>Check for memory leaks:</strong><br />
+<code>python
+   # Monitor memory usage
+   print(torch.cuda.memory_summary())</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="gpu-not-showing-in-nvidia-smi">"GPU not showing in nvidia-smi"<a class="headerlink" href="#gpu-not-showing-in-nvidia-smi" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ nvidia-smi
+No devices found
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Not allocated GPU<br />
+- Container created without GPU</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check allocation:</strong><br />
+<code>bash
+   python3 /opt/ds01-infra/scripts/docker/gpu_allocator.py status</code></p>
+<ol>
+<li><strong>Recreate container:</strong><br />
+<code>bash
+   container-retire my-project
+   container-deploy my-project</code></li>
+</ol>
+<hr />
+<h2 id="network-issues">Network Issues<a class="headerlink" href="#network-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-access-jupyter">"Can't access Jupyter"<a class="headerlink" href="#cant-access-jupyter" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Jupyter running but can't access in browser</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check Jupyter is running:</strong><br />
+<code>bash
+   docker exec &lt;project-name&gt;._.$(whoami) ps aux | grep jupyter</code></p>
+<ol>
+<li>
+<p><strong>Check port:</strong><br />
+<code>bash
+   docker port &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Set up SSH tunnel:</strong><br />
+   ```bash<br />
+   # On your laptop<br />
+   ssh -L 8888:localhost:8888 ds01<br />
+   # Without SSH keys: ssh -L 8888:localhost:8888 <student-id>@students.hertie-school.org@10.1.23.20</p>
+</li>
+</ol>
+<p># Then access: http://localhost:8888<br />
+   ```</p>
+<ol>
+<li><strong>Start Jupyter correctly:</strong><br />
+<code>bash
+   jupyter lab --ip=0.0.0.0 --port=8888 --no-browser</code></li>
+</ol>
+<hr />
+<h3 id="cant-download-datasets">"Can't download datasets"<a class="headerlink" href="#cant-download-datasets" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ wget https://example.com/data.zip
+Connection refused
+</code></pre>
+
+<p><strong>Solutions:</strong><br />
+1. <strong>Check network from container:</strong><br />
+<code>bash
+   ping google.com
+   curl https://google.com</code></p>
+<ol>
+<li>
+<p><strong>Check proxy settings</strong> (if your network requires proxy)</p>
+</li>
+<li>
+<p><strong>Try alternative download method:</strong><br />
+   ```bash<br />
+   # Instead of wget<br />
+   curl -O https://example.com/data.zip</p>
+</li>
+</ol>
+<p># Or Python<br />
+   python -c "import urllib.request; urllib.request.urlretrieve('url', 'file')"<br />
+   ```</p>
+<hr />
+<h2 id="permission-issues">Permission Issues<a class="headerlink" href="#permission-issues" title="Permanent link">&para;</a></h2>
+<h3 id="permission-denied-for-docker">"Permission denied" for Docker<a class="headerlink" href="#permission-denied-for-docker" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ docker ps
+Permission denied while trying to connect to the Docker daemon socket
+</code></pre>
+
+<p><strong>Cause:</strong> Not in <code>docker</code> group</p>
+<p><strong>Solution:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Check groups
+groups | grep docker
+
+# If not in docker group, ask admin:
+# sudo usermod -aG docker your-username
+# Then log out and back in
+</code></pre>
+
+<hr />
+<h3 id="permission-denied-for-commands">"Permission denied" for commands<a class="headerlink" href="#permission-denied-for-commands" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-deploy my-project
+bash: container-deploy: Permission denied
+</code></pre>
+
+<p><strong>Causes:</strong><br />
+- Commands not in PATH<br />
+- Commands not executable</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check PATH:</strong><br />
+<code>bash
+   echo $PATH | grep ds01</code></p>
+<ol>
+<li>
+<p><strong>Use full path:</strong><br />
+<code>bash
+   /opt/ds01-infra/scripts/user/container-deploy.sh my-project</code></p>
+</li>
+<li>
+<p><strong>Ask admin to update symlinks:</strong><br />
+<code>bash
+   sudo /opt/ds01-infra/scripts/system/deploy-commands.sh</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="resource-limit-issues">Resource Limit Issues<a class="headerlink" href="#resource-limit-issues" title="Permanent link">&para;</a></h2>
+<h3 id="at-maximum-container-limit">"At maximum container limit"<a class="headerlink" href="#at-maximum-container-limit" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ container-deploy new-project
+Error: Maximum containers reached (3/3)
+</code></pre>
+
+<p><strong>Solution:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Check current containers
+container-list
+
+# Retire unused containers
+container-retire old-project-1
+container-retire old-project-2
+
+# Now can deploy new one
+container-deploy new-project
+</code></pre>
+
+<hr />
+<h3 id="memory-limit-exceeded">"Memory limit exceeded"<a class="headerlink" href="#memory-limit-exceeded" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Container killed<br />
+- OOMKilled in logs</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Check limits:</strong><br />
+<code>bash
+   check-limits
+   # Shows your memory limit and current usage</code></p>
+<ol>
+<li><strong>Reduce memory usage:</strong></li>
+<li>Process data in chunks</li>
+<li>Use data generators</li>
+<li>
+<p>Clear variables when done</p>
+</li>
+<li>
+<p><strong>Request limit increase</strong> (contact admin)</p>
+</li>
+</ol>
+<hr />
+<h2 id="git-issues">Git Issues<a class="headerlink" href="#git-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-push-to-github">"Can't push to GitHub"<a class="headerlink" href="#cant-push-to-github" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre class="codehilite"><code class="language-bash">$ git push
+Permission denied (publickey)
+</code></pre>
+
+<p><strong>Solutions:</strong><br />
+1. <strong>Check SSH key:</strong><br />
+<code>bash
+   ls ~/.ssh/
+   cat ~/.ssh/id_ed25519.pub</code></p>
+<ol>
+<li><strong>Add key to GitHub:</strong></li>
+<li>Copy public key</li>
+<li>
+<p>GitHub → Settings → SSH Keys → Add</p>
+</li>
+<li>
+<p><strong>Test connection:</strong><br />
+<code>bash
+   ssh -T git@github.com</code></p>
+</li>
+<li>
+<p><strong>Use HTTPS instead:</strong><br />
+<code>bash
+   git remote set-url origin https://github.com/user/repo.git</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<h3 id="before-asking-for-help">Before Asking for Help<a class="headerlink" href="#before-asking-for-help" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Check this guide</strong> - Most issues are common</p>
+</li>
+<li>
+<p><strong>Check logs:</strong><br />
+<code>bash
+   docker logs &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Check system status:</strong><br />
+<code>bash
+   dashboard
+   container-list
+   container-stats</code></p>
+</li>
+<li>
+<p><strong>Try recreating:</strong><br />
+<code>bash
+   container-retire my-project
+   container-deploy my-project</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="how-to-ask-for-help">How to Ask for Help<a class="headerlink" href="#how-to-ask-for-help" title="Permanent link">&para;</a></h3>
+<p><strong>Include this information:</strong><br />
+1. <strong>What you tried:</strong><br />
+<code>bash
+   container-deploy my-project</code></p>
+<ol>
+<li>
+<p><strong>Error message:</strong><br />
+<code>Error: No GPUs available</code></p>
+</li>
+<li>
+<p><strong>System state:</strong><br />
+<code>bash
+   container-list
+   check-limits</code></p>
+</li>
+<li>
+<p><strong>Relevant logs:</strong><br />
+<code>bash
+   docker logs &lt;project-name&gt;._.$(whoami) | tail -50</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="contact-points">Contact Points<a class="headerlink" href="#contact-points" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System administrator</strong> - Account issues, quotas, system problems</li>
+<li><strong>Documentation</strong> - This guide, <a href="command-reference.html">Command Reference</a></li>
+<li><strong>Colleagues</strong> - Often have encountered same issues</li>
+</ul>
+<hr />
+<h2 id="preventive-measures">Preventive Measures<a class="headerlink" href="#preventive-measures" title="Permanent link">&para;</a></h2>
+<h3 id="best-practices-to-avoid-issues">Best Practices to Avoid Issues<a class="headerlink" href="#best-practices-to-avoid-issues" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Save frequently to workspace:</strong><br />
+<code>bash
+   # Always work in /workspace (inside container)
+   cd /workspace</code></p>
+</li>
+<li>
+<p><strong>Commit code regularly:</strong><br />
+<code>bash
+   git commit -m "Progress checkpoint"
+   git push</code></p>
+</li>
+<li>
+<p><strong>Retire containers when done:</strong><br />
+<code>bash
+   container-retire my-project</code></p>
+</li>
+<li>
+<p><strong>Monitor resource usage:</strong><br />
+<code>bash
+   container-stats
+   nvidia-smi  # Inside container</code></p>
+</li>
+<li>
+<p><strong>Keep environments updated:</strong><br />
+<code>bash
+   image-update                  # Add packages as needed</code></p>
+</li>
+<li>
+<p><strong>Check limits before starting:</strong><br />
+<code>bash
+   check-limits
+   container-list  # How many running?</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="emergency-recovery">Emergency Recovery<a class="headerlink" href="#emergency-recovery" title="Permanent link">&para;</a></h2>
+<h3 id="i-lost-all-my-work">"I lost all my work!"<a class="headerlink" href="#i-lost-all-my-work" title="Permanent link">&para;</a></h3>
+<p><strong>Don't panic. Check:</strong></p>
+<ol>
+<li>
+<p><strong>Workspace (most likely safe):</strong><br />
+<code>bash
+   ls ~/workspace/&lt;project-name&gt;/</code></p>
+</li>
+<li>
+<p><strong>Git (if you pushed):</strong><br />
+<code>bash
+   cd ~/workspace/my-project
+   git log
+   git pull</code></p>
+</li>
+<li>
+<p><strong>Previous checkpoints:</strong><br />
+<code>bash
+   ls ~/workspace/&lt;project-name&gt;/models/</code></p>
+</li>
+</ol>
+<p><strong>If truly lost:</strong><br />
+- Learn from mistake<br />
+- Implement better backup strategy<br />
+- Use Git religiously going forward</p>
+<hr />
+<h3 id="container-wont-stop">"Container won't stop"<a class="headerlink" href="#container-wont-stop" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- <code>container-stop</code> hangs<br />
+- Container stuck in stopping state</p>
+<p><strong>Solutions:</strong><br />
+1. <strong>Force stop:</strong><br />
+<code>bash
+   docker stop -t 1 &lt;project-name&gt;._.$(whoami)</code></p>
+<ol>
+<li>
+<p><strong>Force kill:</strong><br />
+<code>bash
+   docker kill &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Remove forcefully:</strong><br />
+<code>bash
+   container-remove my-project --force</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="system-seems-broken">"System seems broken"<a class="headerlink" href="#system-seems-broken" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong><br />
+- Multiple commands failing<br />
+- Unusual errors</p>
+<p><strong>Steps:</strong><br />
+1. <strong>Check system status:</strong><br />
+<code>bash
+   dashboard</code></p>
+<ol>
+<li>
+<p><strong>Check your account:</strong><br />
+<code>bash
+   groups
+   quota -s
+   df -h</code></p>
+</li>
+<li>
+<p><strong>Try minimal operation:</strong><br />
+<code>bash
+   docker ps</code></p>
+</li>
+<li>
+<p><strong>Contact administrator</strong> with details</p>
+</li>
+</ol>
+<hr />
+<h2 id="common-error-messages-decoded">Common Error Messages Decoded<a class="headerlink" href="#common-error-messages-decoded" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Meaning</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>No GPUs available</code></td>
+<td>All GPUs allocated</td>
+<td>Wait or retire old containers</td>
+</tr>
+<tr>
+<td><code>OOMKilled</code></td>
+<td>Out of memory</td>
+<td>Reduce memory usage</td>
+</tr>
+<tr>
+<td><code>Permission denied</code></td>
+<td>Not in docker group or file permissions</td>
+<td>Check groups, fix permissions</td>
+</tr>
+<tr>
+<td><code>Container not found</code></td>
+<td>Container removed or wrong name</td>
+<td>Recreate or check name</td>
+</tr>
+<tr>
+<td><code>Image not found</code></td>
+<td>Image doesn't exist</td>
+<td>Build image first</td>
+</tr>
+<tr>
+<td><code>Network unreachable</code></td>
+<td>Network issue</td>
+<td>Check network, retry</td>
+</tr>
+<tr>
+<td><code>Quota exceeded</code></td>
+<td>Hit disk quota</td>
+<td>Clean up old files</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p><strong>Understand the system:</strong><br />
+- → <a href="../background/containers-and-docker.html">Containers Explained</a><br />
+- → <a href="../background/workspaces-and-persistence.html">Workspaces &amp; Persistence</a></p>
+<p><strong>Learn best practices:</strong><br />
+→ <br />
+- → <a href="../core-guides/daily-workflow.html">Daily Usage Patterns</a></p>
+<p><strong>Command reference:</strong><br />
+- → <a href="command-reference.html">Command Reference</a></p>
+<hr />
+<p><strong>Most issues have simple solutions. Check logs, try recreating, and remember: your workspace is always safe!</strong></p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <a href="https://hertie-data-science-lab.github.io/"><img src="../assets/img/logo.svg" alt="" title=""></a>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/thehertieschool/" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/thehertieschool" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/thehertieschool/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://www.youtube.com/user/hertieschoolberlin/" class="youtube"><i class="bx bxl-youtube"></i></a>
+                <a href="https://de.linkedin.com/edu/hertie-school-of-governance-153040" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Site Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#about">About Us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#work">Our Work</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://hertie-data-science-lab.github.io/#teaching">Our Teaching</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://hertie-school.org/en/" target="_blank">Hertie School</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://www.hertie-school.org/en/mds" target="_blank">MSc Data Science for Public Policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="https://civica-data-science.github.io/" target="_blank">CIVICA Data Science Seminar Series</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>DS01 Documentation</h4>
+            <p>User documentation for the Hertie Data Science Lab GPU server.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Hertie School Data Science Lab</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>

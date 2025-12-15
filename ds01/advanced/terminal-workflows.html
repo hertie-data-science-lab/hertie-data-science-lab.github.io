@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Terminal-Native Workflows - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Advanced</a></li><li>Terminal-Native Workflows</li>
           </ol>
         </div>
       </div>
@@ -274,7 +274,7 @@
 <li><a href="advanced/multi-mig-training.html">Multi-MIG Training Guide</a></li>
 <li><a href="advanced/ssh-advanced.html">SSH Advanced</a></li>
 <li><a href="advanced/ssh-setup.html">SSH Setup</a></li>
-<li><a href="advanced/terminal-workflows.html">Terminal-Native Workflows</a></li>
+<li><a href="advanced/terminal-workflows.html" class="active">Terminal-Native Workflows</a></li>
 </ul>
 </li>
 <li><span class="section-title"><a href="key-concepts/index.html">Key Concepts</a></span>
@@ -316,22 +316,193 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
+            <h1 id="terminal-native-workflows">Terminal-Native Workflows<a class="headerlink" href="#terminal-native-workflows" title="Permanent link">&para;</a></h1>
+<p>CLI-focused development patterns for users who prefer terminal over IDE.</p>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(id -u)</code> part auto-substitutes your user ID.</p>
+</blockquote>
 <hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+<h2 id="philosophy">Philosophy<a class="headerlink" href="#philosophy" title="Permanent link">&para;</a></h2>
+<p><strong>Everything via terminal:</strong><br />
+- Edit code: vim/nano<br />
+- Run code: docker exec<br />
+- Debug: logs and print statements<br />
+- Version control: command-line git<br />
+- Sessions: tmux/screen</p>
+<p><strong>No IDE required.</strong></p>
+<hr />
+<h2 id="basic-pattern">Basic Pattern<a class="headerlink" href="#basic-pattern" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash"># Edit code on host
+vim ~/workspace/my-project/train.py
+
+# Run in container (non-interactive)
+docker exec &lt;project-name&gt;._.$(id -u) \
+  python /workspace/train.py
+
+# Check output
+tail -f ~/workspace/my-project/output.log
+</code></pre>
+
+<hr />
+<h2 id="vim-based-development">Vim-Based Development<a class="headerlink" href="#vim-based-development" title="Permanent link">&para;</a></h2>
+<p><strong>Edit on host, run in container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Open project in vim
+cd ~/workspace/my-project
+vim src/model.py
+
+# Test changes
+docker exec &lt;project-name&gt;._.$(id -u) \
+  python /workspace/src/model.py
+
+# Or enter container for interactive testing
+docker exec -it &lt;project-name&gt;._.$(id -u) bash
+&gt;&gt;&gt; python
+&gt;&gt;&gt; from src.model import MyModel
+&gt;&gt;&gt; model = MyModel()
+</code></pre>
+
+<p><strong>Benefits:</strong><br />
+- No IDE overhead<br />
+- Fast editing<br />
+- Works over slow SSH</p>
+<hr />
+<h2 id="tmux-session-management">tmux Session Management<a class="headerlink" href="#tmux-session-management" title="Permanent link">&para;</a></h2>
+<p><strong>Persistent terminal sessions:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Create session
+tmux new -s dev
+
+# Split for editing + running
+Ctrl+B %    # Split vertical
+Ctrl+B &quot;    # Split horizontal
+
+# Left pane: vim
+vim ~/workspace/my-project/train.py
+
+# Right pane: container shell
+docker exec -it &lt;project-name&gt;._.$(id -u) bash
+
+# Detach
+Ctrl+B D
+
+# Reattach later
+tmux attach -s dev
+</code></pre>
+
+<hr />
+<h2 id="non-interactive-execution">Non-Interactive Execution<a class="headerlink" href="#non-interactive-execution" title="Permanent link">&para;</a></h2>
+<p><strong>Run commands without entering container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Single command
+docker exec &lt;project-name&gt;._.$(id -u) \
+  python /workspace/train.py
+
+# Multiple commands
+docker exec &lt;project-name&gt;._.$(id -u) bash -c &quot;
+  cd /workspace
+  python preprocess.py
+  python train.py
+  python evaluate.py
+&quot;
+
+# With environment variables
+docker exec -e CUDA_VISIBLE_DEVICES=0 &lt;project-name&gt;._.$(id -u) \
+  python /workspace/train.py
+</code></pre>
+
+<hr />
+<h2 id="log-monitoring">Log Monitoring<a class="headerlink" href="#log-monitoring" title="Permanent link">&para;</a></h2>
+<p><strong>Follow logs in real-time:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Container logs
+docker logs -f &lt;project-name&gt;._.$(id -u)
+
+# Application logs
+tail -f ~/workspace/my-project/training.log
+
+# With grep filter
+tail -f ~/workspace/my-project/training.log | grep &quot;epoch&quot;
+
+# Multiple logs
+tail -f ~/workspace/my-project/*.log
+</code></pre>
+
+<hr />
+<h2 id="command-line-git">Command-Line Git<a class="headerlink" href="#command-line-git" title="Permanent link">&para;</a></h2>
+<p><strong>Version control without IDE:</strong></p>
+<pre class="codehilite"><code class="language-bash">cd ~/workspace/my-project
+
+# Check status
+git status
+
+# Stage changes
+git add src/model.py
+
+# Commit
+git commit -m &quot;Improve model architecture&quot;
+
+# Push
+git push
+
+# View history
+git log --oneline --graph
+
+# Diff changes
+git diff src/model.py
+</code></pre>
+
+<hr />
+<h2 id="process-management">Process Management<a class="headerlink" href="#process-management" title="Permanent link">&para;</a></h2>
+<p><strong>Background jobs:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Start in background
+docker exec -d &lt;project-name&gt;._.$(id -u) \
+  nohup python /workspace/train.py &gt; /workspace/output.log 2&gt;&amp;1
+
+# Check running processes
+docker exec &lt;project-name&gt;._.$(id -u) ps aux | grep python
+
+# Kill process
+docker exec &lt;project-name&gt;._.$(id -u) pkill -f train.py
+</code></pre>
+
+<hr />
+<h2 id="file-transfer">File Transfer<a class="headerlink" href="#file-transfer" title="Permanent link">&para;</a></h2>
+<p><strong>Copy files between host and container:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Host to container
+docker cp local-file.txt &lt;project-name&gt;._.$(id -u):/workspace/
+
+# Container to host
+docker cp &lt;project-name&gt;._.$(id -u):/workspace/results.txt ~/
+
+# Entire directory
+docker cp ~/data/ &lt;project-name&gt;._.$(id -u):/workspace/data/
+</code></pre>
+
+<p><strong>Usually not needed</strong> - use workspace mount instead.</p>
+<hr />
+<h2 id="shell-aliases">Shell Aliases<a class="headerlink" href="#shell-aliases" title="Permanent link">&para;</a></h2>
+<p><strong>Speed up common tasks:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Add to ~/.bashrc
+alias dex='docker exec -it &lt;project-name&gt;._.$(id -u) bash'
+alias drun='docker exec &lt;project-name&gt;._.$(id -u)'
+alias dlogs='docker logs -f &lt;project-name&gt;._.$(id -u)'
+
+# Usage
+dex                           # Enter container
+drun python /workspace/train.py   # Run command
+dlogs                         # Follow logs
+</code></pre>
+
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p>→ <a href="docker-direct.html">Docker Direct</a> - Docker command reference</p>
+</li>
+<li>
+<p>→ <a href="batch-jobs.html">Batch Jobs</a> - Long-running jobs</p>
+</li>
+<li>
+<p>→ <a href="ssh-advanced.html">SSH Advanced</a> - Remote access</p>
+</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
           </article>
         </div>
       </div>

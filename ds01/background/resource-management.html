@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Reference - DS01 Documentation</title>
+  <title>Resource Management - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li>Reference</li>
+            <li><a href="index.html">Background</a></li><li>Resource Management</li>
           </ol>
         </div>
       </div>
@@ -291,7 +291,7 @@
 <li><a href="background/ephemeral-philosophy.html">Ephemeral Container Philosophy</a></li>
 <li><a href="background/industry-parallels.html">Industry Parallels</a></li>
 <li><a href="background/linux-basics.html">Linux Basics</a></li>
-<li><a href="background/resource-management.html">Resource Management</a></li>
+<li><a href="background/resource-management.html" class="active">Resource Management</a></li>
 <li><a href="background/servers-and-hpc.html">Servers & High-Performance Computing</a></li>
 <li><a href="background/workspaces-and-persistence.html">Workspaces & Persistence</a></li>
 </ul>
@@ -316,22 +316,78 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h1>
-<p>Quick lookup documentation for commands, limits, and system details.</p>
-<hr />
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>Organised by category:<br />
-- <a href="commands/container-commands.html">Container Commands</a> - deploy, retire, list, stats, etc.<br />
-- <a href="commands/image-commands.html">Image Commands</a> - create, list, update, delete<br />
-- <a href="commands/project-commands.html">Project Commands</a> - project-init, dir-create, etc.<br />
-- <a href="commands/system-commands.html">System Commands</a> - dashboard, health-check</p>
-<h2 id="system-reference">System Reference<a class="headerlink" href="#system-reference" title="Permanent link">&para;</a></h2>
+            <h1 id="resource-management">Resource Management<a class="headerlink" href="#resource-management" title="Permanent link">&para;</a></h1>
+<p><strong>Understanding quotas, fair sharing, and resource allocation in shared computing.</strong></p>
+<blockquote>
+<p><strong>Part of <a href="index.html">Educational Computing Context</a></strong> - Career-relevant knowledge beyond DS01 basics.</p>
+</blockquote>
+<p>Resource management is a core concept in cloud computing, HPC, and multi-tenant systems. This guide explains DS01's resource allocation and how these patterns apply to production systems.</p>
+<h2 id="your-resource-limits">Your Resource Limits<a class="headerlink" href="#your-resource-limits" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code class="language-bash">check-limits
+</code></pre>
+
+<p>This command shows your current limits and resource usage. Typical limits:<br />
+- Max GPUs: 1-2<br />
+- Max Containers: 2-3<br />
+- Memory: 32-128GB per container<br />
+- Idle Timeout: 30min-2h (varies by user)<br />
+- Max Runtime: 24h-72h (varies by user)</p>
+<h2 id="how-limits-work">How Limits Work<a class="headerlink" href="#how-limits-work" title="Permanent link">&para;</a></h2>
+<p><strong>Per-user limits prevent:</strong></p>
 <ul>
-<li><a href="file-locations.html">File Locations</a> - Where things are stored</li>
-<li><a href="glossary.html">Glossary</a> - Key terms defined</li>
+<li>
+<p><strong>One user monopolising all GPUs:</strong> Without limits, a user could grab all available GPUs. Everyone else waits indefinitely. Per-user caps (typically 1-2 GPUs) ensure resources are distributed across users.</p>
+</li>
+<li>
+<p><strong>Resource exhaustion:</strong> A single runaway process could consume all system memory, crashing everyone's containers. Memory limits per container (cgroups) mean your container gets OOM-killed before it affects others.</p>
+</li>
+<li>
+<p><strong>Unfair allocation:</strong> Users who request resources but don't use them (idle containers) block others. Idle timeouts automatically reclaim unused allocations, ensuring active users get priority over idle ones.</p>
+</li>
 </ul>
-<hr />
-<p>For detailed options, see the command pages or run <code>&lt;command&gt; --help</code>.</p>
+<p><strong>System enforcement:</strong></p>
+<ul>
+<li>
+<p><strong>GPU allocation (gpu_allocator.py):</strong> When you request a container, the allocator checks your current usage against your limits. Already at your GPU cap? Request denied. The allocator also tracks which physical GPU (or MIG slice) each container uses.</p>
+</li>
+<li>
+<p><strong>Memory limits (systemd cgroups):</strong> Every container runs inside a cgroup with hard memory limits. Request 64GB, use 65GB = OOM killer terminates your process. This isn't punitive - it's protecting other users' containers from your memory leak.</p>
+</li>
+<li>
+<p><strong>Automatic cleanup (cron jobs):</strong> Background jobs check for idle containers (low CPU/GPU usage for extended periods) and containers exceeding max runtime. These get warnings, then automatic shutdown. Freed resources become available to waiting users.</p>
+</li>
+</ul>
+<h2 id="priority-system">Priority System<a class="headerlink" href="#priority-system" title="Permanent link">&para;</a></h2>
+<p><strong>Priority levels (1-100):</strong><br />
+- Default users: 50<br />
+- Power users: 75<br />
+- Admins: 100</p>
+<p><strong>Higher priority means:</strong></p>
+<ul>
+<li>
+<p><strong>Allocated GPUs first when scarce:</strong> If 3 users request GPUs simultaneously and only 2 are available, higher-priority users get them first. Lower-priority users queue until resources free up.</p>
+</li>
+<li>
+<p><strong>May pre-empt lower priority (rarely):</strong> In extreme cases, a high-priority job can terminate a lower-priority idle container to claim its GPU. This is rare - DS01 prefers waiting to pre-emption. But it means admin maintenance tasks can always run.</p>
+</li>
+</ul>
+<h2 id="resource-efficiency">Resource Efficiency<a class="headerlink" href="#resource-efficiency" title="Permanent link">&para;</a></h2>
+<p><strong>Be a good citizen:</strong></p>
+<pre class="codehilite"><code class="language-bash"># Done working? Free GPU
+container-retire my-project
+
+# Idle for lunch? Retire
+container-retire my-project
+
+# Switching projects? Retire
+container-retire old-project
+container-deploy new-project
+</code></pre>
+
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li>→ <a href="ephemeral-containers.html">Ephemeral Containers</a></li>
+</ul>
           </article>
         </div>
       </div>
