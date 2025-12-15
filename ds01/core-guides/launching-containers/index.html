@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/core-guides/launching-containers/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Launching Containers - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Launching Containers";
+        var mkdocs_page_input_path = "core-guides/launching-containers.md";
+        var mkdocs_page_url = "/ds01/core-guides/launching-containers/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Launching Containers</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="launching-containers">Launching Containers<a class="headerlink" href="#launching-containers" title="Permanent link">&para;</a></h1>
+<p>Understand when to use <code>project launch</code> vs <code>container deploy</code> and other container commands.</p>
+<hr />
+<h2 id="quick-answer">Quick Answer<a class="headerlink" href="#quick-answer" title="Permanent link">&para;</a></h2>
+<p><strong>Most of the time, use:</strong></p>
+<pre><code class="language-bash">project launch my-project --open
+</code></pre>
+<p>This is smart: checks if image exists, offers to build if needed, then launches.</p>
+<hr />
+<h2 id="the-two-main-commands">The Two Main Commands<a class="headerlink" href="#the-two-main-commands" title="Permanent link">&para;</a></h2>
+<h3 id="project-launch-smart-launcher-recommended"><code>project launch</code> - Smart Launcher (Recommended)<a class="headerlink" href="#project-launch-smart-launcher-recommended" title="Permanent link">&para;</a></h3>
+<p><strong>What it does:</strong>
+1. Checks if project image exists
+2. If missing, offers to build it
+3. Creates container
+4. Starts container
+5. Optionally opens terminal</p>
+<p><strong>When to use:</strong> Daily workflow, any time you want to work.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash"># Smart - handles everything
+project launch my-thesis --open
+
+# Also works
+project launch   # Interactive project selection
+</code></pre>
+<ul>
+<li>Beginner-friendly</li>
+<li>Handles missing images</li>
+<li>One command to start working</li>
+<li>Matches "launch a project" mental model</li>
+</ul>
+<h3 id="container-deploy-direct-deploy"><code>container deploy</code> - Direct Deploy<a class="headerlink" href="#container-deploy-direct-deploy" title="Permanent link">&para;</a></h3>
+<p><strong>What it does:</strong>
+1. Creates container from existing image
+2. Starts container
+3. Optionally opens terminal</p>
+<p><strong>When to use:</strong>
+- Image already exists
+- You want fine-grained control
+- Deploying AIME base images (not custom projects)</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash"># Requires image to exist
+container deploy my-thesis --open
+
+# Interactive selection
+container deploy
+</code></pre>
+<ul>
+<li>Faster (no image check)</li>
+<li>Works with AIME base images</li>
+<li>Direct control</li>
+</ul>
+<p><strong>Limitation:</strong> Fails if image doesn't exist.</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>project launch</code></th>
+<th><code>container deploy</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Checks image exists</strong></td>
+<td>✓ Yes</td>
+<td>✗ No</td>
+</tr>
+<tr>
+<td><strong>Offers to build image</strong></td>
+<td>✓ Yes</td>
+<td>✗ No</td>
+</tr>
+<tr>
+<td><strong>Works with custom projects</strong></td>
+<td>✓ Yes</td>
+<td>✓ Yes</td>
+</tr>
+<tr>
+<td><strong>Works with AIME base images</strong></td>
+<td>Limited</td>
+<td>✓ Yes</td>
+</tr>
+<tr>
+<td><strong>Reads pyproject.toml</strong></td>
+<td>✓ Yes</td>
+<td>✗ No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="all-container-commands">All Container Commands<a class="headerlink" href="#all-container-commands" title="Permanent link">&para;</a></h2>
+<p>Under the hood there are additional levels of control available.</p>
+<h3 id="creation-starting">Creation &amp; Starting<a class="headerlink" href="#creation-starting" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># L3 Orchestrators (Multi-step)
+project launch &lt;project&gt;       # Smart: check + build + create + start
+container deploy &lt;name&gt;        # Direct: create + start
+
+# L2 Atomic (Single-step) - Advanced
+container-create &lt;name&gt;        # Create only (not started)
+container-start &lt;name&gt;         # Start existing stopped container
+container-run &lt;name&gt;           # Start and enter terminal
+
+# L1 Docker (Direct) - Expert
+docker run ...                 # Raw Docker commands (still enforced by cgroups)
+docker start &lt;container&gt;       # Start stopped container
+docker exec -it &lt;container&gt; bash  # Enter running container
+</code></pre>
+<h3 id="connecting-to-running-containers">Connecting to Running Containers<a class="headerlink" href="#connecting-to-running-containers" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">container-attach &lt;name&gt;        # Connect to running container
+</code></pre>
+<p><strong>Note:</strong> <code>container-attach</code> only works with <strong>running</strong> containers. Use <code>container deploy</code> if container doesn't exist.</p>
+<h3 id="stopping-removing">Stopping &amp; Removing<a class="headerlink" href="#stopping-removing" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># L3 Orchestrator
+container retire &lt;name&gt;        # Stop + remove + free GPU
+
+# L2 Atomic - Advanced
+container-stop &lt;name&gt;          # Stop only (holds GPU briefly)
+container-remove &lt;name&gt;        # Remove only
+
+# L1 Docker (Direct) - Expert
+docker stop &lt;container&gt;        # Stop container
+docker rm &lt;container&gt;          # Remove container
+</code></pre>
+<h3 id="information">Information<a class="headerlink" href="#information" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">container-list                 # List your containers
+container-stats                # Resource usage
+</code></pre>
+<hr />
+<h2 id="interactive-mode">Interactive Mode<a class="headerlink" href="#interactive-mode" title="Permanent link">&para;</a></h2>
+<p><strong>All main commands work without arguments:</strong></p>
+<pre><code class="language-bash"># These open friendly menus
+project launch
+container deploy
+container-attach
+container retire
+</code></pre>
+<p><strong>Example: <code>project launch</code></strong></p>
+<pre><code>Select a project to launch:
+
+  1) my-thesis          (PyTorch 2.8.0)
+  2) research-2024      (TensorFlow 2.16.1)
+  3) experiments        (JAX 0.4.23)
+
+Choice [1-3]: _
+</code></pre>
+<p><strong>Beginner-friendly:</strong> No need to remember project names.</p>
+<hr />
+<h2 id="flags-options">Flags &amp; Options<a class="headerlink" href="#flags-options" title="Permanent link">&para;</a></h2>
+<h3 id="project-launch-options"><code>project launch</code> Options<a class="headerlink" href="#project-launch-options" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">project launch &lt;name&gt; [options]
+
+Options:
+  --open              Create and open terminal (default)
+  --background        Create but do not open terminal
+  --rebuild           Force rebuild image even if exists
+  --guided            Show explanations
+  -h, --help          Show help
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Most common
+project launch my-thesis --open
+
+# Background startup
+project launch my-thesis --background
+
+# Force rebuild image
+project launch my-thesis --rebuild
+</code></pre>
+<h3 id="container-deploy-options"><code>container deploy</code> Options<a class="headerlink" href="#container-deploy-options" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">container deploy &lt;name&gt; [options]
+
+Options:
+  --open              Deploy and open terminal (default)
+  --background        Deploy but do not open terminal
+  --project=&lt;name&gt;    Use specific project workspace
+  --image=&lt;name&gt;      Use specific Docker image
+  --guided            Show explanations
+  -h, --help          Show help
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Standard deploy
+container deploy my-project --open
+
+# Background
+container deploy my-project --background
+
+# Custom image
+container deploy test --image=aime/pytorch:2.8.0
+</code></pre>
+<h3 id="container-retire-options"><code>container retire</code> Options<a class="headerlink" href="#container-retire-options" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">container retire &lt;name&gt; [options]
+
+Options:
+  --force             Skip confirmations
+  --keep-image        Don't offer to remove image
+  --guided            Show explanations
+  -h, --help          Show help
+</code></pre>
+<hr />
+<h2 id="advanced-l2-atomic-commands">Advanced: L2 Atomic Commands<a class="headerlink" href="#advanced-l2-atomic-commands" title="Permanent link">&para;</a></h2>
+<p><strong>Most users don't need these</strong> - <code>project launch</code> and <code>container retire</code> cover daily workflow.</p>
+<p><strong>Use atomic commands when:</strong>
+- You need granular control
+- Building scripts/automation
+- Debugging issues</p>
+<h3 id="creating-without-starting">Creating Without Starting<a class="headerlink" href="#creating-without-starting" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Create container (not started)
+container-create my-project
+
+# Later: start it
+container-start my-project
+
+# Or: start and enter
+container-run my-project
+</code></pre>
+<p><strong>Workflow:</strong></p>
+<pre><code>container-create  → Container exists but stopped
+container-start   → Container running in background
+container-attach  → Connect to running container
+</code></pre>
+<h3 id="stopping-without-removing">Stopping Without Removing<a class="headerlink" href="#stopping-without-removing" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Stop container (keeps container, holds GPU briefly)
+container-stop my-project
+
+# Later: restart
+container-start my-project
+</code></pre>
+<p><strong>Note:</strong> DS01 encourages ephemeral containers - <code>container retire</code> (stop + remove) is preferred.</p>
+<hr />
+<h2 id="expert-l1-docker-commands">Expert: L1 Docker Commands<a class="headerlink" href="#expert-l1-docker-commands" title="Permanent link">&para;</a></h2>
+<p><strong>For advanced users</strong> - direct Docker access, still subject to DS01 resource enforcement (cgroups, OPA).</p>
+<pre><code class="language-bash"># Create and run container
+docker run -d --name my-container --gpus device=0 my-image
+
+# Start/stop existing container
+docker start my-container
+docker stop my-container
+
+# Enter running container
+docker exec -it my-container bash
+
+# Remove container
+docker rm my-container
+
+# List containers
+docker ps -a
+</code></pre>
+<p><strong>Note:</strong> DS01 wrapper (<code>/usr/local/bin/docker</code>) automatically injects cgroup limits and labels.</p>
+<hr />
+<h2 id="understanding-container-states">Understanding Container States<a class="headerlink" href="#understanding-container-states" title="Permanent link">&para;</a></h2>
+<h3 id="with-l3-commands-recommended">With L3 Commands (Recommended)<a class="headerlink" href="#with-l3-commands-recommended" title="Permanent link">&para;</a></h3>
+<p><strong>Simple two-state model:</strong>
+- <strong>Running</strong> - Created and started, ready to use
+- <strong>Removed</strong> - Doesn't exist, can recreate anytime</p>
+<p><strong>Transitions:</strong></p>
+<pre><code>project launch → Running
+container retire → Removed
+</code></pre>
+<h3 id="with-l2-commands-advanced">With L2 Commands (Advanced)<a class="headerlink" href="#with-l2-commands-advanced" title="Permanent link">&para;</a></h3>
+<p><strong>Full five-state model:</strong>
+- <strong>Created</strong> - Exists but not started
+- <strong>Running</strong> - Active, can attach
+- <strong>Paused</strong> - Frozen processes, GPU still allocated
+- <strong>Stopped</strong> - Halted, GPU released after timeout
+- <strong>Removed</strong> - Deleted</p>
+<p><strong>Transitions:</strong></p>
+<pre><code>container-create  → Created
+container-start   → Running
+container-pause   → Paused (from Running)
+container-unpause → Running (from Paused)
+container-stop    → Stopped
+container-remove  → Removed
+</code></pre>
+<h3 id="with-l1-docker-commands-expert">With L1 Docker Commands (Expert)<a class="headerlink" href="#with-l1-docker-commands-expert" title="Permanent link">&para;</a></h3>
+<p><strong>Same five-state model</strong>, direct Docker syntax:</p>
+<p><strong>Transitions:</strong></p>
+<pre><code>docker create   → Created
+docker start    → Running
+docker pause    → Paused
+docker unpause  → Running
+docker stop     → Stopped
+docker rm       → Removed
+</code></pre>
+<p><strong>Most users:</strong> Stick with L3 commands, simpler mental model / avoids idle containers hogging resources.</p>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="image-not-found">"Image not found"<a class="headerlink" href="#image-not-found" title="Permanent link">&para;</a></h3>
+<p><strong>Using <code>container deploy</code>:</strong></p>
+<pre><code>Error: Image ds01-username/my-project:latest not found
+</code></pre>
+<p><strong>Fix:</strong> Use <code>project launch</code> instead (builds if needed):</p>
+<pre><code class="language-bash">project launch my-project
+</code></pre>
+<p><strong>Or build manually:</strong></p>
+<pre><code class="language-bash">image-create my-project
+container deploy my-project
+</code></pre>
+<h3 id="container-already-exists">"Container already exists"<a class="headerlink" href="#container-already-exists" title="Permanent link">&para;</a></h3>
+<p><strong>You ran <code>project launch</code> but container already running.</strong></p>
+<p><strong>Fix:</strong> Use <code>container-attach</code>:</p>
+<pre><code class="language-bash"># Check what's running
+container-list
+
+# Attach to it
+container-attach my-project
+</code></pre>
+<p><strong>Or retire and relaunch:</strong></p>
+<pre><code class="language-bash">container retire my-project
+project launch my-project
+</code></pre>
+<h3 id="no-gpus-available">"No GPUs available"<a class="headerlink" href="#no-gpus-available" title="Permanent link">&para;</a></h3>
+<p><strong>All GPUs in use.</strong></p>
+<p><strong>Options:</strong></p>
+<ol>
+<li>
+<p><strong>Wait and retry:</strong>
+   <code>bash
+   dashboard gpu    # Check availability</code></p>
+</li>
+<li>
+<p><strong>Join queue:</strong>
+   <code>bash
+   gpu-queue join</code></p>
+</li>
+<li>
+<p><strong>Work on something else:</strong>
+   <code>bash
+   project launch other-project</code></p>
+</li>
+</ol>
+<h3 id="container-exits-immediately">Container Exits Immediately<a class="headerlink" href="#container-exits-immediately" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> <code>project launch</code> succeeds but <code>container-attach</code> says "not running".</p>
+<p><strong>Cause:</strong> Container startup command failed.</p>
+<p><strong>Debug:</strong></p>
+<pre><code class="language-bash"># Check logs
+docker logs &lt;container-name&gt;._.$(id -u)
+
+# Check image
+docker images | grep my-project
+</code></pre>
+<p><strong>Common fixes:</strong>
+- Fix packages: <code>image-update</code> (interactive GUI)
+- Rebuild after Dockerfile edit: <code>image-update my-project --rebuild</code>
+- Check Dockerfile syntax
+- Verify base image exists</p>
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-use-project-launch-for-daily-work">1. Use <code>project launch</code> for Daily Work<a class="headerlink" href="#1-use-project-launch-for-daily-work" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Simpler, handles edge cases
+project launch my-thesis
+</code></pre>
+<p>Instead of:</p>
+<pre><code class="language-bash"># More steps, can fail
+image-create my-thesis   # Did you already build?
+container deploy my-thesis
+</code></pre>
+<h3 id="2-always-container-retire-when-done">2. Always <code>container retire</code> When Done<a class="headerlink" href="#2-always-container-retire-when-done" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Frees GPU immediately
+container retire my-project
+</code></pre>
+<p>Instead of:</p>
+<pre><code class="language-bash"># Holds GPU, clutters system
+container-stop my-project  # Don't do this
+</code></pre>
+<h3 id="3-use-interactive-mode-when-unsure">3. Use Interactive Mode When Unsure<a class="headerlink" href="#3-use-interactive-mode-when-unsure" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Let the menu guide you
+project launch
+container-attach
+container retire
+</code></pre>
+<h3 id="4-check-status-before-acting">4. Check Status Before Acting<a class="headerlink" href="#4-check-status-before-acting" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># What's running?
+container-list
+
+# Then decide
+container-attach &lt;name&gt;    # If running
+project launch &lt;name&gt;      # If not running
+</code></pre>
+<hr />
+<h2 id="command-cheat-sheet">Command Cheat Sheet<a class="headerlink" href="#command-cheat-sheet" title="Permanent link">&para;</a></h2>
+<p><strong>Start working:</strong></p>
+<pre><code class="language-bash">project launch my-project --open
+</code></pre>
+<p><strong>Reconnect:</strong></p>
+<pre><code class="language-bash">container-attach my-project
+</code></pre>
+<p><strong>Done with GPU work:</strong></p>
+<pre><code class="language-bash">exit
+container retire my-project
+</code></pre>
+<p><strong>See what's running:</strong></p>
+<pre><code class="language-bash">container-list
+</code></pre>
+<p><strong>Check system status:</strong></p>
+<pre><code class="language-bash">dashboard
+</code></pre>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p><strong>Learn the daily workflow:</strong></p>
+<ul>
+<li>→ <a href="../daily-workflow/">Daily Workflow Guide</a></li>
+</ul>
+<p><strong>Understand container lifecycle:</strong></p>
+<ul>
+<li>→ <a href="../../key-concepts/ephemeral-containers/">Ephemeral Containers Concept</a></li>
+</ul>
+<p><strong>Create new projects:</strong></p>
+<ul>
+<li>→ <a href="../creating-projects/">Creating Projects Guide</a></li>
+</ul>
+<p><strong>Advanced container management:</strong></p>
+<ul>
+<li>→ <a href="../reference/container-commands.md">Container Management Reference</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

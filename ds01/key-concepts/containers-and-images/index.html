@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/key-concepts/containers-and-images/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Containers and Images - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Containers and Images";
+        var mkdocs_page_input_path = "key-concepts/containers-and-images.md";
+        var mkdocs_page_url = "/ds01/key-concepts/containers-and-images/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Containers and Images</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="containers-and-images">Containers and Images<a class="headerlink" href="#containers-and-images" title="Permanent link">&para;</a></h1>
+<p><strong>The most important concept for using DS01 effectively.</strong></p>
+<hr />
+<h2 id="the-key-insight">The Key Insight<a class="headerlink" href="#the-key-insight" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Image = Blueprint (permanent)</strong></li>
+<li><strong>Container = Instance (temporary)</strong></li>
+</ul>
+<p>Changing the blueprint doesn't change existing instances.</p>
+<hr />
+<h2 id="quick-analogy">Quick Analogy<a class="headerlink" href="#quick-analogy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Image</th>
+<th>Container</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cooking</td>
+<td>Recipe</td>
+<td>Meal</td>
+</tr>
+<tr>
+<td>Programming</td>
+<td>Class</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td>Template</td>
+<td>Document</td>
+</tr>
+</tbody>
+</table>
+<p>You can make many meals from one recipe. Changing the recipe doesn't change already-cooked meals.</p>
+<hr />
+<h2 id="what-this-means-for-you">What This Means for You<a class="headerlink" href="#what-this-means-for-you" title="Permanent link">&para;</a></h2>
+<h3 id="why-packages-disappear">Why packages disappear<a class="headerlink" href="#why-packages-disappear" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Inside container
+pip install transformers
+
+# Later...
+container retire my-project
+project launch my-project
+
+import transformers  # ModuleNotFoundError!
+</code></pre>
+<p><strong>Why?</strong> The container was temporary. The image didn't change.</p>
+<h3 id="how-to-make-packages-permanent">How to make packages permanent<a class="headerlink" href="#how-to-make-packages-permanent" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Use the interactive package manager
+image-update                  # Select image, add &quot;transformers&quot;
+
+# Recreate container
+project launch my-project
+
+import transformers  # Works!
+</code></pre>
+<p><strong>Why?</strong> Now the package is in the image (blueprint).</p>
+<hr />
+<h2 id="the-ds01-workflow">The DS01 Workflow<a class="headerlink" href="#the-ds01-workflow" title="Permanent link">&para;</a></h2>
+<pre><code>┌─────────────┐
+│  Dockerfile │  ← Edit this to change your environment
+└──────┬──────┘
+       │ image-update
+       ▼
+┌─────────────┐
+│    Image    │  ← Blueprint (permanent)
+└──────┬──────┘
+       │ project launch
+       ▼
+┌─────────────┐
+│  Container  │  ← Instance (temporary)
+└─────────────┘
+</code></pre>
+<p><strong>To change your environment:</strong> Run <code>image-update</code>, then recreate container.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+<th>Permanent?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dockerfile</td>
+<td><code>~/workspace/&lt;project&gt;/Dockerfile</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Docker storage</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Docker runtime</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Workspace files</td>
+<td><code>~/workspace/&lt;project&gt;/</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>pip install in container</td>
+<td>Container only</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-questions">Common Questions<a class="headerlink" href="#common-questions" title="Permanent link">&para;</a></h2>
+<p><strong>"Can I modify an image directly?"</strong></p>
+<blockquote>
+<p>No. Use <code>image-update</code> to add packages.</p>
+</blockquote>
+<p><strong>"Do changes in container affect the image?"</strong></p>
+<blockquote>
+<p>No. Container changes are isolated and temporary.</p>
+</blockquote>
+<p><strong>"Why not just keep containers running forever?"</strong></p>
+<blockquote>
+<p>Resources (GPU) stay allocated. Other users can't use them. See <a href="../ephemeral-containers/">Ephemeral Containers</a>.</p>
+</blockquote>
+<hr />
+<h2 id="want-deeper-understanding">Want Deeper Understanding?<a class="headerlink" href="#want-deeper-understanding" title="Permanent link">&para;</a></h2>
+<p>For comprehensive explanation of:
+- <strong>How Docker layers work</strong>
+- <strong>Image vs container architecture</strong>
+- <strong>Advanced image management</strong>
+- <strong>Industry Docker practices</strong></p>
+<p>See <a href="../../background/containers-and-docker/">Containers &amp; Docker</a> in Educational Computing Context (20 min read).</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../ephemeral-containers/">Ephemeral Containers</a> - Why containers are temporary</li>
+<li><a href="../workspaces-persistence/">Workspaces and Persistence</a> - Where files are saved</li>
+<li><a href="../../core-guides/custom-images/">Custom Images Guide</a> - Practical how-to</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/reference/command-reference/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Command Reference - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Command Reference";
+        var mkdocs_page_input_path = "reference/command-reference.md";
+        var mkdocs_page_url = "/ds01/reference/command-reference/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Command Reference</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="command-reference">Command Reference<a class="headerlink" href="#command-reference" title="Permanent link">&para;</a></h1>
+<p>Complete reference for all DS01 commands with examples and options.</p>
+<hr />
+<h2 id="quick-index">Quick Index<a class="headerlink" href="#quick-index" title="Permanent link">&para;</a></h2>
+<p><strong>Container Lifecycle:</strong>
+- <a href="#container-deploy">container-deploy</a> - Create and start container (L3)
+- <a href="#container-retire">container-retire</a> - Stop and remove container (L3)
+- <a href="#container-create">container-create</a> - Create container only (L2)
+- <a href="#container-start">container-start</a> - Start container in background (L2)
+- <a href="#container-run">container-run</a> - Start and enter container (L2)
+- <a href="#container-pause">container-pause</a> - Freeze container processes (L2)
+- <a href="#container-unpause">container-unpause</a> - Resume frozen container (L2)
+- <a href="#container-stop">container-stop</a> - Stop container (L2)
+- <a href="#container-remove">container-remove</a> - Remove container (L2)
+- <a href="#container-list">container-list</a> - List containers (L2)
+- <a href="#container-stats">container-stats</a> - Resource usage (L2)
+- <a href="#container-exit">container-exit</a> - Exit container (L2)</p>
+<p><strong>Image Management:</strong>
+- <a href="#image-create">image-create</a> - Build custom image (L2)
+- <a href="#image-list">image-list</a> - List images (L2)
+- <a href="#image-update">image-update</a> - Rebuild image (L2)
+- <a href="#image-delete">image-delete</a> - Remove image (L2)</p>
+<p><strong>Project Setup:</strong>
+- <a href="#project-init">project-init</a> - Create new project (L4)
+- <a href="#project-launch">project-launch</a> - Launch container for existing project (L4)
+- <a href="#dir-create">dir-create</a> - Create workspace directory (L2)
+- <a href="#git-init">git-init</a> - Initialize Git repository (L2)
+- <a href="#readme-create">readme-create</a> - Generate README (L2)</p>
+<p><strong>User Setup:</strong>
+- <a href="#user-setup">user-setup</a> - Complete onboarding wizard (L4)
+- <a href="#ssh-setup">ssh-setup</a> - Configure SSH keys (L2)
+- <a href="#vscode-setup">vscode-setup</a> - Configure VSCode Remote (L2)</p>
+<p><strong>System:</strong>
+- <a href="#dashboard">dashboard</a> - System status dashboard</p>
+<hr />
+<h2 id="container-lifecycle-commands">Container Lifecycle Commands<a class="headerlink" href="#container-lifecycle-commands" title="Permanent link">&para;</a></h2>
+<h3 id="container-deploy">container-deploy<a class="headerlink" href="#container-deploy" title="Permanent link">&para;</a></h3>
+<p><strong>Create and start a container</strong> (L3 orchestrator)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-deploy &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--open</code> - Create and enter terminal immediately
+- <code>--background</code> - Create and start in background
+- <code>--gpu &lt;N&gt;</code> - Request N GPUs
+- <code>--framework &lt;name&gt;</code> - Specify framework (pytorch, tensorflow, jax)
+- <code>--image &lt;name&gt;</code> - Use specific image
+- <code>--guided</code> - Educational mode with explanations
+- <code>--help</code> - Show help message</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive mode
+container-deploy my-project
+
+# Create and enter
+container-deploy my-project --open
+
+# Background mode
+container-deploy my-project --background
+
+# Guided mode
+container-deploy my-project --guided
+</code></pre>
+<p><strong>What it does:</strong>
+1. Checks resource availability
+2. Runs <code>container-create</code> (allocates GPU, creates container)
+3. Prompts for startup mode or uses flags
+4. Runs <code>container-start</code> or <code>container-run</code> based on choice</p>
+<p><strong>Equivalent to:</strong></p>
+<pre><code class="language-bash">container-create my-project
+container-run my-project  # or container-start
+</code></pre>
+<hr />
+<h3 id="container-retire">container-retire<a class="headerlink" href="#container-retire" title="Permanent link">&para;</a></h3>
+<p><strong>Stop and remove a container, free GPU</strong> (L3 orchestrator)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-retire &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>-f, --force</code> - Skip confirmation prompts
+- <code>--save-packages</code> - Automatically save new packages to image (no prompt)
+- <code>--images</code> - Also remove the Docker image after retiring
+- <code>--dry-run</code> - Show what would be done
+- <code>--guided</code> - Educational mode
+- <code>--help</code> - Show help message</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive mode (with confirmations)
+container-retire my-project
+
+# Skip confirmations
+container-retire my-project --force
+
+# Also remove Docker image
+container-retire my-project --images
+
+# Auto-save new packages before retiring
+container-retire my-project --save-packages
+</code></pre>
+<p><strong>What it does:</strong>
+1. Confirms you want to retire (unless --force)
+2. Detects new packages and offers to save (or auto-saves with --save-packages)
+3. Runs <code>container-stop</code> (stops container)
+4. Runs <code>container-remove</code> (removes container, frees GPU)
+5. Optionally prompts to remove Docker image (or auto-removes with --images)</p>
+<p><strong>Equivalent to:</strong></p>
+<pre><code class="language-bash">container-stop my-project
+container-remove my-project
+</code></pre>
+<hr />
+<h3 id="container-create">container-create<a class="headerlink" href="#container-create" title="Permanent link">&para;</a></h3>
+<p><strong>Create a container with GPU allocation</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-create &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--gpu &lt;N&gt;</code> - Request N GPUs (default: 1)
+- <code>--framework &lt;name&gt;</code> - Base framework
+- <code>--image &lt;name&gt;</code> - Specific Docker image
+- <code>--guided</code> - Educational mode
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Create with default settings
+container-create my-project
+
+# Request multiple GPUs
+container-create my-project --gpu 2
+
+# Use specific image
+container-create my-project --image ds01-$(whoami)/custom:latest
+</code></pre>
+<p><strong>What it does:</strong>
+1. Checks resource limits
+2. Allocates GPU via <code>gpu_allocator.py</code>
+3. Creates container with resource limits
+4. Mounts workspace
+5. Container remains in created/stopped state</p>
+<p><strong>Does not:</strong> Start the container (use <code>container-start</code> or <code>container-run</code>)</p>
+<hr />
+<h3 id="container-start">container-start<a class="headerlink" href="#container-start" title="Permanent link">&para;</a></h3>
+<p><strong>Start container in background</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-start &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Start container
+container-start my-project
+
+# Check it's running
+container-list
+</code></pre>
+<p><strong>What it does:</strong>
+1. Starts the container
+2. Container runs in background
+3. Returns immediately</p>
+<p><strong>To enter running container:</strong> Use <code>container-run</code> or <code>docker exec</code></p>
+<hr />
+<h3 id="container-run">container-run<a class="headerlink" href="#container-run" title="Permanent link">&para;</a></h3>
+<p><strong>Start (if stopped) and enter container</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-run &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Enter running or start and enter stopped container
+container-run my-project
+
+# You're now inside container
+user@my-project:/workspace$
+</code></pre>
+<p><strong>What it does:</strong>
+1. If stopped: Starts container
+2. Opens interactive shell inside container
+3. You can exit with <code>exit</code> or Ctrl+D</p>
+<p><strong>Note:</strong> Container keeps running after you exit (unless you stop it)</p>
+<hr />
+<h3 id="container-pause">container-pause<a class="headerlink" href="#container-pause" title="Permanent link">&para;</a></h3>
+<p><strong>Freeze container processes</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-pause &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Pause container
+container-pause my-project
+
+# Processes frozen, GPU still allocated
+</code></pre>
+<p><strong>What it does:</strong>
+1. Freezes all container processes (SIGSTOP)
+2. GPU remains allocated
+3. Memory state preserved
+4. Use <code>container-unpause</code> to resume</p>
+<p><strong>Use case:</strong> Temporarily free CPU while keeping GPU and state</p>
+<hr />
+<h3 id="container-unpause">container-unpause<a class="headerlink" href="#container-unpause" title="Permanent link">&para;</a></h3>
+<p><strong>Resume frozen container</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-unpause &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Resume paused container
+container-unpause my-project
+
+# Processes continue where they left off
+</code></pre>
+<p><strong>What it does:</strong>
+1. Resumes all frozen processes (SIGCONT)
+2. Container continues running normally</p>
+<hr />
+<h3 id="container-stop">container-stop<a class="headerlink" href="#container-stop" title="Permanent link">&para;</a></h3>
+<p><strong>Stop a running container</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-stop [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>-f, --force</code> - Force stop (kill immediately)
+- <code>-t, --timeout SECS</code> - Timeout before force kill (default: 10)
+- <code>-a, --all</code> - Stop all your containers
+- <code>-v, --verbose</code> - Show detailed shutdown process
+- <code>--keep-container</code> - Don't prompt to remove container
+- <code>--guided</code> - Educational mode</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">container-stop my-project              # Graceful stop
+container-stop my-project --force      # Force stop immediately
+container-stop --all                   # Stop all your containers
+</code></pre>
+<p><strong>What it does:</strong>
+1. Stops container gracefully (SIGTERM)
+2. GPU marked as stopped (timer starts)
+3. Container still exists (can restart)</p>
+<p><strong>To free GPU immediately:</strong> Use <code>container-retire</code> instead</p>
+<hr />
+<h3 id="container-remove">container-remove<a class="headerlink" href="#container-remove" title="Permanent link">&para;</a></h3>
+<p><strong>Remove container and free GPU</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-remove [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>-a, --all</code> - Remove all your stopped containers
+- <code>-i, --images</code> - Also remove associated Docker images
+- <code>-v, --volumes</code> - Also remove anonymous volumes
+- <code>-f, --force</code> - Skip all prompts
+- <code>--skip-removal-confirm</code> - Skip removal confirmation only
+- <code>--dry-run</code> - Show what would be removed
+- <code>--guided</code> - Educational mode</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">container-remove my-project              # Remove specific container
+container-remove my-project --images     # Also remove Docker image
+container-remove --all                   # Remove all stopped containers
+container-remove --all --images --dry-run  # Preview bulk removal
+</code></pre>
+<p><strong>What it does:</strong>
+1. Removes container
+2. Frees GPU immediately
+3. Workspace files remain safe</p>
+<p><strong>Warning:</strong> Cannot be undone (but easy to recreate from image)</p>
+<hr />
+<h3 id="container-list">container-list<a class="headerlink" href="#container-list" title="Permanent link">&para;</a></h3>
+<p><strong>List your containers</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-list [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--all</code> - Include stopped containers (default: running only)</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># List running containers
+container-list
+
+# List all (including stopped)
+container-list --all
+
+# Example output:
+# NAME                STATUS      GPU     UPTIME
+# my-project         Running     0:1     2h 34m
+# experiment-1       Running     0:2     45m
+</code></pre>
+<p><strong>What it shows:</strong>
+- Container names
+- Status (Running, Stopped)
+- Allocated GPU
+- Uptime</p>
+<hr />
+<h3 id="container-stats">container-stats<a class="headerlink" href="#container-stats" title="Permanent link">&para;</a></h3>
+<p><strong>Show resource usage</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">container-stats [project-name]
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># All your containers
+container-stats
+
+# Specific container
+container-stats my-project
+
+# Example output:
+# CONTAINER      CPU %   MEM USAGE/LIMIT     MEM %   GPU MEM
+# my-project     245%    12.5GB / 64GB      19.5%   18.2GB
+</code></pre>
+<p><strong>What it shows:</strong>
+- CPU usage (% across all cores)
+- Memory usage and limit
+- Memory percentage
+- GPU memory usage (if available)</p>
+<hr />
+<h2 id="image-management-commands">Image Management Commands<a class="headerlink" href="#image-management-commands" title="Permanent link">&para;</a></h2>
+<h3 id="image-create">image-create<a class="headerlink" href="#image-create" title="Permanent link">&para;</a></h3>
+<p><strong>Build custom Docker image</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">image-create [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--framework &lt;name&gt;</code> - Base framework (pytorch, tensorflow, jax)
+- <code>--guided</code> - Educational mode
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive mode
+image-create
+
+# Specify project and framework
+image-create my-project --framework pytorch
+</code></pre>
+<p><strong>What it does:</strong>
+1. <strong>Phase 1:</strong> Choose base framework (PyTorch, TensorFlow, JAX)
+2. <strong>Phase 2:</strong> Add Jupyter Lab and extensions
+3. <strong>Phase 3:</strong> Add data science packages
+4. <strong>Phase 4:</strong> Add custom packages (optional)
+5. Builds image and tags as <code>ds01-&lt;user&gt;/&lt;project&gt;:latest</code></p>
+<p><strong>Time:</strong> 5-15 minutes (first build), faster with cached layers</p>
+<hr />
+<h3 id="image-list">image-list<a class="headerlink" href="#image-list" title="Permanent link">&para;</a></h3>
+<p><strong>List your Docker images</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">image-list [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>-a, --all</code> - Show all images (not just yours)
+- <code>-s, --size</code> - Show image sizes
+- <code>-d, --detailed</code> - Show detailed info with Dockerfile locations
+- <code>--guided</code> - Educational mode</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">image-list              # List your images
+image-list --all        # List all images on server
+image-list --detailed   # Show detailed info with Dockerfile locations
+
+# Example output:
+# REPOSITORY              TAG      SIZE     CREATED
+# ds01-alice/my-project   latest   8.2GB    2 days ago
+# ds01-alice/experiment   latest   7.9GB    1 week ago
+</code></pre>
+<hr />
+<h3 id="image-update">image-update<a class="headerlink" href="#image-update" title="Permanent link">&para;</a></h3>
+<p><strong>Update existing image with package management</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">image-update [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--rebuild</code> - Rebuild image without modifying Dockerfile
+- <code>--no-cache</code> - Force rebuild without cache
+- <code>--add "pkg1 pkg2"</code> - Add packages directly
+- <code>--edit</code> - Edit Dockerfile manually (advanced)
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Recommended: Interactive GUI
+image-update                         # Select image, add/remove packages
+
+# Advanced: After manual Dockerfile edit
+image-update my-project --rebuild    # Rebuild without prompts
+image-update my-project --no-cache   # Force complete rebuild
+</code></pre>
+<p><strong>What it does:</strong>
+1. Without arguments: Opens interactive GUI to add/remove packages
+2. With <code>--rebuild</code>: Rebuilds from existing Dockerfile
+3. Uses layer cache for speed (unless --no-cache)</p>
+<p><strong>When to use:</strong>
+- <strong>No arguments</strong> (recommended): Add/remove packages via GUI
+- <code>--rebuild</code>: After manual Dockerfile edit
+- <code>--no-cache</code>: Force clean rebuild</p>
+<hr />
+<h3 id="image-delete">image-delete<a class="headerlink" href="#image-delete" title="Permanent link">&para;</a></h3>
+<p><strong>Remove Docker image</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">image-delete [image-name...] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--all</code> - Delete all your images (with confirmation)
+- <code>-f, --force</code> - Force removal (stop/remove containers first)
+- <code>--keep-dockerfile</code> - Don't delete the associated Dockerfile
+- <code>--guided</code> - Educational mode</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">image-delete my-project                    # Remove image (with confirmation)
+image-delete img1 img2 img3                # Bulk delete multiple images
+image-delete --all                         # Remove all your images
+image-delete my-project --force            # Force remove (stops containers first)
+image-delete my-project --keep-dockerfile  # Keep Dockerfile for later rebuild
+</code></pre>
+<p><strong>Warning:</strong> Containers using this image must be removed first (or use --force)</p>
+<hr />
+<h2 id="project-setup-commands">Project Setup Commands<a class="headerlink" href="#project-setup-commands" title="Permanent link">&para;</a></h2>
+<h3 id="project-init">project-init<a class="headerlink" href="#project-init" title="Permanent link">&para;</a></h3>
+<p><strong>Complete project initialisation</strong> (L4 wizard)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">project-init [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--guided</code> - Educational mode
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive mode
+project-init
+
+# Specify project name
+project-init my-research
+</code></pre>
+<p><strong>What it does:</strong>
+1. <code>dir-create</code> - Creates <code>~/workspace/&lt;project&gt;/</code>
+2. <code>git-init</code> - Initializes Git repository
+3. <code>readme-create</code> - Generates README.md
+4. <code>image-create</code> - Builds custom Docker image
+5. <code>container-deploy</code> - Deploys first container</p>
+<p><strong>Equivalent to running all those commands individually</strong></p>
+<hr />
+<h3 id="project-launch">project-launch<a class="headerlink" href="#project-launch" title="Permanent link">&para;</a></h3>
+<p><strong>Launch container for existing project</strong> (L4 wizard)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">project-launch [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--guided</code> - Educational mode
+- <code>--open</code> - Start and enter terminal (skip prompt)
+- <code>--background</code> - Start in background (skip prompt)
+- <code>--rebuild</code> - Force rebuild image even if exists
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive mode (select from project list)
+project-launch
+
+# Launch specific project
+project-launch my-thesis
+
+# Launch and enter terminal
+project-launch my-thesis --open
+
+# Force image rebuild
+project-launch my-thesis --rebuild
+</code></pre>
+<p><strong>What it does:</strong>
+1. Shows menu of projects in <code>~/workspace/</code> (if no name given)
+2. Checks if Docker image exists for project
+3. If no image: runs <code>image-create</code> automatically
+4. Runs <code>container-deploy</code> to start container</p>
+<p><strong>Key difference from container-deploy:</strong>
+- <code>project-launch</code> = Smart (handles image creation automatically)
+- <code>container-deploy</code> = Direct (requires image to exist)</p>
+<hr />
+<h3 id="dir-create">dir-create<a class="headerlink" href="#dir-create" title="Permanent link">&para;</a></h3>
+<p><strong>Create workspace directory</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">dir-create &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Create project directory
+dir-create my-project
+
+# Created: ~/workspace/my-project/
+</code></pre>
+<hr />
+<h3 id="git-init">git-init<a class="headerlink" href="#git-init" title="Permanent link">&para;</a></h3>
+<p><strong>Initialize Git repository</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">git-init &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Initialize Git in workspace
+git-init my-project
+
+# Creates ~/workspace/my-project/.git/
+# Adds .gitignore for Python/data science
+</code></pre>
+<hr />
+<h3 id="readme-create">readme-create<a class="headerlink" href="#readme-create" title="Permanent link">&para;</a></h3>
+<p><strong>Generate README.md</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">readme-create &lt;project-name&gt;
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Create README
+readme-create my-project
+
+# Generates ~/workspace/my-project/README.md
+# with project template
+</code></pre>
+<hr />
+<h2 id="user-setup-commands">User Setup Commands<a class="headerlink" href="#user-setup-commands" title="Permanent link">&para;</a></h2>
+<h3 id="user-setup">user-setup<a class="headerlink" href="#user-setup" title="Permanent link">&para;</a></h3>
+<p><strong>Complete onboarding wizard</strong> (L4 wizard)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">user-setup
+</code></pre>
+<p><strong>Aliases:</strong> <code>user setup</code>, <code>new-user</code></p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Run onboarding
+user-setup
+</code></pre>
+<p><strong>What it does:</strong>
+1. <code>ssh-setup</code> - Creates SSH keys
+2. <code>project-init</code> - Initializes first project
+3. <code>vscode-setup</code> - Configures VSCode Remote (optional)</p>
+<p><strong>Time:</strong> 15-20 minutes</p>
+<p><strong>See:</strong> <a href="../../getting-started/first-time-setup/">First-Time Setup Guide</a></p>
+<hr />
+<h3 id="ssh-setup">ssh-setup<a class="headerlink" href="#ssh-setup" title="Permanent link">&para;</a></h3>
+<p><strong>Configure SSH keys</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">ssh-setup [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--key-type &lt;type&gt;</code> - Key type (default: ed25519)
+- <code>--no-passphrase</code> - Create without passphrase
+- <code>--help</code> - Show help</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive setup
+ssh-setup
+
+# Non-interactive
+ssh-setup --key-type ed25519 --no-passphrase
+</code></pre>
+<p><strong>What it does:</strong>
+1. Generates SSH key pair
+2. Displays public key (add to GitHub/GitLab)
+3. Configures SSH agent (optional)</p>
+<hr />
+<h3 id="vscode-setup">vscode-setup<a class="headerlink" href="#vscode-setup" title="Permanent link">&para;</a></h3>
+<p><strong>Configure VSCode Remote</strong> (L2 atomic)</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">vscode-setup [OPTIONS]
+</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Interactive setup
+vscode-setup
+
+# Generates VSCode config for remote development
+</code></pre>
+<p><strong>See:</strong> <a href="../advanced/vscode-remote.md">VSCode Remote Guide</a></p>
+<hr />
+<h2 id="system-commands">System Commands<a class="headerlink" href="#system-commands" title="Permanent link">&para;</a></h2>
+<h3 id="dashboard">dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h3>
+<p><strong>System status dashboard</strong></p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="language-bash">dashboard [SECTION] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--watch</code>, <code>-w</code> - Watch mode (2s refresh)
+- <code>--full</code> - Show all sections expanded
+- <code>--json</code> - JSON output for scripting</p>
+<p><strong>Sections:</strong>
+- <code>gpu</code> - GPU/MIG utilization diagram
+- <code>cpu</code> - CPU usage by user diagram
+- <code>system</code> - CPU, Memory, Disk bars
+- <code>mig-config</code> - MIG partition configuration
+- <code>containers</code> - All containers with stats
+- <code>users</code> - Per-user resource summary
+- <code>temp</code> - GPU temperatures and power
+- <code>allocations [N]</code> - Recent N GPU allocations
+- <code>alerts</code> - Active alerts and warnings</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">dashboard                    # Default compact view
+dashboard --full             # All sections expanded
+dashboard --watch            # Live monitoring
+dashboard gpu                # GPU section only
+dashboard containers         # Container list
+dashboard alerts             # Check for issues
+dashboard allocations 20     # Last 20 GPU allocations
+</code></pre>
+<hr />
+<h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="complete-workflow">Complete Workflow<a class="headerlink" href="#complete-workflow" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># First time setup
+user-setup
+
+# Create a new project (one-time)
+project init my-thesis --type=cv
+
+# Daily workflow
+project launch my-thesis --open
+# Work...
+exit
+container retire my-thesis
+
+# Build custom environment (manual)
+image-create my-project
+container-deploy my-project --open
+
+# Multiple containers (parallel experiments)
+container-deploy exp-1 --background
+container-deploy exp-2 --background
+container-deploy exp-3 --background
+
+# Clean up
+container-retire exp-1
+container-retire exp-2
+container-retire exp-3
+</code></pre>
+<h3 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Replace <code>&lt;project-name&gt;</code> with your actual project name.</p>
+</blockquote>
+<pre><code class="language-bash"># Check container status
+container-list
+container-stats &lt;project-name&gt;
+
+# View logs
+docker logs &lt;project-name&gt;._.$(whoami)
+
+# Enter container
+container-run &lt;project-name&gt;
+
+# Check GPU
+nvidia-smi
+</code></pre>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<h3 id="command-help">Command Help<a class="headerlink" href="#command-help" title="Permanent link">&para;</a></h3>
+<p>All commands support <code>--help</code>:</p>
+<pre><code class="language-bash">container-deploy --help
+image-create --help
+</code></pre>
+<h3 id="guided-mode">Guided Mode<a class="headerlink" href="#guided-mode" title="Permanent link">&para;</a></h3>
+<p>Most commands support <code>--guided</code>:</p>
+<pre><code class="language-bash">container-deploy my-project --guided
+image-create --guided
+</code></pre>
+<p><strong>Guided mode:</strong>
+- Explains each step
+- Educational prompts
+- Recommended for beginners</p>
+<hr />
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<h3 id="ds01-variables">DS01 Variables<a class="headerlink" href="#ds01-variables" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># System installation
+DS01_INSTALL_DIR=/opt/ds01-infra
+
+# Workspace base
+DS01_WORKSPACE=~/workspace
+</code></pre>
+<h3 id="docker-variables">Docker Variables<a class="headerlink" href="#docker-variables" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Docker socket
+DOCKER_HOST=unix:///var/run/docker.sock
+
+# Default image registry
+DOCKER_REGISTRY=&lt;internal-registry&gt;
+</code></pre>
+<hr />
+<h2 id="exit-codes">Exit Codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h2>
+<p><strong>Standard exit codes:</strong>
+- <code>0</code> - Success
+- <code>1</code> - General error
+- <code>2</code> - Misuse of command (invalid arguments)
+- <code>3</code> - Resource unavailable (no GPUs, quota exceeded)
+- <code>4</code> - Container/image not found
+- <code>5</code> - Permission denied</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">container-deploy my-project
+echo $?  # Check exit code
+</code></pre>
+<hr />
+<h2 id="tips-tricks">Tips &amp; Tricks<a class="headerlink" href="#tips-tricks" title="Permanent link">&para;</a></h2>
+<h3 id="tab-completion">Tab Completion<a class="headerlink" href="#tab-completion" title="Permanent link">&para;</a></h3>
+<p>Commands support tab completion:</p>
+<pre><code class="language-bash">container-de&lt;Tab&gt;     # Completes to: container-deploy
+container-deploy my-&lt;Tab&gt;  # Completes project name (if exists)
+</code></pre>
+<h3 id="command-history">Command History<a class="headerlink" href="#command-history" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Search history
+Ctrl+R
+# Type: container-deploy
+
+# Recall last container-deploy command
+!container-deploy
+</code></pre>
+<h3 id="aliases">Aliases<a class="headerlink" href="#aliases" title="Permanent link">&para;</a></h3>
+<p>Create shortcuts in <code>~/.bashrc</code>:</p>
+<pre><code class="language-bash">alias cdeploy='container-deploy'
+alias cretire='container-retire'
+alias clist='container-list'
+</code></pre>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<h3 id="learn-workflows">Learn Workflows<a class="headerlink" href="#learn-workflows" title="Permanent link">&para;</a></h3>
+<p><strong>Daily patterns:</strong>
+- → <a href="../../core-guides/daily-workflow/">Daily Usage Patterns</a></p>
+<p><strong>Project setup:</strong>
+- → <a href="../../core-guides/creating-projects/">Creating Projects</a></p>
+<p><strong>Container management:</strong>
+- → <a href="../../core-guides/daily-workflow/">Managing Containers</a></p>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
+<p><strong>Common issues:</strong>
+- → <a href="../troubleshooting/">Troubleshooting Guide</a></p>
+<p><strong>Best practices:</strong>
+→ </p>
+<p><strong>Need examples?</strong> → <a href="../../core-guides/daily-workflow/">Daily Usage Patterns</a></p>
+<p><strong>Having issues?</strong> → <a href="../troubleshooting/">Troubleshooting</a></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

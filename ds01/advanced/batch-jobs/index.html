@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/advanced/batch-jobs/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Batch Jobs and Non-Interactive Execution - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Batch Jobs and Non-Interactive Execution";
+        var mkdocs_page_input_path = "advanced/batch-jobs.md";
+        var mkdocs_page_url = "/ds01/advanced/batch-jobs/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Batch Jobs and Non-Interactive Execution</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-pattern">Basic Pattern</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-nohup">With nohup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#parameter-sweep-example">Parameter Sweep Example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#monitoring-jobs">Monitoring Jobs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#job-completion-detection">Job Completion Detection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#error-handling">Error Handling</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#checkpointing">Checkpointing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resource-alerts">Resource Alerts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example-full-pipeline">Example: Full Pipeline</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#see-also">See Also</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Advanced</li>
+      <li class="breadcrumb-item active">Batch Jobs and Non-Interactive Execution</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="batch-jobs-and-non-interactive-execution">Batch Jobs and Non-Interactive Execution<a class="headerlink" href="#batch-jobs-and-non-interactive-execution" title="Permanent link">&para;</a></h1>
+<p>Submit long-running jobs and check results later - HPC-style workflows.</p>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(id -u)</code> part auto-substitutes your user ID.</p>
+</blockquote>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>Batch job pattern:</strong>
+1. Submit job to container
+2. Job runs in background
+3. Results written to workspace
+4. Check logs/results later</p>
+<p><strong>No babysitting needed.</strong></p>
+<hr />
+<h2 id="basic-pattern">Basic Pattern<a class="headerlink" href="#basic-pattern" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># Create container
+container-create training --gpu=2
+
+# Submit job (non-interactive)
+docker exec -d training._.$(id -u) \
+  nohup python /workspace/train.py &gt; /workspace/training.log 2&gt;&amp;1
+
+# Job runs for hours/days
+# You can disconnect, container keeps running
+
+# Check progress later
+tail -f ~/workspace/training.log
+
+# Or check GPU usage
+nvidia-smi
+</code></pre>
+<hr />
+<h2 id="with-nohup">With nohup<a class="headerlink" href="#with-nohup" title="Permanent link">&para;</a></h2>
+<p><strong>Standard approach:</strong></p>
+<pre><code class="language-bash">docker exec -d &lt;project-name&gt;._.$(id -u) \
+  nohup python /workspace/train.py \
+  &gt; /workspace/output.log 2&gt;&amp;1 &amp;
+</code></pre>
+<p><strong>Components:</strong>
+- <code>docker exec -d</code> - Detached mode (background)
+- <code>nohup</code> - Ignore hangup signals (survives disconnects)
+- <code>&gt; /workspace/output.log</code> - Redirect stdout
+- <code>2&gt;&amp;1</code> - Redirect stderr to stdout
+- <code>&amp;</code> - Run in background</p>
+<hr />
+<h2 id="parameter-sweep-example">Parameter Sweep Example<a class="headerlink" href="#parameter-sweep-example" title="Permanent link">&para;</a></h2>
+<p><strong>Run multiple experiments:</strong></p>
+<pre><code class="language-bash">#!/bin/bash
+# sweep.sh
+
+for lr in 0.001 0.01 0.1; do
+  for batch_size in 16 32 64; do
+    NAME=&quot;exp-lr${lr}-bs${batch_size}&quot;
+
+    # Create container
+    container-create $NAME --gpu=1 --background
+
+    # Submit job
+    docker exec -d $NAME._.$(id -u) \
+      nohup python /workspace/train.py \
+      --lr=$lr \
+      --batch-size=$batch_size \
+      &gt; /workspace/logs/${NAME}.log 2&gt;&amp;1
+
+    echo &quot;Submitted: $NAME&quot;
+  done
+done
+
+echo &quot;All jobs submitted. Monitor with:&quot;
+echo &quot;tail -f ~/workspace/logs/*.log&quot;
+</code></pre>
+<hr />
+<h2 id="monitoring-jobs">Monitoring Jobs<a class="headerlink" href="#monitoring-jobs" title="Permanent link">&para;</a></h2>
+<p><strong>Check running processes:</strong></p>
+<pre><code class="language-bash"># All your containers
+docker ps --filter label=DS01_USER=$(id -u)
+
+# Processes in specific container
+docker exec &lt;project-name&gt;._.$(id -u) ps aux | grep python
+
+# GPU usage
+nvidia-smi
+
+# Live monitoring
+watch -n 1 nvidia-smi
+</code></pre>
+<p><strong>Check logs:</strong></p>
+<pre><code class="language-bash"># Follow log
+tail -f ~/workspace/training.log
+
+# Last 100 lines
+tail -100 ~/workspace/training.log
+
+# Search logs
+grep &quot;epoch&quot; ~/workspace/training.log
+
+# Multiple logs
+tail -f ~/workspace/logs/*.log
+</code></pre>
+<hr />
+<h2 id="job-completion-detection">Job Completion Detection<a class="headerlink" href="#job-completion-detection" title="Permanent link">&para;</a></h2>
+<p><strong>Wait for job to finish:</strong></p>
+<pre><code class="language-bash">#!/bin/bash
+
+PROJECT=my-training
+
+# Submit job
+docker exec -d $PROJECT._.$(id -u) \
+  nohup python /workspace/train.py &gt; /workspace/output.log 2&gt;&amp;1
+
+# Wait for completion
+while docker exec $PROJECT._.$(id -u) pgrep -f train.py &gt; /dev/null; do
+  echo &quot;Job still running...&quot;
+  sleep 60
+done
+
+echo &quot;Job completed!&quot;
+
+# Collect results
+cat ~/workspace/output.log
+</code></pre>
+<hr />
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<p><strong>Check exit codes:</strong></p>
+<pre><code class="language-bash"># Run job
+docker exec &lt;project-name&gt;._.$(id -u) \
+  python /workspace/train.py
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 0 ]; then
+  echo &quot;Success!&quot;
+else
+  echo &quot;Failed with code $EXIT_CODE&quot;
+  docker logs &lt;project-name&gt;._.$(id -u)
+fi
+</code></pre>
+<hr />
+<h2 id="checkpointing">Checkpointing<a class="headerlink" href="#checkpointing" title="Permanent link">&para;</a></h2>
+<p><strong>Save progress regularly:</strong></p>
+<pre><code class="language-python"># In train.py
+for epoch in range(num_epochs):
+    train_one_epoch()
+
+    # Save checkpoint
+    if epoch % 5 == 0:
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+        }, f'/workspace/checkpoints/epoch_{epoch}.pt')
+</code></pre>
+<p><strong>Resume if interrupted:</strong></p>
+<pre><code class="language-python"># Load checkpoint if exists
+checkpoint_path = '/workspace/checkpoints/latest.pt'
+if os.path.exists(checkpoint_path):
+    checkpoint = torch.load(checkpoint_path)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    start_epoch = checkpoint['epoch'] + 1
+else:
+    start_epoch = 0
+</code></pre>
+<hr />
+<h2 id="resource-alerts">Resource Alerts<a class="headerlink" href="#resource-alerts" title="Permanent link">&para;</a></h2>
+<p><strong>Email on completion (if configured):</strong></p>
+<pre><code class="language-bash">#!/bin/bash
+
+docker exec -d &lt;project-name&gt;._.$(id -u) \
+  bash -c &quot;python /workspace/train.py; echo 'Training complete' | mail -s 'Job Done' user@example.com&quot;
+</code></pre>
+<p><strong>Slack notification (if webhook configured):</strong></p>
+<pre><code class="language-python"># At end of train.py
+import requests
+
+webhook_url = &quot;https://hooks.slack.com/...&quot;
+message = {&quot;text&quot;: &quot;Training completed!&quot;}
+requests.post(webhook_url, json=message)
+</code></pre>
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Always write to <code>/workspace</code>:</strong> Anything written elsewhere in the container (like <code>/tmp</code> or <code>/root</code>) vanishes when the container is removed. Your training ran for 12 hours, saved the model to <code>/home/model.pt</code>, you retired the container - model gone. Always use <code>/workspace/</code> which is mounted from the host and persists.</p>
+</li>
+<li>
+<p><strong>Use clear log names:</strong> When you're running a parameter sweep with 50 experiments, <code>output.log</code> tells you nothing. Use <code>exp-lr0.001-bs32-seed42.log</code> - you can grep for specific hyperparameters, sort by parameter values, and immediately know which experiment produced which results without opening each file.</p>
+</li>
+<li>
+<p><strong>Save checkpoints frequently:</strong> GPU jobs get interrupted - idle timeouts, server maintenance, OOM errors. If you only save at the end, 23 hours of training is lost. Save every N epochs to <code>/workspace/checkpoints/</code>. When restarting, load the latest checkpoint and continue from where you left off instead of starting over.</p>
+</li>
+<li>
+<p><strong>Log hyperparameters:</strong> At the start of your training script, write all hyperparameters to the log file: learning rate, batch size, model architecture, random seed. Three months later when you're writing your thesis, you'll need to know exactly what settings produced your best model. The log file is your lab notebook.</p>
+</li>
+<li>
+<p><strong>Clean up finished jobs:</strong> Each running container holds a GPU allocation. If you submit 10 experiments and forget to clean up, you're blocking 10 GPUs even though the jobs finished hours ago. Add cleanup to your scripts, or periodically run <code>container-list</code> and retire finished experiments.</p>
+</li>
+</ol>
+<hr />
+<h2 id="example-full-pipeline">Example: Full Pipeline<a class="headerlink" href="#example-full-pipeline" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">#!/bin/bash
+# pipeline.sh
+
+set -e
+
+PROJECT=&quot;my-training&quot;
+LOG_DIR=~/workspace/logs
+CHECKPOINT_DIR=~/workspace/checkpoints
+
+mkdir -p $LOG_DIR $CHECKPOINT_DIR
+
+# Create container
+container-create $PROJECT --gpu=2 || exit 1
+
+# Submit job
+docker exec -d $PROJECT._.$(id -u) bash -c &quot;
+  cd /workspace
+  python train.py \
+    --epochs=100 \
+    --lr=0.001 \
+    --batch-size=32 \
+    --checkpoint-dir=/workspace/checkpoints \
+    &gt; /workspace/logs/training.log 2&gt;&amp;1
+&quot;
+
+echo &quot;Job submitted. Monitor with:&quot;
+echo &quot;  tail -f $LOG_DIR/training.log&quot;
+echo &quot;&quot;
+echo &quot;Check GPU usage:&quot;
+echo &quot;  nvidia-smi&quot;
+echo &quot;&quot;
+echo &quot;When complete, collect results from:&quot;
+echo &quot;  $CHECKPOINT_DIR/&quot;
+</code></pre>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>→ <a href="../terminal-workflows/">Terminal Workflows</a> - CLI development patterns</p>
+</li>
+<li>
+<p>→ <a href="../docker-direct/">Docker Direct</a> - Docker commands</p>
+</li>
+<li>
+<p>→ <a href="../intermediate/scripting.md">Scripting</a> - Automation patterns</p>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../key-concepts/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../key-concepts/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>System Commands - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "System Commands";
+        var mkdocs_page_input_path = "reference/commands/system-commands.md";
+        var mkdocs_page_url = "/ds01/reference/commands/system-commands/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">System Commands</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="system-commands">System Commands<a class="headerlink" href="#system-commands" title="Permanent link">&para;</a></h1>
+<p>Commands for system status, user setup, and configuration.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># System dashboard
+dashboard
+
+# First-time setup
+user-setup
+
+# Check your limits
+check-limits
+
+# SSH and VSCode setup
+ssh-setup
+vscode-setup
+
+# Help and info
+help                     # List all commands
+version                  # Show version
+</code></pre>
+<hr />
+<h2 id="dashboard">dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h2>
+<p><strong>System status dashboard</strong></p>
+<pre><code class="language-bash">dashboard [SECTION] [OPTIONS]
+</code></pre>
+<p>View GPU availability, container status, and system resources.</p>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--watch</code>, <code>-w</code> | Watch mode (2s refresh) |
+| <code>--full</code> | Show all sections expanded |
+| <code>--json</code> | JSON output for scripting |</p>
+<p><strong>Modular Sections:</strong>
+| Section | Description |
+|---------|-------------|
+| <code>gpu</code> | GPU/MIG utilization diagram |
+| <code>cpu</code> | CPU usage by user diagram |
+| <code>system</code> | CPU, Memory, Disk bars |
+| <code>mig-config</code> | MIG partition configuration |
+| <code>containers</code> | All containers with stats |
+| <code>users</code> | Per-user resource summary |
+| <code>temp</code> | GPU temperatures and power |</p>
+<p><strong>Additional Views:</strong>
+| Command | Description |
+|---------|-------------|
+| <code>allocations [N]</code> | Recent N GPU allocations (default: 10) |
+| <code>alerts</code> | Active alerts and warnings (idle containers, etc.) |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">dashboard                    # Default compact view (GPU, CPU by user, system)
+dashboard --full             # All sections expanded
+dashboard --watch            # Live monitoring
+dashboard --json             # JSON output for scripting
+
+# Individual sections
+dashboard gpu                # GPU/MIG utilization
+dashboard cpu                # CPU usage by user
+dashboard system             # System resources
+dashboard containers         # All containers
+dashboard users              # Per-user summary
+dashboard temp               # GPU temperatures
+
+# Additional views
+dashboard alerts             # Check for issues
+dashboard allocations 20     # Last 20 GPU allocations
+</code></pre>
+<hr />
+<h2 id="user-setup">user-setup<a class="headerlink" href="#user-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Complete onboarding wizard</strong> (L4 wizard)</p>
+<pre><code class="language-bash">user-setup [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--quick</code> | Expert mode: skip skill assessment, minimal prompts |</p>
+<p><strong>Aliases:</strong> <code>user setup</code>, <code>new-user</code></p>
+<p><strong>What it does:</strong>
+1. <code>ssh-setup</code> - Creates SSH keys
+2. <code>project-init</code> - Initializes first project
+3. <code>vscode-setup</code> - Configures VSCode Remote (optional)</p>
+<p><strong>Time:</strong> 15-20 minutes</p>
+<p><strong>See:</strong> <a href="../../../getting-started/first-time-setup/">First-Time Setup Guide</a></p>
+<hr />
+<h2 id="check-limits">check-limits<a class="headerlink" href="#check-limits" title="Permanent link">&para;</a></h2>
+<p><strong>View your resource limits and usage</strong></p>
+<pre><code class="language-bash">check-limits
+</code></pre>
+<p><strong>Example output:</strong></p>
+<pre><code>=== Your Resource Limits ===
+Max GPUs:       2
+Max Containers: 3
+Memory/Container: 64GB
+Max Runtime:    24h (varies by user)
+Idle Timeout:   0.5h (varies by user)
+
+=== Current Usage ===
+GPUs:       1 / 2
+Containers: 2 / 3
+</code></pre>
+<hr />
+<h2 id="ssh-config">ssh-config<a class="headerlink" href="#ssh-config" title="Permanent link">&para;</a></h2>
+<p><strong>SSH configuration utility</strong></p>
+<pre><code class="language-bash">ssh-config &lt;command&gt;
+</code></pre>
+<p><strong>Commands:</strong>
+| Command | Description |
+|---------|-------------|
+| <code>generate</code> | Generate new SSH keys (ed25519) |
+| <code>test</code> | Test SSH connection to localhost |
+| <code>show</code> | Display public key and connection info |
+| <code>vscode</code> | Show VS Code Remote-SSH setup instructions |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">ssh-config generate    # Create new SSH keys
+ssh-config test        # Test if SSH is working
+ssh-config show        # Display your public key
+ssh-config vscode      # Get VS Code setup instructions
+</code></pre>
+<hr />
+<h2 id="ssh-setup">ssh-setup<a class="headerlink" href="#ssh-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure SSH keys</strong> (L2 atomic)</p>
+<pre><code class="language-bash">ssh-setup [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--guided</code> | Show detailed explanations for beginners |
+| <code>--force</code> | Regenerate keys even if they exist |
+| <code>--verify</code> | Just verify existing setup |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">ssh-setup              # Interactive setup
+ssh-setup --guided     # With explanations
+ssh-setup --verify     # Check existing setup
+</code></pre>
+<p><strong>What it does:</strong>
+1. Generates SSH key pair (ed25519)
+2. Displays public key (add to GitHub/GitLab)
+3. Verifies configuration</p>
+<hr />
+<h2 id="vscode-setup">vscode-setup<a class="headerlink" href="#vscode-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure VSCode Remote</strong> (L2 atomic)</p>
+<pre><code class="language-bash">vscode-setup [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--project=NAME</code> | Project-specific instructions |
+| <code>--container=NAME</code> | Container-specific instructions |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">vscode-setup                        # General setup guide
+vscode-setup --project=my-thesis    # Project-specific instructions
+vscode-setup --guided               # With explanations
+</code></pre>
+<p><strong>See:</strong> <a href="../../../core-guides/vscode-remote/">VSCode Remote Guide</a></p>
+<hr />
+<h2 id="shell-setup">shell-setup<a class="headerlink" href="#shell-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Fix PATH configuration</strong></p>
+<pre><code class="language-bash">shell-setup [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--check</code> | Verify PATH only |
+| <code>--force</code> | Reconfigure even if PATH already correct |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">shell-setup --check   # Verify PATH
+shell-setup           # Fix PATH
+shell-setup --guided  # With explanations
+</code></pre>
+<p><strong>Use when:</strong> DS01 commands not found in PATH</p>
+<hr />
+<h2 id="jupyter-setup">jupyter-setup<a class="headerlink" href="#jupyter-setup" title="Permanent link">&para;</a></h2>
+<p><strong>Configure Jupyter Lab access</strong></p>
+<pre><code class="language-bash">jupyter-setup [OPTIONS]
+</code></pre>
+<p>Configures Jupyter Lab access for the DS01 server.</p>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--guided</code> | Full setup with detailed explanations |
+| <code>--port-forward</code> | Show SSH port forwarding commands only |
+| <code>--brief</code> | Minimal output (for orchestrators) |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">jupyter-setup                 # Quick VS Code Jupyter extension setup
+jupyter-setup --guided        # Full guided setup
+jupyter-setup --port-forward  # Just port forwarding commands
+</code></pre>
+<p><strong>Use when:</strong> Setting up Jupyter Lab access from your local machine.</p>
+<hr />
+<h2 id="help">help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h2>
+<p><strong>Show all available commands</strong></p>
+<pre><code class="language-bash">help [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--atomic</code> | Show atomic container commands (advanced) |
+| <code>--admin</code> | Show admin commands (ds01-* prefix) |
+| <code>--inside</code> | Show inside-container commands |
+| <code>--full</code> | Show everything |</p>
+<p><strong>Alias:</strong> <code>commands</code> (identical functionality)</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">help              # Show main commands
+help --atomic     # Show advanced L2 commands
+help --admin      # Show admin tools
+help --full       # Show all commands
+</code></pre>
+<hr />
+<h2 id="version">version<a class="headerlink" href="#version" title="Permanent link">&para;</a></h2>
+<p><strong>Show DS01 version information</strong></p>
+<pre><code class="language-bash">version
+</code></pre>
+<p>Displays the current DS01 infrastructure version and build information.</p>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<h3 id="command-help">Command Help<a class="headerlink" href="#command-help" title="Permanent link">&para;</a></h3>
+<p>All commands support <code>--help</code>:</p>
+<pre><code class="language-bash">container-deploy --help
+image-create --help
+</code></pre>
+<h3 id="guided-mode">Guided Mode<a class="headerlink" href="#guided-mode" title="Permanent link">&para;</a></h3>
+<p>Most commands support <code>--guided</code>:</p>
+<pre><code class="language-bash">container-deploy my-project --guided
+image-create --guided
+</code></pre>
+<p><strong>Guided mode:</strong>
+- Explains each step
+- Educational prompts
+- Recommended for beginners</p>
+<hr />
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<h3 id="ds01-variables">DS01 Variables<a class="headerlink" href="#ds01-variables" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">DS01_INSTALL_DIR=/opt/ds01-infra
+DS01_WORKSPACE=~/workspace
+</code></pre>
+<h3 id="docker-variables">Docker Variables<a class="headerlink" href="#docker-variables" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">DOCKER_HOST=unix:///var/run/docker.sock
+</code></pre>
+<hr />
+<h2 id="exit-codes">Exit Codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>1</td>
+<td>General error</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Invalid arguments</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Resource unavailable (no GPUs, quota exceeded)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Container/image not found</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Permission denied</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Check exit code:</strong></p>
+<pre><code class="language-bash">container-deploy my-project
+echo $?
+</code></pre>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../container-commands/">Container Commands</a></li>
+<li><a href="../../getting-started/">Getting Started</a></li>
+<li><a href="../../troubleshooting/">Troubleshooting</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

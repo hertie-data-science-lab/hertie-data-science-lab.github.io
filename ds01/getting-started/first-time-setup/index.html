@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/getting-started/first-time-setup/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>First-Time Setup Guide - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "First-Time Setup Guide";
+        var mkdocs_page_input_path = "getting-started/first-time-setup.md";
+        var mkdocs_page_url = "/ds01/getting-started/first-time-setup/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">First-Time Setup Guide</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="first-time-setup-guide">First-Time Setup Guide<a class="headerlink" href="#first-time-setup-guide" title="Permanent link">&para;</a></h1>
+<p>Welcome! This guide walks you through setting up your DS01 account from scratch. By the end, you'll have:
+- SSH keys configured for secure access
+- Your first project workspace
+- A custom Docker image with your chosen ML framework
+- Your first running container</p>
+<hr />
+<h2 id="method-1-automated-setup-recommended">Method 1: Automated Setup (Recommended)<a class="headerlink" href="#method-1-automated-setup-recommended" title="Permanent link">&para;</a></h2>
+<h3 id="run-the-setup-wizard">Run the Setup Wizard<a class="headerlink" href="#run-the-setup-wizard" title="Permanent link">&para;</a></h3>
+<p>The <code>user-setup</code> command guides you through complete onboarding:</p>
+<pre><code class="language-bash">user-setup
+</code></pre>
+<h3 id="what-the-wizard-does">What the Wizard Does<a class="headerlink" href="#what-the-wizard-does" title="Permanent link">&para;</a></h3>
+<p><strong>Step 1: SSH Key Setup</strong></p>
+<pre><code>Setting up SSH keys for secure access...
+
+Do you have an existing SSH key? (y/n): n
+
+Generating new SSH key...
+✓ Created ~/.ssh/id_ed25519
+
+Your public key (add this to GitHub, GitLab, etc.):
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq... user@ds01
+</code></pre>
+<p><strong>What this means:</strong> SSH keys let you access Git repositories and remote services without typing passwords. The wizard creates a secure key pair for you.</p>
+<p><strong>Step 2: Project Initialisation</strong></p>
+<pre><code>Creating your first project...
+
+Project name: my-first-project
+Description: My first DS01 project
+
+✓ Created ~/workspace/my-first-project/
+✓ Initialized Git repository
+✓ Created README.md
+</code></pre>
+<p><strong>What this means:</strong> Your workspace is where all your code and data live. It's permanent storage - even when containers are removed, workspace files remain.</p>
+<p><strong>Step 3: Custom Image</strong></p>
+<pre><code>Building your custom Docker image...
+
+Choose ML framework:
+1) PyTorch 2.8.0 (CUDA 12.4)
+2) TensorFlow 2.16.1 (CUDA 12.3)
+3) JAX 0.4.23 (CUDA 12.3)
+
+Selection: 1
+
+Additional packages (comma-separated):
+Examples: scikit-learn, pandas, matplotlib
+&gt; scikit-learn, transformers, datasets
+
+Building image (this takes 5-10 minutes)...
+Phase 1/4: Base framework... ✓
+Phase 2/4: Jupyter Lab... ✓
+Phase 3/4: Data science packages... ✓
+Phase 4/4: Custom packages... ✓
+
+✓ Image built: ds01-your-username/my-first-project:latest
+</code></pre>
+<p><strong>What this means:</strong> A Docker image is like a blueprint for your computing environment. It contains Python, CUDA drivers, ML frameworks, and all your packages. </p>
+<p><strong>Step 4: Container Deployment</strong></p>
+<pre><code>Deploying your first container...
+
+Allocating GPU resources...
+✓ Allocated GPU 0:1 (MIG instance)
+
+Creating container...
+✓ Container created: my-first-project._.your-username
+
+Start container now? (y/n): y
+
+Starting container and opening terminal...
+
+Welcome to your DS01 container!
+Workspace: /workspace
+GPU: Available (check with nvidia-smi)
+
+your-username@my-first-project:/workspace$
+</code></pre>
+<p><strong>What this means:</strong> You now have a running container - an isolated computing environment with GPU access. Your workspace is mounted at <code>/workspace</code>.</p>
+<h3 id="inside-your-container">Inside Your Container<a class="headerlink" href="#inside-your-container" title="Permanent link">&para;</a></h3>
+<p>Try these commands to explore:</p>
+<pre><code class="language-bash"># Check your workspace
+ls /workspace
+pwd                             # Should show: /workspace
+
+# Verify GPU access
+nvidia-smi                      # Shows GPU info
+
+# Check Python and packages
+python --version
+python -c &quot;import torch; print(torch.cuda.is_available())&quot;
+
+# Start Jupyter (optional)
+jupyter lab --ip=0.0.0.0 --port=8888
+</code></pre>
+<h3 id="when-youre-done">When You're Done<a class="headerlink" href="#when-youre-done" title="Permanent link">&para;</a></h3>
+<p>Exit the container:</p>
+<pre><code class="language-bash">exit
+</code></pre>
+<p>Your container is still running. To free the GPU for others:</p>
+<pre><code class="language-bash">container-retire my-first-project
+</code></pre>
+<p><strong>Don't worry!</strong> Your workspace files are safe in <code>~/workspace/my-first-project/</code>. You can recreate the container anytime with <code>container-deploy my-first-project</code>.</p>
+<hr />
+<h2 id="method-2-manual-setup-step-by-step">Method 2: Manual Setup (Step-by-Step)<a class="headerlink" href="#method-2-manual-setup-step-by-step" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-ssh-key-setup-2-minutes">Step 1: SSH Key Setup (2 minutes)<a class="headerlink" href="#step-1-ssh-key-setup-2-minutes" title="Permanent link">&para;</a></h3>
+<p><strong>Why:</strong> SSH keys provide secure, password-less authentication for Git and remote services.</p>
+<pre><code class="language-bash"># Generate SSH key
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N &quot;&quot;
+
+# Display public key (copy this)
+cat ~/.ssh/id_ed25519.pub
+</code></pre>
+<p><strong>Add to GitHub/GitLab:</strong>
+1. Copy the public key output
+2. Go to GitHub → Settings → SSH Keys → Add SSH key
+3. Paste and save</p>
+<p><strong>Learn more:</strong> <a href="../../advanced/ssh-setup/">SSH Setup Guide</a></p>
+<h3 id="step-2-create-workspace-1-minute">Step 2: Create Workspace (1 minute)<a class="headerlink" href="#step-2-create-workspace-1-minute" title="Permanent link">&para;</a></h3>
+<p><strong>Why:</strong> Workspaces are permanent storage for your code and data.</p>
+<pre><code class="language-bash"># Create project directory
+mkdir -p ~/workspace/my-first-project
+cd ~/workspace/my-first-project
+
+# Initialize Git
+git init
+
+# Create README
+cat &gt; README.md &lt;&lt; 'EOF'
+# My First DS01 Project
+
+## Overview
+This is my first project on DS01.
+
+## Getting Started
+```bash
+container-deploy my-first-project --open
+</code></pre>
+<p>EOF</p>
+<p>git add README.md
+git commit -m "Initial commit"</p>
+<pre><code>
+**Where are my files?**
+- Host system: `~/workspace/my-first-project/`
+- Inside container: `/workspace/` (automatically mounted)
+
+### Step 3: Create Dockerfile (5 minutes)
+
+**Why:** Dockerfiles define your computing environment - what packages are installed.
+
+```bash
+# Create Dockerfile within projecet
+mkdir -p ~/my-first-project
+
+# Create your Dockerfile
+cat &gt; ~/my-first-project/Dockerfile &lt;&lt; 'EOF'
+# Phase 1: Base framework
+FROM henrycgbaker/aime-pytorch:2.8.0-cuda12.4-ubuntu22.04
+
+# Set working directory
+WORKDIR /workspace
+
+# Phase 2: Jupyter Lab
+RUN pip install --no-cache-dir \
+    jupyterlab \
+    ipywidgets \
+    matplotlib
+
+# Phase 3: Data science packages
+RUN pip install --no-cache-dir \
+    pandas \
+    numpy \
+    scikit-learn \
+    seaborn
+
+# Phase 4: Your custom packages
+RUN pip install --no-cache-dir \
+    transformers \
+    datasets \
+    accelerate
+
+# Expose Jupyter port
+EXPOSE 8888
+
+# Default command
+CMD [&quot;/bin/bash&quot;]
+EOF
+</code></pre>
+<p><strong>Customize this!</strong> Add packages you need:
+- Computer vision: <code>opencv-python</code>, <code>torchvision</code>, <code>albumentations</code>
+- NLP: <code>transformers</code>, <code>tokenizers</code>, <code>spacy</code>
+- Data: <code>polars</code>, <code>dask</code>, <code>pyarrow</code>
+- Plotting: <code>plotly</code>, <code>bokeh</code>, <code>altair</code></p>
+<p><strong>Learn more:</strong> <a href="../../advanced/dockerfile-complete-guide/">Complete Dockerfile Guide</a></p>
+<h3 id="step-4-build-image-7-10-minutes">Step 4: Build Image (7-10 minutes)<a class="headerlink" href="#step-4-build-image-7-10-minutes" title="Permanent link">&para;</a></h3>
+<p><strong>Why:</strong> Building creates a Docker image from your Dockerfile - your environment blueprint.</p>
+<p><strong>Recommended</strong> <code>image-create</code> / <code>image-update</code> -&gt; select dockerfile to build from</p>
+<pre><code class="language-bash"># Build image (this takes time - downloads base image and installs packages)
+docker build \
+  -t ds01-$(whoami)/my-first-project:latest \
+  -f ~/my-first-project/Dockerfile \
+  .
+
+# Verify image
+docker images | grep ds01-$(whoami)
+</code></pre>
+<p><strong>What's happening:</strong>
+1. Downloads base image (~5GB, one-time download)
+2. Installs Jupyter and extensions
+3. Installs data science packages
+4. Installs your custom packages
+5. Tags image with your username</p>
+<p><strong>Tip:</strong> This is slow the first time (downloading base image). Subsequent builds reuse cached layers.</p>
+<h3 id="step-5-deploy-container-1-minute">Step 5: Deploy Container (1 minute)<a class="headerlink" href="#step-5-deploy-container-1-minute" title="Permanent link">&para;</a></h3>
+<p><strong>Why:</strong> Containers are instances of your image - your actual computing environment.</p>
+<pre><code class="language-bash"># Deploy container with GPU
+container-deploy my-first-project --open
+</code></pre>
+<p><strong>Or manually:</strong></p>
+<pre><code class="language-bash"># Create container (allocates GPU, mounts workspace)
+container-create my-first-project
+
+# Start and enter
+container-attach my-first-project
+</code></pre>
+<h3 id="step-6-verify-setup">Step 6: Verify Setup<a class="headerlink" href="#step-6-verify-setup" title="Permanent link">&para;</a></h3>
+<p>Inside your container, run:</p>
+<pre><code class="language-bash"># Check location
+pwd                             # Should show: /workspace
+
+# Check GPU
+nvidia-smi                      # Should show GPU details
+
+# Check Python environment
+python --version                # Should be 3.10+
+pip list | grep torch           # Should show PyTorch 2.8.0
+
+# Quick test
+python -c &quot;import torch; print(f'CUDA available: {torch.cuda.is_available()}')&quot;
+python -c &quot;import torch; print(f'GPU count: {torch.cuda.device_count()}')&quot;
+</code></pre>
+<p>Expected output:</p>
+<pre><code>CUDA available: True
+GPU count: 1
+</code></pre>
+<hr />
+<h2 id="understanding-your-setup">Understanding Your Setup<a class="headerlink" href="#understanding-your-setup" title="Permanent link">&para;</a></h2>
+<h3 id="file-organisation">File Organisation<a class="headerlink" href="#file-organisation" title="Permanent link">&para;</a></h3>
+<pre><code>~/ (your home directory)
+├── workspace/
+│   └── my-first-project/           # ← Your code and data (PERSISTENT)
+│        ├── README.md
+|        ├── requirements.txt
+|        ├── pyproject.toml
+|        ├── Dockerfile
+│        ├── configs/
+│        ├── data/
+│        ├── models/
+│        ├── outputs/
+│        ├── notebooks/
+│        ├── scripts/
+│        └── tests/
+├─── hidden .files (ignore these)
+└── ONBOARDING.md
+</code></pre>
+<p><strong>Inside container:</strong></p>
+<pre><code>/ (container filesystem)
+└── workspace/                      # ← Mounted from ~/workspace/my-first-project/
+│     ├── README.md
+|     ├── requirements.txt
+|     ├── pyproject.toml
+|     ├── Dockerfile
+│     ├── configs/
+│     ├── data/
+│     ├── models/
+│     ├── outputs/
+│     ├── notebooks/
+│     ├── scripts/
+│     └── tests/
+</code></pre>
+<h3 id="whats-persistent-vs-ephemeral">What's Persistent vs Ephemeral<a class="headerlink" href="#whats-persistent-vs-ephemeral" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Persistent?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/workspace/</code></td>
+<td>✅ Yes</td>
+<td>Always safe, even after <code>container-retire</code></td>
+</tr>
+<tr>
+<td><code>~/dockerfiles/</code></td>
+<td>✅ Yes</td>
+<td>Image blueprints</td>
+</tr>
+<tr>
+<td>Docker images</td>
+<td>✅ Yes</td>
+<td>Can recreate containers</td>
+</tr>
+<tr>
+<td>Container instance</td>
+<td>❌ No</td>
+<td>Removed with <code>container-retire</code></td>
+</tr>
+<tr>
+<td>Files in <code>/tmp</code></td>
+<td>❌ No</td>
+<td>Inside container, not workspace</td>
+</tr>
+<tr>
+<td>GPU allocation</td>
+<td>❌ No</td>
+<td>Released when container stops</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Golden rule:</strong> Save everything important in <code>/workspace</code> (inside container) = <code>~/workspace/&lt;project&gt;/</code> (on host).</p>
+<hr />
+<h3 id="customise-your-environment">Customise Your Environment<a class="headerlink" href="#customise-your-environment" title="Permanent link">&para;</a></h3>
+<p>Want to add more packages?</p>
+<pre><code class="language-bash"># Use interactive GUI to add packages (recommended)
+image-update                  # Select image, add packages
+
+# Or manually edit Dockerfile (advanced)
+vim ~/dockerfiles/my-first-project.Dockerfile
+image-update my-first-project --rebuild
+
+# Then recreate container
+container-deploy my-first-project --open
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

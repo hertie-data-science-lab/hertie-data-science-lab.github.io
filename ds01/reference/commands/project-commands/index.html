@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/reference/commands/project-commands/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Project Commands - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Project Commands";
+        var mkdocs_page_input_path = "reference/commands/project-commands.md";
+        var mkdocs_page_url = "/ds01/reference/commands/project-commands/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Project Commands</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="project-commands">Project Commands<a class="headerlink" href="#project-commands" title="Permanent link">&para;</a></h1>
+<p>Commands for project initialisation and setup.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># Create new project (wizard)
+project init my-project
+
+# Launch existing project (smart - builds image if needed)
+project launch my-project
+
+# Individual steps
+dir-create my-project
+git-init my-project
+readme-create my-project
+</code></pre>
+<hr />
+<h2 id="recommended-workflow">Recommended Workflow<a class="headerlink" href="#recommended-workflow" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># One-time: Create project
+project init my-thesis --type=cv
+
+# Daily: Launch project
+project launch my-thesis
+
+# When done: Retire container
+container retire my-thesis
+</code></pre>
+<hr />
+<h2 id="project-init">project-init<a class="headerlink" href="#project-init" title="Permanent link">&para;</a></h2>
+<p><strong>Complete project initialisation</strong> (L4 wizard)</p>
+<pre><code class="language-bash">project-init [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--type=TYPE</code> | Project type: ml, cv, nlp, rl, audio, ts, llm, custom |
+| <code>--quick</code> | Skip interactive prompts, use defaults (type=ml) |
+| <code>--no-git</code> | Skip Git initialization |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">project-init                      # Interactive
+project-init my-research          # Specify name
+project-init my-thesis --type=cv  # Computer vision project
+project-init test --quick         # Quick setup with defaults
+</code></pre>
+<p><strong>What it does:</strong>
+1. <code>dir-create</code> - Creates <code>~/workspace/&lt;project&gt;/</code>
+2. <code>git-init</code> - Initializes Git repository
+3. <code>readme-create</code> - Generates README.md
+4. <code>image-create</code> - Builds custom Docker image
+5. <code>container-deploy</code> - Deploys first container</p>
+<p><strong>Equivalent to running all steps individually.</strong></p>
+<hr />
+<h2 id="project-launch">project-launch<a class="headerlink" href="#project-launch" title="Permanent link">&para;</a></h2>
+<p><strong>Launch container for existing project</strong> (L4 wizard)</p>
+<pre><code class="language-bash">project-launch [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--guided</code> | Educational mode |
+| <code>--open</code> | Start and enter terminal |
+| <code>--background</code> | Start in background |
+| <code>--rebuild</code> | Force rebuild image |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">project-launch              # Interactive (select from list)
+project-launch my-thesis    # Launch specific project
+project-launch my-thesis --open  # Launch and enter
+</code></pre>
+<p><strong>What it does:</strong>
+1. Shows menu of projects in <code>~/workspace/</code> (if no name given)
+2. Checks if Docker image exists
+3. If no image: runs <code>image-create</code> automatically
+4. Runs <code>container-deploy</code> to start container</p>
+<p><strong>Key difference from container-deploy:</strong>
+- <code>project-launch</code> = Smart (handles image creation automatically)
+- <code>container-deploy</code> = Direct (requires image to exist)</p>
+<hr />
+<h2 id="dir-create">dir-create<a class="headerlink" href="#dir-create" title="Permanent link">&para;</a></h2>
+<p><strong>Create workspace directory</strong> (L2 atomic)</p>
+<pre><code class="language-bash">dir-create &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--type=TYPE</code> | Structure type: data-science (default), blank |
+| <code>--force</code> | Overwrite existing directory |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">dir-create my-project               # Create with data-science structure
+dir-create my-project --type=blank  # Create empty directory
+dir-create my-project --guided      # With explanations
+</code></pre>
+<p>Creates standard directory structure:</p>
+<pre><code>~/workspace/my-project/
+├── data/{raw,processed,external}/
+├── models/checkpoints/
+├── notebooks/
+├── scripts/
+├── configs/
+├── outputs/{logs,figures}/
+└── tests/
+</code></pre>
+<hr />
+<h2 id="git-init">git-init<a class="headerlink" href="#git-init" title="Permanent link">&para;</a></h2>
+<p><strong>Initialize Git repository</strong> (L2 atomic)</p>
+<pre><code class="language-bash">git-init &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--user=NAME</code> | Git user name (prompts if not set) |
+| <code>--email=EMAIL</code> | Git user email (prompts if not set) |
+| <code>--remote=URL</code> | Add remote repository URL |
+| <code>--no-lfs</code> | Skip Git LFS setup |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">git-init my-project                           # Initialize Git
+git-init my-project --user=&quot;Jane&quot; --email=&quot;jane@example.com&quot;
+git-init my-project --remote=git@github.com:user/repo.git
+git-init my-project --guided                  # With explanations
+</code></pre>
+<p><strong>Features:</strong>
+- Comprehensive ML/DS <code>.gitignore</code>
+- Git LFS for large model files (<code>.pth</code>, <code>.pt</code>, <code>.h5</code>, <code>.ckpt</code>, <code>.bin</code>)
+- User config setup
+- Optional remote repository</p>
+<hr />
+<h2 id="readme-create">readme-create<a class="headerlink" href="#readme-create" title="Permanent link">&para;</a></h2>
+<p><strong>Generate README.md</strong> (L2 atomic)</p>
+<pre><code class="language-bash">readme-create &lt;project-name&gt; [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--type=TYPE</code> | Project type: ml (default), cv, nlp, rl |
+| <code>--desc="TEXT"</code> | Project description |
+| <code>--structure=TYPE</code> | Structure: data-science (default), blank |
+| <code>--commit</code> | Create initial Git commit (requires Git repo) |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">readme-create my-project                                # Basic README
+readme-create cv-project --type=cv --desc=&quot;Image classification&quot;
+readme-create my-project --commit                       # Create and commit
+readme-create my-project --guided                       # With explanations
+</code></pre>
+<p>Creates a template README with sections for project description, setup, usage, and license.</p>
+<hr />
+<h2 id="workflow-example">Workflow Example<a class="headerlink" href="#workflow-example" title="Permanent link">&para;</a></h2>
+<h3 id="using-project-init-recommended">Using project-init (recommended)<a class="headerlink" href="#using-project-init-recommended" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">project-init my-thesis
+# Handles everything automatically
+</code></pre>
+<h3 id="manual-setup">Manual setup<a class="headerlink" href="#manual-setup" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">dir-create my-thesis
+git-init my-thesis
+readme-create my-thesis
+image-create my-thesis
+container-deploy my-thesis --open
+</code></pre>
+<hr />
+<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<p>After <code>project-init</code>:</p>
+<pre><code>~/workspace/my-project/
+├── .git/              # Git repository
+├── .gitignore         # Python/DS ignores
+├── README.md          # Project documentation
+├── data/              # Data files (gitignored)
+├── notebooks/         # Jupyter notebooks
+├── src/               # Source code
+└── models/            # Saved models (gitignored)
+
+~/dockerfiles/
+└── my-project.Dockerfile  # Custom image definition
+</code></pre>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../container-commands/">Container Commands</a></li>
+<li><a href="../image-commands/">Image Commands</a></li>
+<li><a href="../../../core-guides/creating-projects/">Creating Projects Guide</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

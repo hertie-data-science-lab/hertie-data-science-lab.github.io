@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/getting-started/help-system/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Using the Help System - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Using the Help System";
+        var mkdocs_page_input_path = "getting-started/help-system.md";
+        var mkdocs_page_url = "/ds01/getting-started/help-system/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Using the Help System</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="using-the-help-system">Using the Help System<a class="headerlink" href="#using-the-help-system" title="Permanent link">&para;</a></h1>
+<p>DS01 commands have built-in help to guide you from beginner to expert.</p>
+<hr />
+<h2 id="four-help-modes">Four Help Modes<a class="headerlink" href="#four-help-modes" title="Permanent link">&para;</a></h2>
+<p>Every command supports <strong>four help modes</strong> - two for quick reference, two for learning:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Type</th>
+<th>When to Use</th>
+<th>What You Get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--help</code> or <code>-h</code></td>
+<td><strong>Quick Reference</strong></td>
+<td>Know the command, need syntax</td>
+<td>Usage, main options, examples</td>
+</tr>
+<tr>
+<td><code>--info</code></td>
+<td><strong>Full Reference</strong></td>
+<td>Need all options</td>
+<td>Complete documentation, all flags</td>
+</tr>
+<tr>
+<td><code>--concepts</code></td>
+<td><strong>Learn First</strong></td>
+<td>New to this concept</td>
+<td>Explains what something is before running</td>
+</tr>
+<tr>
+<td><code>--guided</code></td>
+<td><strong>Learn by Doing</strong></td>
+<td>First time using command</td>
+<td>Step-by-step with explanations</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-reference-help">Quick Reference: <code>--help</code><a class="headerlink" href="#quick-reference-help" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You know what the command does, just need the syntax.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">container-deploy --help
+</code></pre>
+<p><strong>Shows:</strong></p>
+<pre><code>DS01 Container Deploy
+L3 Orchestrator - Creates and starts containers in one command
+
+Usage:
+  container-deploy [name] [options]
+
+Options:
+  --guided          Show detailed explanations
+  --background      Start without attaching
+  --open            Start and open terminal
+  -h, --help        Show this help
+
+Examples:
+  container-deploy                  # Interactive wizard
+  container-deploy my-project       # Quick deploy
+  container-deploy my-project --open
+</code></pre>
+<p><strong>Fast, concise, straight to the point.</strong></p>
+<hr />
+<h2 id="full-reference-info">Full Reference: <code>--info</code><a class="headerlink" href="#full-reference-info" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You need to see ALL options and detailed examples.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">container-deploy --info
+</code></pre>
+<p><strong>Shows:</strong>
+- Complete option list
+- All subcommands
+- Multiple examples
+- Advanced use cases
+- Related commands</p>
+<p><strong>Like a man page, but friendlier.</strong></p>
+<hr />
+<h2 id="learn-the-concept-concepts">Learn the Concept: <code>--concepts</code><a class="headerlink" href="#learn-the-concept-concepts" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You're new to containers, images, or DS01 concepts.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">image-create --concepts
+</code></pre>
+<p><strong>Shows:</strong></p>
+<pre><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Understanding Docker Images
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What is a Docker Image?
+
+An image is like a recipe for creating containers. It defines:
+  • What software is installed (PyTorch, pandas, etc.)
+  • What system libraries are included
+  • How the environment is configured
+
+Think of it as a snapshot of a configured system.
+
+Container vs Image:
+  Image     →  Recipe/Blueprint (stored, sharable)
+  Container →  Running instance (temporary, for work)
+
+You can create many containers from one image.
+
+Why Images Matter:
+
+1. Reproducibility - Same environment every time
+2. Shareability - Give Dockerfile to colleagues
+3. Version Control - Track changes in git
+4. Efficiency - Rebuild containers instantly
+
+[Press Enter to continue or Ctrl+C to exit]
+</code></pre>
+<p><strong>Read this BEFORE running the command</strong> - builds understanding first.</p>
+<hr />
+<h2 id="learn-by-doing-guided">Learn by Doing: <code>--guided</code><a class="headerlink" href="#learn-by-doing-guided" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> First time using a command or want explanations during execution.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">image-create --guided
+</code></pre>
+<p><strong>What happens:</strong></p>
+<h3 id="1-explains-before-each-choice">1. Explains Before Each Choice<a class="headerlink" href="#1-explains-before-each-choice" title="Permanent link">&para;</a></h3>
+<pre><code>━━━ Framework Selection ━━━
+
+PyTorch, TensorFlow, and JAX are deep learning frameworks.
+
+PyTorch:
+  • Most popular for research
+  • Dynamic computation graphs
+  • Great for experimentation
+
+TensorFlow:
+  • Industry standard for production
+  • Static computation graphs
+  • Extensive tooling
+
+JAX:
+  • Cutting-edge research
+  • Fast on GPUs/TPUs
+  • Functional programming style
+
+Which framework do you want?
+  1) PyTorch 2.8.0 (recommended for research)
+  2) TensorFlow 2.16.1
+  3) JAX 0.4.23
+
+[Press Enter to see options]
+</code></pre>
+<h3 id="2-pauses-for-you-to-read">2. Pauses for You to Read<a class="headerlink" href="#2-pauses-for-you-to-read" title="Permanent link">&para;</a></h3>
+<pre><code>Press Enter to continue...
+</code></pre>
+<p>Gives you time to understand before proceeding.</p>
+<h3 id="3-shows-whats-happening">3. Shows What's Happening<a class="headerlink" href="#3-shows-whats-happening" title="Permanent link">&para;</a></h3>
+<pre><code>Building Docker image...
+────────────────────────────────────────────────
+  [Step 1/4] Downloading PyTorch base image...
+  [Step 2/4] Installing system packages...
+  [Step 3/4] Installing Python packages...
+  [Step 4/4] Configuring environment...
+────────────────────────────────────────────────
+</code></pre>
+<h3 id="4-explains-what-just-happened">4. Explains What Just Happened<a class="headerlink" href="#4-explains-what-just-happened" title="Permanent link">&para;</a></h3>
+<pre><code>━━━ What Just Happened? ━━━
+
+Your Docker image was built with:
+  • PyTorch 2.8.0 with CUDA 12.4
+  • pandas, numpy, matplotlib
+  • Jupyter Lab
+  • Your custom packages
+
+The image is stored as: ds01-username/my-project:latest
+
+You can create containers from this image anytime with:
+  project launch my-project
+</code></pre>
+<p><strong>Best for first-time users</strong> - learn while doing.</p>
+<hr />
+<h2 id="interactive-mode-no-arguments">Interactive Mode (No Arguments)<a class="headerlink" href="#interactive-mode-no-arguments" title="Permanent link">&para;</a></h2>
+<p><strong>When:</strong> You're not sure what arguments to provide.</p>
+<p><strong>Just run the command without anything:</strong></p>
+<pre><code class="language-bash"># These all start interactive wizards
+project init
+container deploy
+image create
+</code></pre>
+<p><strong>What happens:</strong>
+- Command asks questions
+- Presents menus
+- Guides you through options
+- No need to memorise flags</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">container-deploy
+</code></pre>
+<p><strong>Shows:</strong></p>
+<pre><code>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DS01 Container Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Select a project to deploy:
+
+  1) my-thesis          (PyTorch 2.8.0)
+  2) research-2024      (TensorFlow 2.16.1)
+  3) experiments        (JAX 0.4.23)
+
+Choice [1-3]:
+</code></pre>
+<p><strong>Friendly, menu-driven, no flags needed.</strong></p>
+<hr />
+<h2 id="quick-command-reference-commands">Quick Command Reference: <code>commands</code><a class="headerlink" href="#quick-command-reference-commands" title="Permanent link">&para;</a></h2>
+<p><strong>See everything available:</strong></p>
+<pre><code class="language-bash">commands
+</code></pre>
+<p><strong>Shows:</strong>
+- All DS01 commands
+- Organised by category
+- Brief descriptions
+- Common workflows</p>
+<p><strong>Like a cheat sheet</strong> - quick lookup of what's available.</p>
+<hr />
+<h2 id="combining-help-modes">Combining Help Modes<a class="headerlink" href="#combining-help-modes" title="Permanent link">&para;</a></h2>
+<h3 id="pattern-1-beginner-learning">Pattern 1: Beginner Learning<a class="headerlink" href="#pattern-1-beginner-learning" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 1. Learn concept first
+image-create --concepts
+
+# 2. Run with guidance
+image-create --guided
+
+# 3. Second run: interactive
+image-create
+
+# 4. Later: Quick reference
+image-create --help
+
+# 5. Finally: experienced, run non-interactively as CLI
+image-create my-project -f pytorch -t nlp
+</code></pre>
+<hr />
+<h2 id="help-for-subcommands">Help for Subcommands<a class="headerlink" href="#help-for-subcommands" title="Permanent link">&para;</a></h2>
+<p><strong>Dispatchers have help too:</strong></p>
+<pre><code class="language-bash"># See all container commands
+container help
+
+# Help for specific subcommand
+container deploy --help
+container retire --help
+</code></pre>
+<p><strong>Also works:</strong></p>
+<pre><code class="language-bash"># Hyphenated form
+container-deploy --help
+</code></pre>
+<p>Both formats are equivalent.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

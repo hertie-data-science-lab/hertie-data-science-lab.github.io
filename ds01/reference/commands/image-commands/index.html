@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/reference/commands/image-commands/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Image Commands - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Image Commands";
+        var mkdocs_page_input_path = "reference/commands/image-commands.md";
+        var mkdocs_page_url = "/ds01/reference/commands/image-commands/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../../troubleshooting/file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Image Commands</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="image-commands">Image Commands<a class="headerlink" href="#image-commands" title="Permanent link">&para;</a></h1>
+<p>Commands for Docker image management.</p>
+<hr />
+<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<p>All image commands support these flags:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--help</code></td>
+<td>Quick reference (usage, main options)</td>
+</tr>
+<tr>
+<td><code>--info</code></td>
+<td>Full reference (all options, examples)</td>
+</tr>
+<tr>
+<td><code>--concepts</code></td>
+<td>Pre-run education (what is an image?)</td>
+</tr>
+<tr>
+<td><code>--guided</code></td>
+<td>Interactive learning (explanations during)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">image-create --concepts   # Learn about images before creating
+image-update --info       # See all update options
+</code></pre>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># Build custom image
+image-create my-project
+
+# List your images
+image-list
+
+# Update image (interactive GUI - recommended)
+image-update                  # Select image, add/remove packages
+
+# Rebuild after manual Dockerfile edit (advanced)
+image-update my-project --rebuild
+
+# Delete image
+image-delete my-project
+</code></pre>
+<hr />
+<h2 id="image-create">image-create<a class="headerlink" href="#image-create" title="Permanent link">&para;</a></h2>
+<p><strong>Build custom Docker image</strong> (L2 atomic)</p>
+<pre><code class="language-bash">image-create [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>-f, --framework NAME</code> | Base framework (pytorch, tensorflow, jax) |
+| <code>-t, --type TYPE</code> | Use case type: ml, cv, nlp, rl, audio, ts, llm, custom |
+| <code>-p, --packages "pkg1 pkg2"</code> | Additional Python packages |
+| <code>-s, --system "pkg1 pkg2"</code> | System packages via apt |
+| <code>-r, --requirements FILE</code> | Import from requirements.txt |
+| <code>--dockerfile PATH</code> | Use existing Dockerfile (skip creation) |
+| <code>--project-dockerfile</code> | Store Dockerfile in project dir |
+| <code>--no-build</code> | Create Dockerfile only, don't build |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">image-create                                    # Interactive
+image-create my-project -f pytorch -t cv        # CV project with PyTorch
+image-create nlp-exp -t nlp -p &quot;wandb optuna&quot;   # NLP with extra packages
+image-create my-proj -r ~/workspace/my-proj/requirements.txt  # From requirements
+image-create custom --no-build                  # Just create Dockerfile
+</code></pre>
+<p><strong>Use case types:</strong>
+- <code>ml</code> - General ML (xgboost, lightgbm, shap, optuna)
+- <code>cv</code> - Computer Vision (timm, ultralytics, kornia)
+- <code>nlp</code> - NLP (transformers, peft, safetensors)
+- <code>rl</code> - Reinforcement Learning (gymnasium, stable-baselines3)
+- <code>audio</code> - Audio/Speech (librosa, soundfile)
+- <code>ts</code> - Time Series (statsmodels, prophet, darts)
+- <code>llm</code> - LLM/GenAI (vllm, bitsandbytes, langchain)
+- <code>custom</code> - Specify packages manually</p>
+<p><strong>Result:</strong> Image tagged as <code>ds01-&lt;user&gt;/&lt;project&gt;:latest</code></p>
+<p><strong>Time:</strong> 5-15 minutes (first build), faster with cached layers</p>
+<hr />
+<h2 id="image-list">image-list<a class="headerlink" href="#image-list" title="Permanent link">&para;</a></h2>
+<p><strong>List your Docker images</strong> (L2 atomic)</p>
+<pre><code class="language-bash">image-list [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>-a, --all</code> | Show all images (not just yours) |
+| <code>-s, --size</code> | Show image sizes |
+| <code>-d, --detailed</code> | Show detailed info with Dockerfile locations |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">image-list              # List your images
+image-list --all        # List all images on server
+image-list --detailed   # Show detailed info with Dockerfile locations
+image-list --size       # Include image sizes
+</code></pre>
+<p><strong>Example output:</strong></p>
+<pre><code>REPOSITORY              TAG      SIZE     CREATED
+ds01-alice/my-project   latest   8.2GB    2 days ago
+ds01-alice/experiment   latest   7.9GB    1 week ago
+</code></pre>
+<hr />
+<h2 id="image-update">image-update<a class="headerlink" href="#image-update" title="Permanent link">&para;</a></h2>
+<p><strong>Update existing image with package management</strong> (L2 atomic)</p>
+<pre><code class="language-bash">image-update [project-name] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--add "pkg1 pkg2"</code> | Add Python packages directly |
+| <code>--add-system "pkg1"</code> | Add system packages via apt |
+| <code>-r, --requirements FILE</code> | Import from requirements.txt |
+| <code>--rebuild</code> | Rebuild image without modifying Dockerfile |
+| <code>--no-cache</code> | Force rebuild without cache |
+| <code>--edit</code> | Edit Dockerfile manually (advanced) |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Recommended: Interactive GUI
+image-update                         # Select image, add/remove packages
+
+# Advanced: After manual Dockerfile edit
+image-update my-project --rebuild    # Rebuild without prompts
+image-update my-project --no-cache   # Force complete rebuild
+image-update my-project --add &quot;wandb optuna&quot;  # Quick add from CLI
+</code></pre>
+<p><strong>When to use:</strong>
+- <strong>No arguments</strong> (recommended): Interactive GUI to add/remove packages
+- <code>--rebuild</code>: Dockerfile was edited manually, or base image updated
+- <code>--add</code>: Quick package additions from command line</p>
+<p><strong>Note:</strong> Uses existing Dockerfile at <code>~/dockerfiles/&lt;project&gt;.Dockerfile</code> or <code>~/workspace/&lt;project&gt;/Dockerfile</code></p>
+<hr />
+<h2 id="image-delete">image-delete<a class="headerlink" href="#image-delete" title="Permanent link">&para;</a></h2>
+<p><strong>Remove Docker image</strong> (L2 atomic)</p>
+<pre><code class="language-bash">image-delete [image-name...] [OPTIONS]
+</code></pre>
+<p><strong>Options:</strong>
+| Option | Description |
+|--------|-------------|
+| <code>--all</code> | Delete all your images (with confirmation) |
+| <code>-f, --force</code> | Force removal (stop/remove containers first) |
+| <code>--keep-dockerfile</code> | Don't delete the associated Dockerfile |
+| <code>--guided</code> | Educational mode |</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash">image-delete my-project                    # Remove image (with confirmation)
+image-delete img1 img2 img3                # Bulk delete multiple images
+image-delete --all                         # Remove all your images
+image-delete my-project --force            # Force remove (stops containers first)
+image-delete my-project --keep-dockerfile  # Keep Dockerfile for later rebuild
+</code></pre>
+<p><strong>Note:</strong> Containers using this image must be removed first (or use --force)</p>
+<hr />
+<h2 id="image-naming-convention">Image Naming Convention<a class="headerlink" href="#image-naming-convention" title="Permanent link">&para;</a></h2>
+<pre><code>ds01-&lt;username&gt;/&lt;project-name&gt;:latest
+      ↑              ↑           ↑
+      Your user ID   Project     Tag
+</code></pre>
+<p><strong>Examples:</strong>
+- <code>ds01-alice/thesis:latest</code>
+- <code>ds01-bob/experiment-42:latest</code></p>
+<hr />
+<h2 id="image-tagging">Image Tagging<a class="headerlink" href="#image-tagging" title="Permanent link">&para;</a></h2>
+<p>Tag images to save working environments:</p>
+<pre><code class="language-bash"># Tag current state
+docker tag ds01-alice/project:latest ds01-alice/project:working-v1
+
+# List tags
+docker images ds01-alice/project
+
+# Use specific tag
+container-deploy --image ds01-alice/project:working-v1
+</code></pre>
+<hr />
+<h2 id="dockerfile-location">Dockerfile Location<a class="headerlink" href="#dockerfile-location" title="Permanent link">&para;</a></h2>
+<p>Images are built from Dockerfiles at:</p>
+<pre><code>~/dockerfiles/&lt;project-name&gt;.Dockerfile
+# or
+~/workspace/&lt;project-name&gt;/Dockerfile
+</code></pre>
+<p><strong>Recommended:</strong> Use <code>image-update</code> interactive GUI to manage packages.</p>
+<p><strong>Advanced:</strong> Edit Dockerfile directly:</p>
+<pre><code class="language-bash">vim ~/dockerfiles/my-project.Dockerfile
+image-update my-project --rebuild
+</code></pre>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../container-commands/">Container Commands</a></li>
+<li><a href="../../../core-guides/custom-images/">Custom Images Guide</a></li>
+<li><a href="../../../advanced/dockerfile-complete-guide/">Complete Dockerfile Guide</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

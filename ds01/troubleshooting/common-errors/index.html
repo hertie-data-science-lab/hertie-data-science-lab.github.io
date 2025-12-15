@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hertie-data-science-lab.github.io/ds01/troubleshooting/common-errors/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Common Errors - DS01 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Common Errors";
+        var mkdocs_page_input_path = "troubleshooting/common-errors.md";
+        var mkdocs_page_url = "/ds01/troubleshooting/common-errors/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DS01 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quick-reference/">Quick Reference</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites/">Prerequisites</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/first-connection.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-container/">First Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/basic-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../getting-started/next-steps.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/jupyter-notebooks.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/vscode-remote/">VSCode Remote Development</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/file-transfers.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/gpu-usage/">Working with GPUs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/python-environments.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/installing-packages.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-guides/long-running-jobs/">Long-Running Jobs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/monitoring-resources.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/container-management.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../core-guides/data-persistence.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Intermediate</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/command-hierarchy/">Command Hierarchy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../intermediate/atomic-commands/">Atomic Commands Reference</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/command-options.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/working-with-output.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/shell-scripting.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/common-patterns.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../intermediate/aliases-functions.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/docker-builds.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/ssh-config.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/terminal-workflow.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/batch-jobs/">Batch Jobs and Non-Interactive Execution</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/multi-gpu.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/performance-tuning.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/reproducible-research.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../advanced/debugging-containers.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Key Concepts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/container-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../key-concepts/ephemeral-containers/">Ephemeral Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/persistence-model.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/resource-sharing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../key-concepts/workflow-patterns.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Background</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../background/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/linux-foundations.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/command-line-basics.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/file-systems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/processes-jobs.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/containers-docker.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/remote-computing.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/servers-cloud.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../background/security-basics.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/ds-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/docker-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/linux-commands.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/file-locations/">File Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/environment-variables.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/port-mappings.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/gpu-specifications.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/glossary/">Glossary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/faq.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../reference/external-resources.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../connection-issues.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../container-problems.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../gpu-issues/">GPU Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../file-issues.md">None</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DS01 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Common Errors</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="common-errors">Common Errors<a class="headerlink" href="#common-errors" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
+</blockquote>
+<hr />
+<h2 id="file-issues">File Issues<a class="headerlink" href="#file-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-find-my-files-files-missing">Can't Find My Files {#files-missing}<a class="headerlink" href="#cant-find-my-files-files-missing" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong>
+- Files missing from container
+- Workspace appears empty</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Check both locations:</strong>
+   ```bash
+   # On host
+   ls ~/workspace/<project-name>/</li>
+</ol>
+<p># In container
+   docker exec <project-name>._.$(whoami) ls /workspace/
+   ```</p>
+<ol>
+<li>
+<p><strong>Remember the mapping:</strong>
+   <code>Host:      ~/workspace/&lt;project-name&gt;/
+   Container: /workspace/</code></p>
+</li>
+<li>
+<p><strong>Verify workspace mount:</strong>
+   <code>bash
+   docker inspect &lt;project-name&gt;._.$(whoami) | grep -A 5 "Mounts"</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="permission-denied-on-files-permission-denied">Permission Denied on Files {#permission-denied}<a class="headerlink" href="#permission-denied-on-files-permission-denied" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre><code class="language-bash">$ touch /workspace/file.txt
+Permission denied
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check ownership:</strong>
+   <code>bash
+   ls -ld ~/workspace/&lt;project-name&gt;/
+   # Should be owned by you</code></p>
+</li>
+<li>
+<p><strong>Fix permissions (on host):</strong>
+   <code>bash
+   sudo chown -R $(whoami):$(whoami) ~/workspace/&lt;project-name&gt;/</code></p>
+</li>
+<li>
+<p><strong>Check disk space:</strong>
+   <code>bash
+   df -h | grep home</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="out-of-disk-space-disk-space">Out of Disk Space {#disk-space}<a class="headerlink" href="#out-of-disk-space-disk-space" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre><code class="language-bash">No space left on device
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<p>Best to notify DSL admin by raising an issue ticket in <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">ds01-hub repo</a>. Most user permissions are restricted so you will not be able to do a full clean of docker/disk except from those files related to you (limited). </p>
+<ol>
+<li><strong>Check usage:</strong>
+   ```bash
+   # Workspace
+   du -sh ~/workspace/*</li>
+</ol>
+<p># Docker
+   docker system df
+   ```</p>
+<ol>
+<li><strong>Clean up:</strong>
+   ```bash
+   # Remove old projects
+   rm -rf ~/workspace/old-project/</li>
+</ol>
+<p># Clean Docker
+   docker image prune
+   docker system prune</p>
+<p># Remove old checkpoints
+   find ~/workspace -name "checkpoint-*.pt" -mtime +30 -delete
+   ```</p>
+<hr />
+<h2 id="permission-issues">Permission Issues<a class="headerlink" href="#permission-issues" title="Permanent link">&para;</a></h2>
+<h3 id="docker-permission-denied-docker-permission">Docker Permission Denied {#docker-permission}<a class="headerlink" href="#docker-permission-denied-docker-permission" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre><code class="language-bash">$ docker ps
+Permission denied while trying to connect to the Docker daemon socket
+</code></pre>
+<p><strong>Cause:</strong> Not in <code>docker</code> group</p>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Check groups
+groups | grep docker
+</code></pre>
+<h2 id="if-not-in-docker-group-ask-dsl-admin-to-add-you">If not in docker group, ask DSL admin to add you<a class="headerlink" href="#if-not-in-docker-group-ask-dsl-admin-to-add-you" title="Permanent link">&para;</a></h2>
+<h3 id="commands-not-found-commands-not-found">Commands Not Found {#commands-not-found}<a class="headerlink" href="#commands-not-found-commands-not-found" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre><code class="language-bash">$ container-deploy my-project
+bash: container-deploy: command not found
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check PATH:</strong>
+   <code>bash
+   echo $PATH | grep ds01</code></p>
+</li>
+<li>
+<p><strong>Use full path:</strong>
+   <code>bash
+   /opt/ds01-infra/scripts/user/orchestrators/container-deploy my-project</code></p>
+</li>
+<li>
+<p><strong>Fix PATH:</strong>
+   <code>bash
+   shell-setup
+   source ~/.bashrc</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="network-issues">Network Issues<a class="headerlink" href="#network-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-access-jupyter-jupyter-access">Can't Access Jupyter {#jupyter-access}<a class="headerlink" href="#cant-access-jupyter-jupyter-access" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong>
+- Jupyter running but can't access in browser</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check Jupyter is running:</strong>
+   <code>bash
+   docker exec &lt;project-name&gt;._.$(whoami) ps aux | grep jupyter</code></p>
+</li>
+<li>
+<p><strong>Check port:</strong>
+   <code>bash
+   docker port &lt;project-name&gt;._.$(whoami)</code></p>
+</li>
+<li>
+<p><strong>Set up SSH tunnel:</strong>
+   ```bash
+   # On your laptop
+   ssh -L 8888:localhost:8888 <user-id>@ds01</p>
+</li>
+</ol>
+<p># Then access: http://localhost:8888
+   ```</p>
+<ol>
+<li><strong>Start Jupyter correctly:</strong>
+   <code>bash
+   jupyter lab --ip=0.0.0.0 --port=8888 --no-browser</code></li>
+</ol>
+<hr />
+<h2 id="git-issues">Git Issues<a class="headerlink" href="#git-issues" title="Permanent link">&para;</a></h2>
+<h3 id="cant-push-to-github">Can't Push to GitHub<a class="headerlink" href="#cant-push-to-github" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong></p>
+<pre><code class="language-bash">$ git push
+Permission denied (publickey)
+</code></pre>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check SSH key:</strong>
+   <code>bash
+   ls ~/.ssh/
+   cat ~/.ssh/id_ed25519.pub</code></p>
+</li>
+<li>
+<p><strong>Add key to GitHub:</strong></p>
+</li>
+<li>Copy public key</li>
+<li>
+<p>GitHub → Settings → SSH Keys → Add</p>
+</li>
+<li>
+<p><strong>Test connection:</strong>
+   <code>bash
+   ssh -T git@github.com</code></p>
+</li>
+<li>
+<p><strong>Use HTTPS instead:</strong>
+   <code>bash
+   git remote set-url origin https://github.com/user/repo.git</code></p>
+</li>
+</ol>
+<hr />
+<h2 id="resource-limits">Resource Limits<a class="headerlink" href="#resource-limits" title="Permanent link">&para;</a></h2>
+<h3 id="memory-limit-exceeded">Memory Limit Exceeded<a class="headerlink" href="#memory-limit-exceeded" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong>
+- Container killed
+- OOMKilled in logs</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>
+<p><strong>Check limits:</strong>
+   <code>bash
+   check-limits</code></p>
+</li>
+<li>
+<p><strong>Reduce memory usage:</strong></p>
+</li>
+<li>Process data in chunks</li>
+<li>Use data generators</li>
+<li>Clear variables when done</li>
+</ol>
+<hr />
+<h2 id="error-message-reference">Error Message Reference<a class="headerlink" href="#error-message-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Meaning</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>No GPUs available</code></td>
+<td>All GPUs allocated</td>
+<td>Wait or retire old containers</td>
+</tr>
+<tr>
+<td><code>OOMKilled</code></td>
+<td>Out of memory</td>
+<td>Reduce memory usage</td>
+</tr>
+<tr>
+<td><code>Permission denied</code></td>
+<td>Not in docker group or file permissions</td>
+<td>Check groups, fix permissions</td>
+</tr>
+<tr>
+<td><code>Container not found</code></td>
+<td>Container removed or wrong name</td>
+<td>Recreate or check name</td>
+</tr>
+<tr>
+<td><code>Image not found</code></td>
+<td>Image doesn't exist</td>
+<td>Build image first</td>
+</tr>
+<tr>
+<td><code>Network unreachable</code></td>
+<td>Network issue</td>
+<td>Check network, retry</td>
+</tr>
+<tr>
+<td><code>Quota exceeded</code></td>
+<td>Hit disk quota</td>
+<td>Clean up old files</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../container-issues/">Container Issues</a></li>
+<li><a href="../gpu-issues/">GPU Issues</a></li>
+<li><a href="../image-issues/">Image Issues</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
