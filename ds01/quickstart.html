@@ -247,6 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -320,12 +321,42 @@
 <hr />
 <h2 id="step-1-connect-via-ssh">Step 1: Connect via SSH<a class="headerlink" href="#step-1-connect-via-ssh" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>NB: requires you are connected via Hertie campus Wi-Fi or VPN connection. Contact IT service desk if you need VPN acess.</p>
+<p>NB: requires you are connected via Hertie campus Wi-Fi or VPN connection. Contact IT service desk if you need VPN access.</p>
 </blockquote>
 <p>From your laptop terminal:</p>
-<pre class="codehilite"><code class="language-bash">ssh &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+<pre class="codehilite"><code class="language-bash">ssh &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
+<p>Your username depends on your account type:</p>
+<table>
+<thead>
+<tr>
+<th>Account type</th>
+<th>Username format</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master's student</td>
+<td><code>&lt;student-id&gt;@hertie-school.lan</code></td>
+<td><code>212345@hertie-school.lan</code></td>
+</tr>
+<tr>
+<td>PhD student</td>
+<td><code>&lt;student-id&gt;@hertie-school.lan</code></td>
+<td><code>197968@hertie-school.lan</code></td>
+</tr>
+<tr>
+<td>Staff / faculty</td>
+<td><code>&lt;firstname&gt;.&lt;lastname&gt;@hertie-school.lan</code></td>
+<td><code>j.smith@hertie-school.lan</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> <code>@hertie-school.lan</code> is the canonical internal domain and works for all account types. You can also use your email domain (e.g. <code>@students.hertie-school.org</code>, <code>@phd.hertie-school.org</code>, or <code>@hertie-school.org</code> for staff) — these resolve to <code>@hertie-school.lan</code> automatically.</p>
+</blockquote>
 <p>If you don't have SSH keys set up, you'll be prompted for your usual Hertie Microsoft password.</p>
 <hr />
 <h2 id="step-2-run-first-time-setup">Step 2: Run First-Time Setup<a class="headerlink" href="#step-2-run-first-time-setup" title="Permanent link">&para;</a></h2>

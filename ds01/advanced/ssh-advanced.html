@@ -247,6 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -323,7 +324,7 @@
 <p>Create <code>~/.ssh/config</code> on your laptop:</p>
 <pre class="codehilite"><code>Host ds01
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     IdentityFile ~/.ssh/id_ed25519
     ForwardAgent yes
 </code></pre>
@@ -333,7 +334,7 @@
 </code></pre>
 
 <p>Without SSH config, use the full format:</p>
-<pre class="codehilite"><code class="language-bash">ssh &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+<pre class="codehilite"><code class="language-bash">ssh &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
 <hr />
@@ -348,7 +349,7 @@ ssh-keygen -t rsa -b 4096 -C &quot;your-email@example.com&quot;
 
 <h3 id="copy-to-ds01">Copy to DS01<a class="headerlink" href="#copy-to-ds01" title="Permanent link">&para;</a></h3>
 <pre class="codehilite"><code class="language-bash">ssh-copy-id ds01
-# Without SSH config: ssh-copy-id &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH config: ssh-copy-id &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
 <p>Or manually:</p>
@@ -370,7 +371,7 @@ ssh -A ds01
 <h3 id="jupyter">Jupyter<a class="headerlink" href="#jupyter" title="Permanent link">&para;</a></h3>
 <pre class="codehilite"><code class="language-bash"># Forward port 8888
 ssh -L 8888:localhost:8888 ds01
-# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 
 # Access at http://localhost:8888
 </code></pre>
@@ -389,7 +390,7 @@ ssh -L 6006:localhost:6006 ds01
 <h3 id="in-ssh-config">In SSH Config<a class="headerlink" href="#in-ssh-config" title="Permanent link">&para;</a></h3>
 <pre class="codehilite"><code>Host ds01
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     LocalForward 8888 localhost:8888
     LocalForward 6006 localhost:6006
 </code></pre>
@@ -400,7 +401,7 @@ ssh -L 6006:localhost:6006 ds01
 <p>Add to <code>~/.ssh/config</code>:</p>
 <pre class="codehilite"><code>Host ds01
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     ControlMaster auto
     ControlPath ~/.ssh/sockets/%r@%h-%p
     ControlPersist 600
@@ -482,7 +483,7 @@ rsync -avz ds01:~/workspace/project/models/ ./models/
 <h3 id="config-for-vs-code">Config for VS Code<a class="headerlink" href="#config-for-vs-code" title="Permanent link">&para;</a></h3>
 <pre class="codehilite"><code>Host ds01
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     ForwardAgent yes
 </code></pre>
 
@@ -491,7 +492,7 @@ rsync -avz ds01:~/workspace/project/models/ ./models/
 <h3 id="connection-refused">Connection Refused<a class="headerlink" href="#connection-refused" title="Permanent link">&para;</a></h3>
 <pre class="codehilite"><code class="language-bash"># Check SSH is running
 ssh -v ds01
-# Without SSH config: ssh -v &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH config: ssh -v &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
 <h3 id="permission-denied">Permission Denied<a class="headerlink" href="#permission-denied" title="Permanent link">&para;</a></h3>

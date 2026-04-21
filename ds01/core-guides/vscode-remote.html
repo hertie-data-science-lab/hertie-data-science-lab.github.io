@@ -247,6 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -355,7 +356,7 @@ container-deploy &lt;project-name&gt; --background</code></p>
 <p>Add to <code>~/.ssh/config</code>:</p>
 <pre class="codehilite"><code>Host ds01-container
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     RemoteCommand docker exec -it &lt;project-name&gt;._.&lt;user-id&gt; bash
     RequestTTY yes
 </code></pre>

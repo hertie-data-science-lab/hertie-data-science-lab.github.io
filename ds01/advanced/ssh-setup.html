@@ -247,6 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -347,16 +348,17 @@ ssh -T git@gitlab.com
 <p>Create <code>~/.ssh/config</code>:</p>
 <pre class="codehilite"><code>Host ds01
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     IdentityFile ~/.ssh/id_ed25519
 </code></pre>
 
+<p>Replace <code>&lt;your-username&gt;</code> with your Hertie username (e.g. <code>212345</code> for students, <code>j.smith</code> for staff). Your email domain (e.g. <code>@students.hertie-school.org</code>, <code>@phd.hertie-school.org</code>) also works — it resolves to <code>@hertie-school.lan</code> automatically.</p>
 <p><strong>Usage:</strong></p>
 <pre class="codehilite"><code class="language-bash">ssh ds01  # Instead of the full format below
 </code></pre>
 
 <p><strong>Without SSH config:</strong></p>
-<pre class="codehilite"><code class="language-bash">ssh &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+<pre class="codehilite"><code class="language-bash">ssh &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>First Container - DS01 Documentation</title>
+  <title>VS Code Dev Containers - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li><a href="index.html">Getting Started</a></li><li>First Container</li>
+            <li><a href="index.html">Core Guides</a></li><li>VS Code Dev Containers</li>
           </ol>
         </div>
       </div>
@@ -234,7 +234,7 @@
 <li><span class="section-title"><a href="quick-reference.html">Quick Reference</a></span></li>
 <li><span class="section-title"><a href="getting-started/index.html">Getting Started</a></span>
 <ul>
-<li><a href="getting-started/first-container.html" class="active">First Container</a></li>
+<li><a href="getting-started/first-container.html">First Container</a></li>
 <li><a href="getting-started/first-time-setup.html">First-Time Setup Guide</a></li>
 <li><a href="getting-started/help-system.html">Using the Help System</a></li>
 <li><a href="getting-started/prerequisites.html">Prerequisites</a></li>
@@ -247,7 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
-<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
+<li><a href="core-guides/devcontainers.html" class="active">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -317,112 +317,316 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="first-container">First Container<a class="headerlink" href="#first-container" title="Permanent link">&para;</a></h1>
-<p>Deploy your first container in &lt;30 minutes.</p>
-<hr />
+            <h1 id="vs-code-dev-containers">VS Code Dev Containers<a class="headerlink" href="#vs-code-dev-containers" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Status: Experimental</strong> - This workflow is in active development. Please report issues.</p>
+</blockquote>
+<p>Use VS Code Dev Containers to launch DS01 GPU containers directly from your local machine.</p>
+<h2 id="what-are-dev-containers">What are Dev Containers?<a class="headerlink" href="#what-are-dev-containers" title="Permanent link">&para;</a></h2>
+<p>Dev containers are a VS Code feature that launches a container when you open a project folder. Instead of SSH-ing to DS01 and running <code>container deploy</code>, you:</p>
+<ol>
+<li>Open a folder in VS Code</li>
+<li>VS Code sees the <code>devcontainer.json</code> file</li>
+<li>VS Code builds/starts the container and connects automatically</li>
+</ol>
+<p><strong>Key difference from Remote-SSH:</strong><br />
+- <strong>Remote-SSH</strong>: You SSH to DS01, then start a container manually<br />
+- <strong>Dev Containers</strong>: VS Code handles the container lifecycle for you</p>
+<h2 id="when-to-use-dev-containers">When to Use Dev Containers<a class="headerlink" href="#when-to-use-dev-containers" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Recommended Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GUI-heavy, edit-run-debug cycles</td>
+<td>Dev Containers</td>
+</tr>
+<tr>
+<td>Long-running training jobs</td>
+<td>CLI (<code>container deploy</code>)</td>
+</tr>
+<tr>
+<td>Quick SSH-based editing</td>
+<td>Remote-SSH</td>
+</tr>
+<tr>
+<td>Need terminal control</td>
+<td>CLI (<code>container deploy</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Dev containers are ideal when you want VS Code to manage everything automatically.</p>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<pre class="codehilite"><code class="language-bash"># 1. First-time setup (run once)
-user-setup
-
-# 2. Setup Project (per project)
-project-init --guided
-
-# 3a. Launch project (every login)
-project launch --guided
-
-#3b OR container-oriented workflow
-image-create           # Once (then image-update for adding packages)
-container-deploy my-project --open # Every login
-
-# 3. You're now inside the container
-# Work in /workspace - files here are persistent
-
-# 4. When done
-exit
-container-retire my-project
-</code></pre>
-
-<hr />
-<h2 id="work-inside-container">Work Inside Container<a class="headerlink" href="#work-inside-container" title="Permanent link">&para;</a></h2>
-<pre class="codehilite"><code class="language-bash"># You're now inside the container
-user@my-project:/workspace$
-
-# Check GPU is available
-nvidia-smi
-
-# Start Python
-python
-&gt;&gt;&gt; import torch
-&gt;&gt;&gt; torch.cuda.is_available()
-True
-</code></pre>
-
-<p><strong>Important:</strong> Save files in <code>/workspace</code> - this is your persistent storage.</p>
-<hr />
-<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
-<h3 id="files">Files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h3>
-<pre class="codehilite"><code>/workspace/              Your persistent files (always safe)
-Everything else          Temporary (lost on container removal)
-</code></pre>
-
-<h3 id="container-states">Container States<a class="headerlink" href="#container-states" title="Permanent link">&para;</a></h3>
-<pre class="codehilite"><code>container-deploy   →   Container running, GPU allocated
-container-retire   →   Container removed, GPU freed
-</code></pre>
-
-<p>Your workspace files survive both states.</p>
-<hr />
-<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
-<p>Every command has built-in help:</p>
-<pre class="codehilite"><code class="language-bash">&lt;command&gt; --help        # Quick reference
-&lt;command&gt; --info        # Full reference (all options)
-&lt;command&gt; --concepts    # Learn concepts before running
-&lt;command&gt; --guided      # Step-by-step with explanations
-</code></pre>
-
-<p><strong>Example:</strong> If you're new to images:</p>
-<pre class="codehilite"><code class="language-bash">image-create --concepts   # Understand what images are
-image-create --guided     # Create with explanations
-</code></pre>
-
-<p>--</p>
-<h3 id="nb-container-naming">NB: Container Naming<a class="headerlink" href="#nb-container-naming" title="Permanent link">&para;</a></h3>
+<h3 id="1-prerequisites">1. Prerequisites<a class="headerlink" href="#1-prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Images</strong>: <code>ds01-&lt;user&gt;/&lt;project&gt;:latest</code></li>
-<li><strong>Containers</strong>: <code>&lt;project&gt;._.&lt;user&gt;</code> (AIME convention)</li>
+<li>VS Code with <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers extension</a></li>
+<li>SSH access to DS01 configured</li>
+<li>Docker context set to DS01 (see Setup below)</li>
 </ul>
-<hr />
-<h2 id="bonus">Bonus?<a class="headerlink" href="#bonus" title="Permanent link">&para;</a></h2>
-<p><strong>Understand why:</strong><br />
-- <a href="../background/containers-and-docker.html">Containers &amp; Docker</a><br />
-- <a href="../background/ephemeral-philosophy.html">Ephemeral Philosophy</a></p>
-<p><strong>Do more:</strong><br />
-- <a href="../core-guides/daily-workflow.html">Daily Workflow</a><br />
-- <a href="../core-guides/custom-images.html">Custom Images</a></p>
-<hr />
+<h3 id="2-create-configuration">2. Create Configuration<a class="headerlink" href="#2-create-configuration" title="Permanent link">&para;</a></h3>
+<p>On DS01, navigate to your project and run:</p>
+<pre class="codehilite"><code class="language-bash"># Interactive wizard
+devcontainer init
+
+# Or quick mode with defaults
+devcontainer init --quick
+</code></pre>
+
+<p>This creates <code>.devcontainer/devcontainer.json</code> with DS01-optimised settings.</p>
+<h3 id="3-open-in-vs-code">3. Open in VS Code<a class="headerlink" href="#3-open-in-vs-code" title="Permanent link">&para;</a></h3>
+<p>Locally:</p>
+<ol>
+<li>Open the project folder in VS Code</li>
+<li>VS Code prompts: "Reopen in Container" - click Yes</li>
+<li>Wait for container to build and start</li>
+<li>You're now working inside a DS01 GPU container</li>
+</ol>
+<h2 id="the-devcontainer-init-command">The <code>devcontainer init</code> Command<a class="headerlink" href="#the-devcontainer-init-command" title="Permanent link">&para;</a></h2>
+<p>The wizard creates devcontainer.json files optimised for DS01:</p>
+<pre class="codehilite"><code class="language-bash"># Interactive mode (prompts for all options)
+devcontainer init
+
+# Quick mode (uses defaults)
+devcontainer init --quick
+
+# Specify framework
+devcontainer init --framework=pytorch
+devcontainer init --framework=tensorflow
+
+# No GPU (for editing/git only)
+devcontainer init --no-gpu
+
+# Learn about dev containers first
+devcontainer init --concepts
+
+# Step-by-step with explanations
+devcontainer init --guided
+</code></pre>
+
+<h3 id="generated-configuration">Generated Configuration<a class="headerlink" href="#generated-configuration" title="Permanent link">&para;</a></h3>
+<p>The wizard generates a <code>devcontainer.json</code> like:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;name&quot;: &quot;my-project&quot;,
+  &quot;image&quot;: &quot;aime/pytorch:2.4-cuda12.4-nccl2.22-cudnn9-ubuntu22.04&quot;,
+  &quot;runArgs&quot;: [&quot;--gpus&quot;, &quot;all&quot;, &quot;--shm-size&quot;, &quot;8g&quot;],
+  &quot;mounts&quot;: [
+    &quot;source=${localEnv:HOME},target=/home/${localEnv:USER},type=bind&quot;
+  ],
+  &quot;shutdownAction&quot;: &quot;stopContainer&quot;
+}
+</code></pre>
+
+<p>Key settings:<br />
+- <strong>image</strong>: Uses same AIME base images as <code>container deploy</code><br />
+- <strong>runArgs</strong>: GPU access via DS01's docker-wrapper<br />
+- <strong>mounts</strong>: Your home directory for persistent files<br />
+- <strong>shutdownAction</strong>: Auto-stops container when you close VS Code (releases GPU)</p>
+<h2 id="gpu-allocation">GPU Allocation<a class="headerlink" href="#gpu-allocation" title="Permanent link">&para;</a></h2>
+<p>Dev containers use the same GPU allocation system as CLI containers:</p>
+<ul>
+<li><strong>MIG instances</strong> by default (shared GPU slices)</li>
+<li><strong>Full GPU</strong> if your quota allows and you request it</li>
+<li>Same quotas and limits apply</li>
+</ul>
+<h3 id="dynamic-allocation">Dynamic Allocation<a class="headerlink" href="#dynamic-allocation" title="Permanent link">&para;</a></h3>
+<p><strong>Important</strong>: The GPU is allocated <strong>at container start time</strong>, not when you create devcontainer.json.</p>
+<pre class="codehilite"><code>devcontainer.json                    At container launch
+─────────────────                    ───────────────────
+&quot;runArgs&quot;: [&quot;--gpus&quot;, &quot;all&quot;]    →    docker-wrapper.sh intercepts
+                                            │
+                                            ▼
+                                     gpu_allocator_v2.py
+                                     &quot;Give me an available GPU&quot;
+                                            │
+                                            ▼
+                                     Rewrites to: --gpus device=GPU-abc123
+</code></pre>
+
+<p>This means:<br />
+- <strong>Each time you open VS Code</strong>, a fresh GPU is allocated from the pool<br />
+- <strong>Different GPU</strong> may be assigned each time based on availability<br />
+- <strong>Same allocation system</strong> as <code>container deploy</code></p>
+<p>The <code>shutdownAction: "stopContainer"</code> setting is important - it releases your GPU when you close VS Code. Without this, your GPU stays allocated.</p>
+<h2 id="integration-with-project-init">Integration with project-init<a class="headerlink" href="#integration-with-project-init" title="Permanent link">&para;</a></h2>
+<p>When creating a new project, you can choose your workflow:</p>
+<pre class="codehilite"><code class="language-bash">project init my-thesis --type=ml
+</code></pre>
+
+<p>At <strong>Step 7</strong>, you'll be asked:</p>
+<pre class="codehilite"><code>How will you launch containers for this project?
+  1) CLI (Recommended)
+  2) VS Code Dev Container (experimental - in dev)
+  3) Skip (decide later)
+</code></pre>
+
+<p>Choosing option 2 automatically creates <code>.devcontainer/devcontainer.json</code>.</p>
+<h3 id="adding-dev-containers-to-existing-projects">Adding Dev Containers to Existing Projects<a class="headerlink" href="#adding-dev-containers-to-existing-projects" title="Permanent link">&para;</a></h3>
+<p>For existing projects in <code>~/workspace/</code>:</p>
+<pre class="codehilite"><code class="language-bash"># From anywhere - shows project dropdown
+devcontainer init
+
+# From within a project
+cd ~/workspace/my-project
+devcontainer init --quick
+</code></pre>
+
+<h2 id="checking-your-configuration">Checking Your Configuration<a class="headerlink" href="#checking-your-configuration" title="Permanent link">&para;</a></h2>
+<p>Validate an existing devcontainer.json:</p>
+<pre class="codehilite"><code class="language-bash"># Check current directory
+devcontainer check
+
+# Check specific project
+devcontainer check ~/workspace/my-project
+
+# Auto-fix issues
+devcontainer check --fix
+</code></pre>
+
+<p>The checker validates:<br />
+- Base image (AIME catalog recommended)<br />
+- GPU configuration<br />
+- shutdownAction setting (critical for GPU release)<br />
+- Home directory mount (for persistence)</p>
+<h2 id="unified-container-view">Unified Container View<a class="headerlink" href="#unified-container-view" title="Permanent link">&para;</a></h2>
+<p>Dev containers appear in <code>container ls</code> alongside regular DS01 containers:</p>
+<pre class="codehilite"><code>$ container ls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Your Containers
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. my-thesis
+   Status: Running
+   Image:  ds01-1000/my-thesis
+   GPU:    Allocated (MIG 1g.10gb)
+
+2. llm-finetuning (dev container)
+   Status: Running
+   Image:  aime/pytorch:2.4-cuda12.4
+   GPU:    Allocated (MIG 1g.10gb)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total: 2 container(s)
+</code></pre>
+
+<p>All containers - whether created via CLI or VS Code - are subject to the same:<br />
+- Resource quotas<br />
+- Idle timeout enforcement<br />
+- GPU allocation tracking</p>
+<h2 id="setup-docker-context">Setup: Docker Context<a class="headerlink" href="#setup-docker-context" title="Permanent link">&para;</a></h2>
+<p>To have VS Code connect to DS01's Docker daemon:</p>
+<h3 id="option-1-ssh-context-recommended">Option 1: SSH Context (Recommended)<a class="headerlink" href="#option-1-ssh-context-recommended" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># On your local machine
+docker context create ds01 --docker &quot;host=ssh://your-username@ds01.example.com&quot;
+docker context use ds01
+</code></pre>
+
+<p>Then in VS Code settings:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;dev.containers.dockerPath&quot;: &quot;docker&quot;,
+  &quot;dev.containers.defaultExtensions&quot;: [&quot;ms-python.python&quot;]
+}
+</code></pre>
+
+<h3 id="option-2-tcp-socket-advanced">Option 2: TCP Socket (Advanced)<a class="headerlink" href="#option-2-tcp-socket-advanced" title="Permanent link">&para;</a></h3>
+<p>If SSH context is slow, you can use TCP:</p>
+<ol>
+<li>On DS01, expose Docker socket (admin setup required)</li>
+<li>Configure VS Code to connect via TCP</li>
+</ol>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="no-gpus-availableresource-limits-reached">"No GPUs available/Resource limits reached"<a class="headerlink" href="#no-gpus-availableresource-limits-reached" title="Permanent link">&para;</a></h3>
-<pre class="codehilite"><code class="language-bash">dashboard      # Check availability
-container-retire old-project  # Free your old containers
+<h3 id="cannot-connect-to-docker-daemon">"Cannot connect to Docker daemon"<a class="headerlink" href="#cannot-connect-to-docker-daemon" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Check Docker context: <code>docker context show</code></li>
+<li>Test connection: <code>docker ps</code></li>
+<li>Verify SSH key is loaded: <code>ssh-add -l</code></li>
+</ol>
+<h3 id="container-wont-start">Container won't start<a class="headerlink" href="#container-wont-start" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Check GPU quota: <code>check-limits</code></li>
+<li>Verify image exists: <code>docker images | grep aime</code></li>
+<li>Check DS01 logs: <code>ds01-logs</code></li>
+</ol>
+<h3 id="gpu-not-available">GPU not available<a class="headerlink" href="#gpu-not-available" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Close other VS Code windows (releases GPUs)</li>
+<li>Check allocation: <code>container ls --detailed</code></li>
+<li>Wait for GPU queue if full</li>
+</ol>
+<h3 id="changes-not-persisting">Changes not persisting<a class="headerlink" href="#changes-not-persisting" title="Permanent link">&para;</a></h3>
+<p>Ensure home directory mount is configured:</p>
+<pre class="codehilite"><code class="language-json">&quot;mounts&quot;: [
+  &quot;source=${localEnv:HOME},target=/home/${localEnv:USER},type=bind&quot;
+]
 </code></pre>
 
-<h3 id="container-not-found">"Container not found"<a class="headerlink" href="#container-not-found" title="Permanent link">&para;</a></h3>
-<pre class="codehilite"><code class="language-bash">container-list          # Check what's running
-container-list --all    # Check all containers (incl those not in running state - advanced)
-container-deploy my-project  # Recreate
-</code></pre>
-
-<h3 id="commands-not-found">Commands not found<a class="headerlink" href="#commands-not-found" title="Permanent link">&para;</a></h3>
-<pre class="codehilite"><code class="language-bash">shell-setup
-source ~/.bashrc
-</code></pre>
-
-<hr />
+<p>Files in <code>/home/username/workspace/</code> persist; files elsewhere in the container do not.</p>
+<h2 id="comparison-cli-vs-dev-containers">Comparison: CLI vs Dev Containers<a class="headerlink" href="#comparison-cli-vs-dev-containers" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>CLI (<code>container deploy</code>)</th>
+<th>Dev Containers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start method</td>
+<td>SSH + command</td>
+<td>Open folder in VS Code</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td>Manual (<code>container retire</code>)</td>
+<td>Automatic (close VS Code)</td>
+</tr>
+<tr>
+<td>GPU release</td>
+<td>Explicit command required</td>
+<td>Auto on window close</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>Dockerfile</td>
+<td>devcontainer.json</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Long jobs, tmux, scripts</td>
+<td>Interactive editing, debugging</td>
+</tr>
+<tr>
+<td>Setup effort</td>
+<td>Per-project Dockerfile</td>
+<td>One-time devcontainer.json</td>
+</tr>
+</tbody>
+</table>
+<p>Both use the same underlying system - same images, same GPU allocation, same quotas.</p>
+<h3 id="when-to-use-which">When to Use Which<a class="headerlink" href="#when-to-use-which" title="Permanent link">&para;</a></h3>
+<p><strong>Use CLI workflow when:</strong><br />
+- Running long training jobs (hours/days)<br />
+- Need multiple terminal sessions (tmux)<br />
+- Want explicit control over start/stop<br />
+- Running batch scripts<br />
+- Prefer terminal-based editing (vim, nano)</p>
+<p><strong>Use Dev Containers when:</strong><br />
+- Interactive development with VS Code features<br />
+- Edit-run-debug cycles<br />
+- Need VS Code extensions (linting, debugging)<br />
+- Quick iterations on code<br />
+- Prefer IDE experience over terminal</p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li>→ <a href="../core-guides/daily-workflow.html">Daily Workflow Guide</a></li>
-<li>→ <a href="../core-guides/custom-images.html">Custom Images Guide</a></li>
-<li>→ <a href="../quick-reference.html">Quick Reference</a></li>
+<li><a href="daily-workflow.html">Daily Workflow</a> - Regular patterns</li>
+<li><a href="gpu-usage.html">GPU Usage</a> - Understanding GPU allocation</li>
+<li><a href="custom-images.html">Custom Images</a> - Building your own images</li>
+<li><a href="vscode-remote.html">VS Code Remote</a> - Alternative: Remote-SSH approach</li>
 </ul>
           </article>
         </div>

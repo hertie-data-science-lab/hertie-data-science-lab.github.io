@@ -247,6 +247,7 @@
 <li><a href="core-guides/custom-environments.html">Custom Environments</a></li>
 <li><a href="core-guides/custom-images.html">Building Custom Images</a></li>
 <li><a href="core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li><a href="core-guides/devcontainers.html">VS Code Dev Containers</a></li>
 <li><a href="core-guides/gpu-usage.html">Working with GPUs</a></li>
 <li><a href="core-guides/jupyter.html" class="active">Jupyter Notebooks</a></li>
 <li><a href="core-guides/launching-containers.html">Launching Containers</a></li>
@@ -355,7 +356,7 @@ jupyter lab --ip=0.0.0.0 --port=8888 --no-browser
 
 # 3. On laptop: Create SSH tunnel (new terminal)
 ssh -L 8888:localhost:8888 ds01
-# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 
 # 4. Open browser: http://localhost:8888
 # Copy token from step 2
@@ -410,7 +411,7 @@ pip install jupyterlab
 <h3 id="step-3-ssh-tunnel-from-laptop">Step 3: SSH Tunnel from Laptop<a class="headerlink" href="#step-3-ssh-tunnel-from-laptop" title="Permanent link">&para;</a></h3>
 <p><strong>On your laptop</strong> (new terminal):</p>
 <pre class="codehilite"><code class="language-bash">ssh -L 8888:localhost:8888 ds01
-# Without SSH keys: ssh -L 8888:localhost:8888 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH keys: ssh -L 8888:localhost:8888 &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 </code></pre>
 
 <p><strong>What this does:</strong> Forwards port 8888 from DS01 to your laptop.</p>
@@ -606,7 +607,7 @@ jupyter lab --ip=0.0.0.0 --port=8889 --no-browser
 
 # Update SSH tunnel
 ssh -L 8889:localhost:8889 ds01
-# Without SSH keys: ssh -L 8889:localhost:8889 &lt;student-id&gt;@students.hertie-school.org@10.1.23.20
+# Without SSH keys: ssh -L 8889:localhost:8889 &lt;your-username&gt;@hertie-school.lan@10.1.23.20
 
 # Access via http://localhost:8889
 </code></pre>
@@ -784,7 +785,7 @@ autossh -M 0 -L 8888:localhost:8888 ds01
 <p><strong>Or create alias in <code>~/.ssh/config</code>:</strong></p>
 <pre class="codehilite"><code>Host ds01-jupyter
     HostName 10.1.23.20
-    User &lt;student-id&gt;@students.hertie-school.org
+    User &lt;your-username&gt;@hertie-school.lan
     LocalForward 8888 localhost:8888
     ServerAliveInterval 60
     ServerAliveCountMax 3
