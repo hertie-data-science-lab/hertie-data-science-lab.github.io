@@ -1,0 +1,393 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-reference/commands/system-commands" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>System Commands | DS01 User Guide</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="System Commands | DS01 User Guide"/><meta data-rh=true name=description content="Commands for system status, user setup, and configuration."/><meta data-rh=true property=og:description content="Commands for system status, user setup, and configuration."/><link data-rh=true rel=canonical href=https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands /><link data-rh=true rel=alternate href=https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands hreflang=en /><link data-rh=true rel=alternate href=https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://hertie-data-science-lab.github.io/ds01/reference/","name":"Reference","position":1},{"@type":"ListItem","item":"https://hertie-data-science-lab.github.io/ds01/category/commands","name":"Commands","position":2},{"@type":"ListItem","item":"https://hertie-data-science-lab.github.io/ds01/reference/commands/system-commands","name":"System Commands","position":3}]}</script><link rel=stylesheet href=/ds01/assets/css/styles.955ab2c0.css /><script src=/ds01/assets/js/runtime~main.71122d45.js defer></script><script src=/ds01/assets/js/main.ae12df01.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-a9c")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/ds01/><b class="navbar__title text--truncate">DS01 User Guide</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://hertie-data-science-lab.github.io/ds01-infra/ target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">Full docs (admin/dev) ↗<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><a href=https://github.com/hertie-data-science-lab/ds01-hub/issues target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">Get help<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=Search aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/getting-started/><span title="Getting Started" class=categoryLinkLabel_W154>Getting Started</span></a><button aria-label="Expand sidebar category 'Getting Started'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/key-concepts/><span title="Key Concepts" class=categoryLinkLabel_W154>Key Concepts</span></a><button aria-label="Expand sidebar category 'Key Concepts'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/core-guides/><span title="Core Guides" class=categoryLinkLabel_W154>Core Guides</span></a><button aria-label="Expand sidebar category 'Core Guides'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/intermediate/><span title=Intermediate class=categoryLinkLabel_W154>Intermediate</span></a><button aria-label="Expand sidebar category 'Intermediate'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/advanced/><span title=Advanced class=categoryLinkLabel_W154>Advanced</span></a><button aria-label="Expand sidebar category 'Advanced'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href=/ds01/reference/><span title=Reference class=categoryLinkLabel_W154>Reference</span></a><button aria-label="Collapse sidebar category 'Reference'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" tabindex=0 href=/ds01/category/commands><span title=Commands class=categoryLinkLabel_W154>Commands</span></a><button aria-label="Collapse sidebar category 'Commands'" aria-expanded=true type=button class="clean-btn menu__caret"></button></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/commands/container-commands><span title="Container Commands" class=linkLabel_WmDU>Container Commands</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/commands/dispatcher-commands><span title="Natural Language Dispatchers" class=linkLabel_WmDU>Natural Language Dispatchers</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/commands/image-commands><span title="Image Commands" class=linkLabel_WmDU>Image Commands</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/commands/project-commands><span title="Project Commands" class=linkLabel_WmDU>Project Commands</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/ds01/reference/commands/system-commands><span title="System Commands" class=linkLabel_WmDU>System Commands</span></a></ul><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/command-quick-ref><span title="Command Quick Reference" class=linkLabel_WmDU>Command Quick Reference</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/command-reference><span title="Command Reference" class=linkLabel_WmDU>Command Reference</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/file-locations><span title="File Locations" class=linkLabel_WmDU>File Locations</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/glossary><span title=Glossary class=linkLabel_WmDU>Glossary</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/ds01/reference/troubleshooting><span title="Troubleshooting Guide" class=linkLabel_WmDU>Troubleshooting Guide</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/background/><span title=Background class=categoryLinkLabel_W154>Background</span></a><button aria-label="Expand sidebar category 'Background'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/ds01/troubleshooting/><span title=Troubleshooting class=categoryLinkLabel_W154>Troubleshooting</span></a><button aria-label="Expand sidebar category 'Troubleshooting'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/ds01/gpu-containers><span title="GPU Container Guide" class=linkLabel_WmDU>GPU Container Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/ds01/><span title="DS01 User Documentation" class=linkLabel_WmDU>DS01 User Documentation</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/ds01/quick-reference><span title="Quick Reference" class=linkLabel_WmDU>Quick Reference</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/ds01/quickstart><span title="30-Minute Quickstart" class=linkLabel_WmDU>30-Minute Quickstart</span></a></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/ds01/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/ds01/reference/><span>Reference</span></a><li class=breadcrumbs__item><a class=breadcrumbs__link href=/ds01/category/commands><span>Commands</span></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>System Commands</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>System Commands</h1></header>
+<p>Commands for system status, user setup, and configuration.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=quick-reference>Quick Reference<a href=#quick-reference class=hash-link aria-label="Direct link to Quick Reference" title="Direct link to Quick Reference" translate=no>​</a></h2>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token comment" style=color:#999988;font-style:italic># System dashboard</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># First-time setup</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">user-setup</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Check your limits</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">check-limits</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># SSH and VSCode setup</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-setup</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">vscode-setup</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Help and info</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">help</span><span class="token plain">                     </span><span class="token comment" style=color:#999988;font-style:italic># List all commands</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">version                  </span><span class="token comment" style=color:#999988;font-style:italic># Show version</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=dashboard>dashboard<a href=#dashboard class=hash-link aria-label="Direct link to dashboard" title="Direct link to dashboard" translate=no>​</a></h2>
+<p><strong>System status dashboard</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">dashboard </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">SECTION</span><span class="token punctuation" style=color:#393A34>]</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p>View GPU availability, container status, and system resources.</p>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--watch</code>, <code>-w</code><td>Watch mode (2s refresh)<tr><td><code>--full</code><td>Show all sections expanded<tr><td><code>--json</code><td>JSON output for scripting</table>
+<p><strong>Modular Sections:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Section<th>Description<tbody><tr><td><code>gpu</code><td>GPU/MIG utilization diagram<tr><td><code>cpu</code><td>CPU usage by user diagram<tr><td><code>system</code><td>CPU, Memory, Disk bars<tr><td><code>mig-config</code><td>MIG partition configuration<tr><td><code>containers</code><td>All containers with stats<tr><td><code>users</code><td>Per-user resource summary<tr><td><code>temp</code><td>GPU temperatures and power</table>
+<p><strong>Additional Views:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command<th>Description<tbody><tr><td><code>allocations [N]</code><td>Recent N GPU allocations (default: 10)<tr><td><code>alerts</code><td>Active alerts and warnings (idle containers, etc.)</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">dashboard                    </span><span class="token comment" style=color:#999988;font-style:italic># Default compact view (GPU, CPU by user, system)</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard </span><span class="token parameter variable" style=color:#36acaa>--full</span><span class="token plain">             </span><span class="token comment" style=color:#999988;font-style:italic># All sections expanded</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard </span><span class="token parameter variable" style=color:#36acaa>--watch</span><span class="token plain">            </span><span class="token comment" style=color:#999988;font-style:italic># Live monitoring</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard </span><span class="token parameter variable" style=color:#36acaa>--json</span><span class="token plain">             </span><span class="token comment" style=color:#999988;font-style:italic># JSON output for scripting</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Individual sections</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard gpu                </span><span class="token comment" style=color:#999988;font-style:italic># GPU/MIG utilization</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard cpu                </span><span class="token comment" style=color:#999988;font-style:italic># CPU usage by user</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard system             </span><span class="token comment" style=color:#999988;font-style:italic># System resources</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard containers         </span><span class="token comment" style=color:#999988;font-style:italic># All containers</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard </span><span class="token function" style=color:#d73a49>users</span><span class="token plain">              </span><span class="token comment" style=color:#999988;font-style:italic># Per-user summary</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard temp               </span><span class="token comment" style=color:#999988;font-style:italic># GPU temperatures</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token comment" style=color:#999988;font-style:italic># Additional views</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard alerts             </span><span class="token comment" style=color:#999988;font-style:italic># Check for issues</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">dashboard allocations </span><span class="token number" style=color:#36acaa>20</span><span class="token plain">     </span><span class="token comment" style=color:#999988;font-style:italic># Last 20 GPU allocations</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=user-setup>user-setup<a href=#user-setup class=hash-link aria-label="Direct link to user-setup" title="Direct link to user-setup" translate=no>​</a></h2>
+<p><strong>Complete onboarding wizard</strong> (L4 wizard)</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">user-setup </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--quick</code><td>Expert mode: skip skill assessment, minimal prompts</table>
+<p><strong>Aliases:</strong> <code>user setup</code>, <code>new-user</code></p>
+<p><strong>What it does:</strong></p>
+<ol>
+<li class=""><code>ssh-setup</code> - Creates SSH keys</li>
+<li class=""><code>project-init</code> - Initializes first project</li>
+<li class=""><code>vscode-setup</code> - Configures VSCode Remote (optional)</li>
+</ol>
+<p><strong>Time:</strong> 15-20 minutes</p>
+<p><strong>See:</strong> <a class="" href=/ds01/getting-started/first-time-setup>First-Time Setup Guide</a></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=check-limits>check-limits<a href=#check-limits class=hash-link aria-label="Direct link to check-limits" title="Direct link to check-limits" translate=no>​</a></h2>
+<p><strong>View your resource limits and usage</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">check-limits</span><br/></div></code></pre></div></div>
+<p><strong>Example output:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">=== Your Resource Limits ===</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Max GPUs:       2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Max Containers: 3</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Memory/Container: 64GB</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Max Runtime:    24h (varies by user)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Idle Timeout:   0.5h (varies by user)</span><br/></div><div class=token-line style=color:#393A34><span class="token plain" style=display:inline-block></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">=== Current Usage ===</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">GPUs:       1 / 2</span><br/></div><div class=token-line style=color:#393A34><span class="token plain">Containers: 2 / 3</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=ssh-config>ssh-config<a href=#ssh-config class=hash-link aria-label="Direct link to ssh-config" title="Direct link to ssh-config" translate=no>​</a></h2>
+<p><strong>SSH configuration utility</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ssh-config </span><span class="token operator" style=color:#393A34>&lt;</span><span class="token plain">command</span><span class="token operator" style=color:#393A34>></span><br/></div></code></pre></div></div>
+<p><strong>Commands:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command<th>Description<tbody><tr><td><code>generate</code><td>Generate new SSH keys (ed25519)<tr><td><code>test</code><td>Test SSH connection to localhost<tr><td><code>show</code><td>Display public key and connection info<tr><td><code>vscode</code><td>Show VS Code Remote-SSH setup instructions</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ssh-config generate    </span><span class="token comment" style=color:#999988;font-style:italic># Create new SSH keys</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-config </span><span class="token builtin class-name">test</span><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># Test if SSH is working</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-config show        </span><span class="token comment" style=color:#999988;font-style:italic># Display your public key</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-config vscode      </span><span class="token comment" style=color:#999988;font-style:italic># Get VS Code setup instructions</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=ssh-setup>ssh-setup<a href=#ssh-setup class=hash-link aria-label="Direct link to ssh-setup" title="Direct link to ssh-setup" translate=no>​</a></h2>
+<p><strong>Configure SSH keys</strong> (L2 atomic)</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ssh-setup </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--guided</code><td>Show detailed explanations for beginners<tr><td><code>--force</code><td>Regenerate keys even if they exist<tr><td><code>--verify</code><td>Just verify existing setup</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">ssh-setup              </span><span class="token comment" style=color:#999988;font-style:italic># Interactive setup</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-setup </span><span class="token parameter variable" style=color:#36acaa>--guided</span><span class="token plain">     </span><span class="token comment" style=color:#999988;font-style:italic># With explanations</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">ssh-setup </span><span class="token parameter variable" style=color:#36acaa>--verify</span><span class="token plain">     </span><span class="token comment" style=color:#999988;font-style:italic># Check existing setup</span><br/></div></code></pre></div></div>
+<p><strong>What it does:</strong></p>
+<ol>
+<li class="">Generates SSH key pair (ed25519)</li>
+<li class="">Displays public key (add to GitHub/GitLab)</li>
+<li class="">Verifies configuration</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=vscode-setup>vscode-setup<a href=#vscode-setup class=hash-link aria-label="Direct link to vscode-setup" title="Direct link to vscode-setup" translate=no>​</a></h2>
+<p><strong>Configure VSCode Remote</strong> (L2 atomic)</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">vscode-setup </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--project=NAME</code><td>Project-specific instructions<tr><td><code>--container=NAME</code><td>Container-specific instructions<tr><td><code>--guided</code><td>Educational mode</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">vscode-setup                        </span><span class="token comment" style=color:#999988;font-style:italic># General setup guide</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">vscode-setup </span><span class="token parameter variable" style=color:#36acaa>--project</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">my-thesis    </span><span class="token comment" style=color:#999988;font-style:italic># Project-specific instructions</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">vscode-setup </span><span class="token parameter variable" style=color:#36acaa>--guided</span><span class="token plain">               </span><span class="token comment" style=color:#999988;font-style:italic># With explanations</span><br/></div></code></pre></div></div>
+<p><strong>See:</strong> <a class="" href=/ds01/core-guides/vscode-remote>VSCode Remote Guide</a></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=shell-setup>shell-setup<a href=#shell-setup class=hash-link aria-label="Direct link to shell-setup" title="Direct link to shell-setup" translate=no>​</a></h2>
+<p><strong>Fix PATH configuration</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">shell-setup </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--check</code><td>Verify PATH only<tr><td><code>--force</code><td>Reconfigure even if PATH already correct<tr><td><code>--guided</code><td>Educational mode</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">shell-setup </span><span class="token parameter variable" style=color:#36acaa>--check</span><span class="token plain">   </span><span class="token comment" style=color:#999988;font-style:italic># Verify PATH</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">shell-setup           </span><span class="token comment" style=color:#999988;font-style:italic># Fix PATH</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">shell-setup </span><span class="token parameter variable" style=color:#36acaa>--guided</span><span class="token plain">  </span><span class="token comment" style=color:#999988;font-style:italic># With explanations</span><br/></div></code></pre></div></div>
+<p><strong>Use when:</strong> DS01 commands not found in PATH</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=jupyter-setup>jupyter-setup<a href=#jupyter-setup class=hash-link aria-label="Direct link to jupyter-setup" title="Direct link to jupyter-setup" translate=no>​</a></h2>
+<p><strong>Configure Jupyter Lab access</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">jupyter-setup </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p>Configures Jupyter Lab access for the DS01 server.</p>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--guided</code><td>Full setup with detailed explanations<tr><td><code>--port-forward</code><td>Show SSH port forwarding commands only<tr><td><code>--brief</code><td>Minimal output (for orchestrators)</table>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">jupyter-setup                 </span><span class="token comment" style=color:#999988;font-style:italic># Quick VS Code Jupyter extension setup</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">jupyter-setup </span><span class="token parameter variable" style=color:#36acaa>--guided</span><span class="token plain">        </span><span class="token comment" style=color:#999988;font-style:italic># Full guided setup</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">jupyter-setup --port-forward  </span><span class="token comment" style=color:#999988;font-style:italic># Just port forwarding commands</span><br/></div></code></pre></div></div>
+<p><strong>Use when:</strong> Setting up Jupyter Lab access from your local machine.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=help>help<a href=#help class=hash-link aria-label="Direct link to help" title="Direct link to help" translate=no>​</a></h2>
+<p><strong>Show all available commands</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">help</span><span class="token plain"> </span><span class="token punctuation" style=color:#393A34>[</span><span class="token plain">OPTIONS</span><span class="token punctuation" style=color:#393A34>]</span><br/></div></code></pre></div></div>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option<th>Description<tbody><tr><td><code>--atomic</code><td>Show atomic container commands (advanced)<tr><td><code>--admin</code><td>Show admin commands (ds01-* prefix)<tr><td><code>--inside</code><td>Show inside-container commands<tr><td><code>--full</code><td>Show everything</table>
+<p><strong>Alias:</strong> <code>commands</code> (identical functionality)</p>
+<p><strong>Examples:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token builtin class-name">help</span><span class="token plain">              </span><span class="token comment" style=color:#999988;font-style:italic># Show main commands</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">help</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>--atomic</span><span class="token plain">     </span><span class="token comment" style=color:#999988;font-style:italic># Show advanced L2 commands</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">help</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>--admin</span><span class="token plain">      </span><span class="token comment" style=color:#999988;font-style:italic># Show admin tools</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">help</span><span class="token plain"> </span><span class="token parameter variable" style=color:#36acaa>--full</span><span class="token plain">       </span><span class="token comment" style=color:#999988;font-style:italic># Show all commands</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=version>version<a href=#version class=hash-link aria-label="Direct link to version" title="Direct link to version" translate=no>​</a></h2>
+<p><strong>Show DS01 version information</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">version</span><br/></div></code></pre></div></div>
+<p>Displays the current DS01 infrastructure version and build information.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=getting-help>Getting Help<a href=#getting-help class=hash-link aria-label="Direct link to Getting Help" title="Direct link to Getting Help" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=command-help>Command Help<a href=#command-help class=hash-link aria-label="Direct link to Command Help" title="Direct link to Command Help" translate=no>​</a></h3>
+<p>All commands support <code>--help</code>:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">container-deploy </span><span class="token parameter variable" style=color:#36acaa>--help</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image-create </span><span class="token parameter variable" style=color:#36acaa>--help</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=guided-mode>Guided Mode<a href=#guided-mode class=hash-link aria-label="Direct link to Guided Mode" title="Direct link to Guided Mode" translate=no>​</a></h3>
+<p>Most commands support <code>--guided</code>:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">container-deploy my-project </span><span class="token parameter variable" style=color:#36acaa>--guided</span><span class="token plain"></span><br/></div><div class=token-line style=color:#393A34><span class="token plain">image-create </span><span class="token parameter variable" style=color:#36acaa>--guided</span><br/></div></code></pre></div></div>
+<p><strong>Guided mode:</strong></p>
+<ul>
+<li class="">Explains each step</li>
+<li class="">Educational prompts</li>
+<li class="">Recommended for beginners</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=environment-variables>Environment Variables<a href=#environment-variables class=hash-link aria-label="Direct link to Environment Variables" title="Direct link to Environment Variables" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=ds01-variables>DS01 Variables<a href=#ds01-variables class=hash-link aria-label="Direct link to DS01 Variables" title="Direct link to DS01 Variables" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token assign-left variable" style=color:#36acaa>DS01_INSTALL_DIR</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">/opt/ds01-infra</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token assign-left variable" style=color:#36acaa>DS01_WORKSPACE</span><span class="token operator" style=color:#393A34>=~</span><span class="token plain">/workspace</span><br/></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=docker-variables>Docker Variables<a href=#docker-variables class=hash-link aria-label="Direct link to Docker Variables" title="Direct link to Docker Variables" translate=no>​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token assign-left variable" style=color:#36acaa>DOCKER_HOST</span><span class="token operator" style=color:#393A34>=</span><span class="token plain">unix:///var/run/docker.sock</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=exit-codes>Exit Codes<a href=#exit-codes class=hash-link aria-label="Direct link to Exit Codes" title="Direct link to Exit Codes" translate=no>​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code<th>Meaning<tbody><tr><td>0<td>Success<tr><td>1<td>General error<tr><td>2<td>Invalid arguments<tr><td>3<td>Resource unavailable (no GPUs, quota exceeded)<tr><td>4<td>Container/image not found<tr><td>5<td>Permission denied</table>
+<p><strong>Check exit code:</strong></p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">container-deploy my-project</span><br/></div><div class=token-line style=color:#393A34><span class="token plain"></span><span class="token builtin class-name">echo</span><span class="token plain"> </span><span class="token variable" style=color:#36acaa>$?</span><br/></div></code></pre></div></div>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=see-also>See Also<a href=#see-also class=hash-link aria-label="Direct link to See Also" title="Direct link to See Also" translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/ds01/reference/commands/container-commands>Container Commands</a></li>
+<li class=""><a class="" href=/ds01/getting-started/>Getting Started</a></li>
+<li class=""><a class="" href=/ds01/troubleshooting/>Troubleshooting</a></li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/hertie-data-science-lab/ds01-infra/edit/main/docs-user/../docs/reference/commands/system-commands.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/ds01/reference/commands/project-commands><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Project Commands</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/ds01/reference/command-quick-ref><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Command Quick Reference</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#quick-reference class="table-of-contents__link toc-highlight">Quick Reference</a><li><a href=#dashboard class="table-of-contents__link toc-highlight">dashboard</a><li><a href=#user-setup class="table-of-contents__link toc-highlight">user-setup</a><li><a href=#check-limits class="table-of-contents__link toc-highlight">check-limits</a><li><a href=#ssh-config class="table-of-contents__link toc-highlight">ssh-config</a><li><a href=#ssh-setup class="table-of-contents__link toc-highlight">ssh-setup</a><li><a href=#vscode-setup class="table-of-contents__link toc-highlight">vscode-setup</a><li><a href=#shell-setup class="table-of-contents__link toc-highlight">shell-setup</a><li><a href=#jupyter-setup class="table-of-contents__link toc-highlight">jupyter-setup</a><li><a href=#help class="table-of-contents__link toc-highlight">help</a><li><a href=#version class="table-of-contents__link toc-highlight">version</a><li><a href=#getting-help class="table-of-contents__link toc-highlight">Getting Help</a><ul><li><a href=#command-help class="table-of-contents__link toc-highlight">Command Help</a><li><a href=#guided-mode class="table-of-contents__link toc-highlight">Guided Mode</a></ul><li><a href=#environment-variables class="table-of-contents__link toc-highlight">Environment Variables</a><ul><li><a href=#ds01-variables class="table-of-contents__link toc-highlight">DS01 Variables</a><li><a href=#docker-variables class="table-of-contents__link toc-highlight">Docker Variables</a></ul><li><a href=#exit-codes class="table-of-contents__link toc-highlight">Exit Codes</a><li><a href=#see-also class="table-of-contents__link toc-highlight">See Also</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>More</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://hertie-data-science-lab.github.io/ds01-infra/ target=_blank rel="noopener noreferrer" class=footer__link-item>Full documentation<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://github.com/hertie-data-science-lab/ds01-hub/issues target=_blank rel="noopener noreferrer" class=footer__link-item>Get help / issues<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Hertie Data Science Lab — DS01.</div></div></div></footer></div></body>
