@@ -374,7 +374,7 @@ screen -r training
 <h2 id="preventing-idle-timeout">Preventing Idle Timeout<a class="headerlink" href="#preventing-idle-timeout" title="Permanent link">&para;</a></h2>
 <p>DS01 auto-stops containers that are idle (low GPU activity). Timeout varies by user (typically <strong>30min-2h</strong>) and is dynamically adjusted. Run <code>check-limits</code> to see your current limits.</p>
 <blockquote>
-<p><strong>⚠️ Contact DSL First</strong></p>
+<p><strong>Contact DSL First</strong></p>
 <p>The workarounds below (<code>.keep-alive</code>, <code>nohup</code>, etc.) are available but should be <strong>last resorts</strong> as they can disrupt the system for other users by holding GPUs longer than necessary.</p>
 <p><strong>Please <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">open an issue on DS01 Hub</a> first</strong> to discuss your requirements with the Data Science Lab team. We can often find better solutions together (adjusted limits, scheduled runs, checkpointing strategies).</p>
 </blockquote>
@@ -416,7 +416,7 @@ docker unpause &lt;project-name&gt;._.$(id -u)
 - Debugging (freeze state for inspection)<br />
 - Testing before checkpoints</p>
 <p><strong>When NOT to use pause:</strong><br />
-- Long breaks (use <code>container-stop</code> instead) <br />
+- Long breaks (use <code>container-stop</code> instead)<br />
 - Freeing GPU for others (pause keeps GPU allocated)</p>
 <hr />
 <h2 id="monitoring-progress">Monitoring Progress<a class="headerlink" href="#monitoring-progress" title="Permanent link">&para;</a></h2>

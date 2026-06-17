@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Container Issues - DS01 Documentation</title>
+  <title>GPU Container Guide - DS01 Documentation</title>
   <meta content="DS01 GPU Server Documentation - Hertie Data Science Lab" name="description">
   <meta content="DS01, GPU, documentation, Hertie, Data Science" name="keywords">
 
@@ -218,7 +218,7 @@
           <ol>
             <li><a href="https://hertie-data-science-lab.github.io/">Home</a></li>
             <li><a href="index.html">DS01 Docs</a></li>
-            <li><a href="index.html">Troubleshooting</a></li><li>Container Issues</li>
+            
           </ol>
         </div>
       </div>
@@ -309,7 +309,7 @@
 <li><span class="section-title"><a href="troubleshooting/index.html">Troubleshooting</a></span>
 <ul>
 <li><a href="troubleshooting/common-errors.html">Common Errors</a></li>
-<li><a href="troubleshooting/container-issues.html" class="active">Container Issues</a></li>
+<li><a href="troubleshooting/container-issues.html">Container Issues</a></li>
 <li><a href="troubleshooting/gpu-issues.html">GPU Issues</a></li>
 <li><a href="troubleshooting/image-issues.html">Image Issues</a></li>
 </ul>
@@ -317,196 +317,234 @@
 </ul>
           </aside>
           <article class="docs-content">
-            <h1 id="container-issues">Container Issues<a class="headerlink" href="#container-issues" title="Permanent link">&para;</a></h1>
-<p>Solutions for container startup, runtime, and lifecycle problems.</p>
-<blockquote>
-<p><strong>Note:</strong> In examples below, replace <code>&lt;project-name&gt;</code> with your actual project name. The <code>$(whoami)</code> part auto-substitutes your username.</p>
-</blockquote>
-<hr />
-<h2 id="container-wont-start-wont-start">Container Won't Start {#wont-start}<a class="headerlink" href="#container-wont-start-wont-start" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong></p>
-<pre class="codehilite"><code class="language-bash">$ container-start my-project
-Error: Container failed to start
+            <h1 id="gpu-container-guide">GPU Container Guide<a class="headerlink" href="#gpu-container-guide" title="Permanent link">&para;</a></h1>
+<p>This guide explains how GPU access works in DS01 and what to expect when running containers with GPU.</p>
+<h2 id="quick-summary">Quick Summary<a class="headerlink" href="#quick-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Container Type</th>
+<th>GPU?</th>
+<th>Lifecycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dev container (no GPU)</td>
+<td>No</td>
+<td><strong>Permanent</strong> - runs until you stop it</td>
+</tr>
+<tr>
+<td>Dev container (with GPU)</td>
+<td>Yes</td>
+<td><strong>Ephemeral</strong> - auto-stops when idle</td>
+</tr>
+<tr>
+<td>ds01 container</td>
+<td>Yes</td>
+<td><strong>Ephemeral</strong> - dedicated, auto-cleanup</td>
+</tr>
+<tr>
+<td>docker-compose (with GPU)</td>
+<td>Yes</td>
+<td><strong>Ephemeral</strong> - auto-stops when idle</td>
+</tr>
+<tr>
+<td>docker run (with GPU)</td>
+<td>Yes</td>
+<td><strong>Ephemeral</strong> - auto-stops when idle</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-golden-rule">The Golden Rule<a class="headerlink" href="#the-golden-rule" title="Permanent link">&para;</a></h2>
+<p><strong>GPU access = ephemeral container</strong></p>
+<p>If your container has GPU access, it WILL be stopped when:<br />
+- GPU is idle for 30 minutes (no GPU activity)<br />
+- Container exceeds its maximum runtime (varies by container type)</p>
+<p>This ensures GPUs are available for all users and aren't hoarded by idle containers.</p>
+<h2 id="container-lifecycle-by-type">Container Lifecycle by Type<a class="headerlink" href="#container-lifecycle-by-type" title="Permanent link">&para;</a></h2>
+<h3 id="ds01-native-containers-recommended">DS01 Native Containers (Recommended)<a class="headerlink" href="#ds01-native-containers-recommended" title="Permanent link">&para;</a></h3>
+<p>Created via <code>container deploy</code>:<br />
+- <strong>Idle timeout</strong>: 30 minutes (configurable by group)<br />
+- <strong>Max runtime</strong>: 24-72 hours (varies by user group)<br />
+- <strong>Best for</strong>: Training runs, batch jobs, GPU-intensive work</p>
+<pre class="codehilite"><code class="language-bash"># Deploy a GPU container
+container deploy myproject
+
+# When done
+container retire myproject
 </code></pre>
 
-<p><strong>Causes:</strong><br />
-- GPU no longer exists (was reallocated)<br />
-- Resource limits exceeded<br />
-- Container configuration issue</p>
-<p><strong>Solutions:</strong></p>
-<ol>
-<li>
-<p><strong>Check container status:</strong><br />
-<code>bash
-   docker ps -a | grep &lt;project-name&gt;
-   docker logs &lt;project-name&gt;._.$(whoami)</code></p>
-</li>
-<li>
-<p><strong>Recreate container:</strong><br />
-<code>bash
-   container-remove my-project
-   container-create my-project</code></p>
-</li>
-<li>
-<p><strong>Check resource limits:</strong><br />
-<code>bash
-   check-limits</code></p>
-</li>
-</ol>
-<hr />
-<h2 id="container-stopped-unexpectedly-stopped-unexpectedly">Container Stopped Unexpectedly {#stopped-unexpectedly}<a class="headerlink" href="#container-stopped-unexpectedly-stopped-unexpectedly" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong><br />
-- Container was running, now shows as stopped<br />
-- Processes terminated</p>
-<p><strong>Causes:</strong><br />
-1. <strong>Idle timeout reached</strong> (30min-2h, varies by user)<br />
-2. <strong>Out of memory</strong> (OOM killer)<br />
-3. <strong>Max runtime exceeded</strong><br />
-4. <strong>Code crashed</strong></p>
-<p><strong>Solutions:</strong></p>
-<ol>
-<li>
-<p><strong>Check logs:</strong><br />
-<code>bash
-   docker logs &lt;project-name&gt;._.$(whoami) | tail -100</code></p>
-</li>
-<li>
-<p><strong>Check for OOM:</strong><br />
-<code>bash
-   docker inspect &lt;project-name&gt;._.$(whoami) | grep OOMKilled</code></p>
-</li>
-<li>
-<p><strong>Prevent idle timeout:</strong><br />
-<code>bash
-   touch ~/workspace/&lt;project-name&gt;/.keep-alive</code></p>
-</li>
-</ol>
-<blockquote>
-<p><strong>Contact DSL First:</strong> The <code>.keep-alive</code> workaround is available but should be a <strong>last resort</strong> as it can disrupt the system for other users. Please <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">open an issue on DS01 Hub</a> first to find a better solution together.</p>
-</blockquote>
-<ol>
-<li><strong>Restart container:</strong><br />
-<code>bash
-   container-start my-project</code><br />
-   Or recreate:<br />
-<code>bash
-   container-retire my-project
-   container-deploy my-project</code></li>
-</ol>
-<hr />
-<h2 id="cant-find-container-not-found">Can't Find Container {#not-found}<a class="headerlink" href="#cant-find-container-not-found" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong></p>
-<pre class="codehilite"><code class="language-bash">$ container-run my-project
-Error: Container not found
+<h3 id="dev-containers-vs-codecursor">Dev Containers (VS Code/Cursor)<a class="headerlink" href="#dev-containers-vs-codecursor" title="Permanent link">&para;</a></h3>
+<p>Containers created by VS Code Remote Containers extension.</p>
+<p><strong>With GPU (<code>--gpus</code> in devcontainer.json):</strong><br />
+- <strong>Idle timeout</strong>: 30 minutes<br />
+- <strong>Max runtime</strong>: 7 days<br />
+- <strong>Lifecycle</strong>: Ephemeral - will be auto-stopped</p>
+<p><strong>Without GPU:</strong><br />
+- <strong>Idle timeout</strong>: None<br />
+- <strong>Max runtime</strong>: None<br />
+- <strong>Lifecycle</strong>: Permanent - runs until you stop it</p>
+<h3 id="docker-compose-containers">Docker Compose Containers<a class="headerlink" href="#docker-compose-containers" title="Permanent link">&para;</a></h3>
+<p><strong>With GPU:</strong><br />
+- <strong>Idle timeout</strong>: 30 minutes<br />
+- <strong>Max runtime</strong>: 3 days<br />
+- <strong>Lifecycle</strong>: Ephemeral</p>
+<h3 id="direct-docker-run">Direct docker run<a class="headerlink" href="#direct-docker-run" title="Permanent link">&para;</a></h3>
+<p><strong>With GPU:</strong><br />
+- <strong>Idle timeout</strong>: 30 minutes<br />
+- <strong>Max runtime</strong>: 2 days<br />
+- <strong>Lifecycle</strong>: Ephemeral</p>
+<h2 id="recommendations">Recommendations<a class="headerlink" href="#recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="for-code-editing-no-gpu-needed">For Code Editing (No GPU Needed)<a class="headerlink" href="#for-code-editing-no-gpu-needed" title="Permanent link">&para;</a></h3>
+<p>Use a dev container WITHOUT GPU:<br />
+- Remove <code>--gpus</code> from your <code>devcontainer.json</code><br />
+- Container can run indefinitely<br />
+- Perfect for: editing, git operations, lightweight work</p>
+<p>Example <code>devcontainer.json</code> for permanent dev environment:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;name&quot;: &quot;My Project&quot;,
+  &quot;image&quot;: &quot;python:3.11&quot;,
+  &quot;postCreateCommand&quot;: &quot;pip install -r requirements.txt&quot;
+  // Note: No &quot;runArgs&quot;: [&quot;--gpus&quot;, &quot;all&quot;]
+}
 </code></pre>
 
-<p><strong>Causes:</strong><br />
-- Container was removed<br />
-- Wrong project name<br />
-- Container never created</p>
-<p><strong>Solutions:</strong></p>
-<ol>
-<li>
-<p><strong>List containers:</strong><br />
-<code>bash
-   container-list --all
-   docker ps -a --filter "name=._.$(whoami)"</code></p>
-</li>
-<li>
-<p><strong>Recreate if needed:</strong><br />
-<code>bash
-   container-deploy my-project</code></p>
-</li>
-<li>
-<p><strong>Check project name spelling</strong></p>
-</li>
-</ol>
-<hr />
-<h2 id="container-performance-performance">Container Performance {#performance}<a class="headerlink" href="#container-performance-performance" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong><br />
-- Container running slowly<br />
-- High latency</p>
-<p><strong>Solutions:</strong></p>
-<ol>
-<li>
-<p><strong>Check resource usage:</strong><br />
-<code>bash
-   container-stats my-project</code></p>
-</li>
-<li>
-<p><strong>Check if swapping:</strong><br />
-<code>bash
-   docker exec &lt;project-name&gt;._.$(whoami) free -h</code></p>
-</li>
-<li>
-<p><strong>Check GPU utilisation:</strong><br />
-<code>bash
-   docker exec &lt;project-name&gt;._.$(whoami) nvidia-smi</code></p>
-</li>
-<li>
-<p><strong>Reduce memory pressure:</strong></p>
-</li>
-<li>Close unused processes</li>
-<li>Use smaller batch sizes</li>
-<li>Process data in chunks</li>
-</ol>
-<hr />
-<h2 id="container-wont-stop-wont-stop">Container Won't Stop {#wont-stop}<a class="headerlink" href="#container-wont-stop-wont-stop" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong><br />
-- <code>container-stop</code> hangs<br />
-- Container stuck in stopping state</p>
-<p><strong>Solutions:</strong></p>
-<ol>
-<li>
-<p><strong>Force stop:</strong><br />
-<code>bash
-   docker stop -t 1 &lt;project-name&gt;._.$(whoami)</code></p>
-</li>
-<li>
-<p><strong>Force kill:</strong><br />
-<code>bash
-   docker kill &lt;project-name&gt;._.$(whoami)</code></p>
-</li>
-<li>
-<p><strong>Remove forcefully:</strong><br />
-<code>bash
-   container-remove my-project --force</code></p>
-</li>
-</ol>
-<hr />
-<h2 id="maximum-containers-reached-max-containers">Maximum Containers Reached {#max-containers}<a class="headerlink" href="#maximum-containers-reached-max-containers" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong></p>
-<pre class="codehilite"><code class="language-bash">$ container-deploy new-project
-Error: Maximum containers reached (3/3)
+<h3 id="for-gpu-work">For GPU Work<a class="headerlink" href="#for-gpu-work" title="Permanent link">&para;</a></h3>
+<p>Use ds01 ephemeral containers for best experience:</p>
+<pre class="codehilite"><code class="language-bash"># Launch GPU container for training
+container deploy training-run
+
+# Do your training/inference
+# ...
+
+# When done, release GPU for others
+container retire training-run
 </code></pre>
 
-<p><strong>Solution:</strong></p>
-<pre class="codehilite"><code class="language-bash"># Check current containers
-container-list
-
-# Retire unused containers
-container-retire old-project-1
-container-retire old-project-2
-
-# Now can deploy new one
-container-deploy new-project
-</code></pre>
-
-<hr />
-<h2 id="general-recovery">General Recovery<a class="headerlink" href="#general-recovery" title="Permanent link">&para;</a></h2>
-<p>When in doubt, recreate:</p>
-<pre class="codehilite"><code class="language-bash">container-retire my-project
-container-deploy my-project --open
-</code></pre>
-
-<p>Your workspace files are <strong>always safe</strong> - recreating won't lose data.</p>
-<hr />
-<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<h3 id="data-safety">Data Safety<a class="headerlink" href="#data-safety" title="Permanent link">&para;</a></h3>
+<p><strong>Always mount volumes for important data:</strong></p>
 <ul>
-<li><a href="gpu-issues.html">GPU Issues</a></li>
-<li><a href="../reference/commands/container-commands.html">Container Commands</a></li>
-<li><a href="../core-guides/daily-workflow.html">Daily Workflow</a></li>
+<li>Your home directory is automatically mounted at <code>/home/yourusername/</code></li>
+<li>Work in your home directory to persist files</li>
+<li>Container contents outside mounted volumes are lost on stop</li>
 </ul>
+<p><strong>Safe locations</strong> (persist across container restarts):<br />
+- <code>/home/yourusername/</code> (your home directory)<br />
+- <code>/workspace/</code> (if using ds01 containers)</p>
+<p><strong>Unsafe locations</strong> (lost on container stop):<br />
+- <code>/tmp/</code><br />
+- <code>/root/</code><br />
+- Any path not mounted from host</p>
+<h2 id="gpu-allocation">GPU Allocation<a class="headerlink" href="#gpu-allocation" title="Permanent link">&para;</a></h2>
+<p>When you request a GPU container (via any method), DS01:</p>
+<ol>
+<li><strong>Checks your quota</strong> - You have a maximum number of GPUs based on your group</li>
+<li><strong>Allocates a specific GPU</strong> - You get a dedicated MIG instance, not "all GPUs"</li>
+<li><strong>Tracks your container</strong> - For quota enforcement and cleanup</li>
+<li><strong>Enforces limits</strong> - Idle timeout and max runtime</li>
+</ol>
+<h3 id="if-no-gpu-available">If No GPU Available<a class="headerlink" href="#if-no-gpu-available" title="Permanent link">&para;</a></h3>
+<p>If all GPUs are allocated:<br />
+- The system waits up to 3 minutes for one to become available<br />
+- If timeout is reached, container creation fails with a helpful message</p>
+<pre class="codehilite"><code>GPU allocation failed after 3 minutes.
+
+Suggestions:
+  1. Stop an idle container: container stop &lt;name&gt;
+  2. Wait for system cleanup (runs every 30 min)
+  3. Check GPU status: gpu-status
+</code></pre>
+
+<h3 id="checking-gpu-status">Checking GPU Status<a class="headerlink" href="#checking-gpu-status" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-bash"># See current GPU allocations
+gpu-status
+
+# See your containers
+docker ps
+
+# See your GPU usage
+container ls
+</code></pre>
+
+<h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h2>
+<h3 id="q-my-dev-container-keeps-getting-stopped">Q: My dev container keeps getting stopped<a class="headerlink" href="#q-my-dev-container-keeps-getting-stopped" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong> Your container has GPU access, which makes it ephemeral. Options:<br />
+1. Remove GPU access if you don't need it (edit <code>devcontainer.json</code>)<br />
+2. Keep your GPU active (training running)<br />
+3. Use ds01 containers for GPU work, dev containers for editing</p>
+<h3 id="q-how-do-i-prevent-idle-timeout">Q: How do I prevent idle timeout?<a class="headerlink" href="#q-how-do-i-prevent-idle-timeout" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong> Keep your GPU active:<br />
+- Running training/inference<br />
+- Active CUDA processes</p>
+<p>For ds01 containers, you can also:</p>
+<pre class="codehilite"><code class="language-bash"># Create keep-alive file (prevents idle timeout)
+touch /workspace/.keep-alive
+</code></pre>
+
+<h3 id="q-can-i-have-multiple-gpu-containers">Q: Can I have multiple GPU containers?<a class="headerlink" href="#q-can-i-have-multiple-gpu-containers" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong> Yes, up to your group limit:<br />
+- <strong>Students</strong>: 1-2 MIG instances total<br />
+- <strong>Researchers/Faculty</strong>: 2+ MIG instances (varies)<br />
+- <strong>Admins</strong>: Unlimited</p>
+<h3 id="q-what-happens-to-my-work-when-container-stops">Q: What happens to my work when container stops?<a class="headerlink" href="#q-what-happens-to-my-work-when-container-stops" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong><br />
+- <strong>Persisted</strong>: Files in <code>/home/yourusername/</code>, <code>/workspace/</code><br />
+- <strong>Lost</strong>: Files elsewhere, running processes, container state</p>
+<h3 id="q-why-was-my-gpus-all-rewritten">Q: Why was my --gpus all rewritten?<a class="headerlink" href="#q-why-was-my-gpus-all-rewritten" title="Permanent link">&para;</a></h3>
+<p><strong>A:</strong> DS01 allocates you a specific GPU/MIG instance instead of "all GPUs":<br />
+- Ensures fair resource sharing<br />
+- Enables quota tracking<br />
+- Prevents GPU hoarding</p>
+<p>Your container still has full GPU access - just to your allocated device.</p>
+<h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>                Container Creation
+                       |
+         +-------------+-------------+
+         |                           |
+    CLI-based                    API-based
+    (docker run,                 (bypasses
+     compose, etc.)               wrapper)
+         |                           |
+         v                           |
++------------------+                 |
+| docker-wrapper   |                 |
+| - Allocate GPU   |                 |
+| - Inject labels  |                 |
+| - Rewrite --gpus |                 |
++--------+---------+                 |
+         |                           |
+         +-------------+-------------+
+                       |
+                       v
+              Docker Daemon
+                       |
+                       v
+        +-----------------------------+
+        | container-owner-tracker     |
+        | - Track ALL containers      |
+        | - Detect GPU usage          |
+        | - Flag unmanaged containers |
+        +-----------------------------+
+                       |
+                       v
+        +-----------------------------+
+        | Lifecycle Enforcement       |
+        | - Idle timeout (cron)       |
+        | - Max runtime (cron)        |
+        | - Applies to ALL GPU        |
+        |   containers                |
+        +-----------------------------+
+</code></pre>
+
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>GPU access = ephemeral</strong> - GPU containers will be auto-stopped when idle</li>
+<li><strong>No GPU = permanent</strong> - Non-GPU containers can run indefinitely</li>
+<li><strong>Save work to mounted volumes</strong> - Home directory always persists</li>
+<li><strong>Use ds01 containers for GPU work</strong> - Best experience and quota tracking</li>
+<li><strong>Use dev containers for editing</strong> - Without GPU for permanent workspace</li>
+</ol>
           </article>
         </div>
       </div>

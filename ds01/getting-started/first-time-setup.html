@@ -379,7 +379,7 @@ Phase 4/4: Custom packages... ✓
 ✓ Image built: ds01-your-username/my-first-project:latest
 </code></pre>
 
-<p><strong>What this means:</strong> A Docker image is like a blueprint for your computing environment. It contains Python, CUDA drivers, ML frameworks, and all your packages. </p>
+<p><strong>What this means:</strong> A Docker image is like a blueprint for your computing environment. It contains Python, CUDA drivers, ML frameworks, and all your packages.</p>
 <p><strong>Step 4: Container Deployment</strong></p>
 <pre class="codehilite"><code>Deploying your first container...
 
@@ -626,32 +626,32 @@ GPU count: 1
 <tbody>
 <tr>
 <td><code>~/workspace/</code></td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 <td>Always safe, even after <code>container-retire</code></td>
 </tr>
 <tr>
 <td><code>~/dockerfiles/</code></td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 <td>Image blueprints</td>
 </tr>
 <tr>
 <td>Docker images</td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 <td>Can recreate containers</td>
 </tr>
 <tr>
 <td>Container instance</td>
-<td>❌ No</td>
+<td>✗ No</td>
 <td>Removed with <code>container-retire</code></td>
 </tr>
 <tr>
 <td>Files in <code>/tmp</code></td>
-<td>❌ No</td>
+<td>✗ No</td>
 <td>Inside container, not workspace</td>
 </tr>
 <tr>
 <td>GPU allocation</td>
-<td>❌ No</td>
+<td>✗ No</td>
 <td>Released when container stops</td>
 </tr>
 </tbody>

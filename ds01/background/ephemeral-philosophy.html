@@ -474,19 +474,19 @@ Dana needs GPU → available immediately
 <h3 id="but-i-lose-my-work">"But I lose my work!"<a class="headerlink" href="#but-i-lose-my-work" title="Permanent link">&para;</a></h3>
 <p><strong>False!</strong> Let's break down what you actually care about:</p>
 <p><strong>What you NEED to keep:</strong><br />
-- ✅ Code you wrote → Saved in <code>/workspace</code><br />
-- ✅ Data you downloaded → Saved in <code>/workspace</code><br />
-- ✅ Models you trained → Saved in <code>/workspace/models/</code><br />
-- ✅ Experiment results → Saved in <code>/workspace/results/</code><br />
-- ✅ Environment setup → Saved in Docker image</p>
+- ✓ Code you wrote → Saved in <code>/workspace</code><br />
+- ✓ Data you downloaded → Saved in <code>/workspace</code><br />
+- ✓ Models you trained → Saved in <code>/workspace/models/</code><br />
+- ✓ Experiment results → Saved in <code>/workspace/results/</code><br />
+- ✓ Environment setup → Saved in Docker image</p>
 <p><strong>What you DON'T need:</strong><br />
-- ❌ The specific running container instance<br />
-- ❌ The specific GPU (any GPU works)<br />
-- ❌ RAM state (reload from checkpoint)</p>
+- ✗ The specific running container instance<br />
+- ✗ The specific GPU (any GPU works)<br />
+- ✗ RAM state (reload from checkpoint)</p>
 <p><strong>Reality:</strong> You lose nothing important. Everything valuable persists.</p>
 <h3 id="what-if-i-have-a-long-running-job">"What if I have a long-running job?"<a class="headerlink" href="#what-if-i-have-a-long-running-job" title="Permanent link">&para;</a></h3>
 <blockquote>
-<p><strong>⚠️ Contact DSL First</strong></p>
+<p><strong>Contact DSL First</strong></p>
 <p>The workarounds below (<code>.keep-alive</code>, <code>nohup</code>, etc.) are available but should be <strong>last resorts</strong> as they can disrupt the system for other users by holding GPUs longer than necessary.</p>
 <p><strong>Please <a href="https://github.com/hertie-data-science-lab/ds01-hub/issues">open an issue on DS01 Hub</a> first</strong> to discuss your requirements. We can often find better solutions together (adjusted limits, scheduled runs, checkpointing strategies).</p>
 </blockquote>

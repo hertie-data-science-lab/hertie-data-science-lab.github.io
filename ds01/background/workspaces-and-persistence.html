@@ -330,7 +330,7 @@
 <strong>Everything else = Temporary and will be lost</strong></p>
 <hr />
 <h2 id="whats-persistent-vs-ephemeral">What's Persistent vs Ephemeral<a class="headerlink" href="#whats-persistent-vs-ephemeral" title="Permanent link">&para;</a></h2>
-<h3 id="persistent-always-safe">Persistent (Always Safe) ✅<a class="headerlink" href="#persistent-always-safe" title="Permanent link">&para;</a></h3>
+<h3 id="persistent-always-safe">Persistent (Always Safe) ✓<a class="headerlink" href="#persistent-always-safe" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -343,26 +343,26 @@
 <tr>
 <td><code>~/workspace/&lt;project&gt;/</code></td>
 <td>Your code, data, results</td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 </tr>
 <tr>
 <td><code>~/dockerfiles/</code></td>
 <td>Image blueprints</td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 </tr>
 <tr>
 <td>Docker images</td>
 <td>Environment blueprints</td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 </tr>
 <tr>
 <td><code>~/.ssh/</code></td>
 <td>SSH keys</td>
-<td>✅ Yes</td>
+<td>✓ Yes</td>
 </tr>
 </tbody>
 </table>
-<h3 id="ephemeral-temporary">Ephemeral (Temporary) ❌<a class="headerlink" href="#ephemeral-temporary" title="Permanent link">&para;</a></h3>
+<h3 id="ephemeral-temporary">Ephemeral (Temporary) ✗<a class="headerlink" href="#ephemeral-temporary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -375,27 +375,27 @@
 <tr>
 <td>Container instance</td>
 <td>Running container</td>
-<td>❌ No</td>
+<td>✗ No</td>
 </tr>
 <tr>
 <td><code>/tmp</code> (in container)</td>
 <td>Temporary files</td>
-<td>❌ No</td>
+<td>✗ No</td>
 </tr>
 <tr>
 <td><code>/home/&lt;user&gt;</code> (in container, outside <code>/workspace</code>)</td>
 <td>Container home dir</td>
-<td>❌ No</td>
+<td>✗ No</td>
 </tr>
 <tr>
 <td>Container processes</td>
 <td>Running Python, Jupyter, etc.</td>
-<td>❌ No</td>
+<td>✗ No</td>
 </tr>
 <tr>
 <td>GPU allocation</td>
 <td>Assigned GPU</td>
-<td>❌ No</td>
+<td>✗ No</td>
 </tr>
 </tbody>
 </table>
@@ -475,7 +475,7 @@ container-create my-container --workspace ~/other/path # Custom location
 │  │  └── train.py                  │    │
 │  │                                │    │
 │  │  /tmp/  ← NOT mounted          │    │
-│  │  └── temp.txt  ❌ LOST         │    │
+│  │  └── temp.txt  ✗ LOST         │    │
 │  └────────────────────────────────┘    │
 └─────────────────────────────────────────┘
 </code></pre>
@@ -561,13 +561,13 @@ cache_dir = '/workspace/.cache'
 
 <p><strong>Bad:</strong></p>
 <pre class="codehilite"><code class="language-python"># DON'T save to /tmp
-torch.save(model.state_dict(), '/tmp/model.pt')  # ❌ LOST on container removal
+torch.save(model.state_dict(), '/tmp/model.pt')  # ✗ LOST on container removal
 
 # DON'T save to home (outside workspace)
-torch.save(model.state_dict(), '~/model.pt')  # ❌ LOST
+torch.save(model.state_dict(), '~/model.pt')  # ✗ LOST
 
 # DON'T save to root
-torch.save(model.state_dict(), '/model.pt')  # ❌ LOST
+torch.save(model.state_dict(), '/model.pt')  # ✗ LOST
 </code></pre>
 
 <h3 id="environment-variables-for-common-paths">Environment Variables for Common Paths<a class="headerlink" href="#environment-variables-for-common-paths" title="Permanent link">&para;</a></h3>
@@ -630,10 +630,10 @@ cat file.txt                          # &quot;Hello&quot; - file persists!
 - GPU released<br />
 - Container instance still exists (stopped state)</p>
 <p><strong>Your files:</strong><br />
-- ✅ Workspace files: Safe<br />
-- ✅ Image: Safe<br />
-- ❌ Running processes: Terminated<br />
-- ❌ Unsaved work (RAM): Lost</p>
+- ✓ Workspace files: Safe<br />
+- ✓ Image: Safe<br />
+- ✗ Running processes: Terminated<br />
+- ✗ Unsaved work (RAM): Lost</p>
 <p><strong>Recovery:</strong></p>
 <pre class="codehilite"><code class="language-bash"># Restart container
 container-start my-project
@@ -650,9 +650,9 @@ ls /workspace
 - Container removed<br />
 - GPU released</p>
 <p><strong>Your files:</strong><br />
-- ✅ Workspace files: Safe<br />
-- ✅ Image: Safe<br />
-- ❌ Container instance: Deleted</p>
+- ✓ Workspace files: Safe<br />
+- ✓ Image: Safe<br />
+- ✗ Container instance: Deleted</p>
 <p><strong>Recovery:</strong></p>
 <pre class="codehilite"><code class="language-bash"># Recreate from same image
 container-deploy my-project
@@ -665,9 +665,9 @@ container-deploy my-project
 - Image removed from Docker storage<br />
 - Containers from this image can't be created</p>
 <p><strong>Your files:</strong><br />
-- ✅ Workspace files: Safe<br />
-- ❌ Image: Deleted<br />
-- ❌ Packages installed: Need to reinstall</p>
+- ✓ Workspace files: Safe<br />
+- ✗ Image: Deleted<br />
+- ✗ Packages installed: Need to reinstall</p>
 <p><strong>Recovery:</strong></p>
 <pre class="codehilite"><code class="language-bash"># Rebuild image
 image-create                          # Reinstall packages
@@ -683,9 +683,9 @@ container-deploy my-project --framework pytorch
 - Workspace directory deleted<br />
 - Your code, data, results LOST</p>
 <p><strong>Your files:</strong><br />
-- ❌ Workspace files: DELETED<br />
-- ✅ Image: Safe (can recreate environment)<br />
-- ❌ Data: Lost (unless in Git or backups)</p>
+- ✗ Workspace files: DELETED<br />
+- ✓ Image: Safe (can recreate environment)<br />
+- ✗ Data: Lost (unless in Git or backups)</p>
 <p><strong>Prevention:</strong></p>
 <pre class="codehilite"><code class="language-bash"># Use Git for code
 cd ~/workspace/my-project
@@ -717,13 +717,13 @@ git push -u origin main
 - Remote backup<br />
 - Reproducibility</p>
 <p><strong>What to commit:</strong><br />
-- ✅ Source code (<code>src/</code>)<br />
-- ✅ Notebooks (<code>notebooks/</code>)<br />
-- ✅ Documentation (<code>README.md</code>)<br />
-- ✅ Configuration (<code>requirements.txt</code>, configs)<br />
-- ❌ Data files (too large)<br />
-- ❌ Model weights (too large)<br />
-- ❌ Results (generated)</p>
+- ✓ Source code (<code>src/</code>)<br />
+- ✓ Notebooks (<code>notebooks/</code>)<br />
+- ✓ Documentation (<code>README.md</code>)<br />
+- ✓ Configuration (<code>requirements.txt</code>, configs)<br />
+- ✗ Data files (too large)<br />
+- ✗ Model weights (too large)<br />
+- ✗ Results (generated)</p>
 <h3 id="2-data-storage">2. Data Storage<a class="headerlink" href="#2-data-storage" title="Permanent link">&para;</a></h3>
 <p><strong>For datasets:</strong><br />
 - Store on DS01's shared data directory (if available)<br />
@@ -870,7 +870,7 @@ docker image prune
 
 <hr />
 <h2 id="best-practices-summary">Best Practices Summary<a class="headerlink" href="#best-practices-summary" title="Permanent link">&para;</a></h2>
-<h3 id="do-this">✅ Do This<a class="headerlink" href="#do-this" title="Permanent link">&para;</a></h3>
+<h3 id="do-this">✓ Do This<a class="headerlink" href="#do-this" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Save everything to <code>/workspace</code></strong></li>
 <li><strong>Use Git for code</strong> (push regularly)</li>
@@ -879,7 +879,7 @@ docker image prune
 <li><strong>Clean up old data</strong> periodically</li>
 <li><strong>Use experiment tracking</strong> (W&amp;B, MLflow)</li>
 </ol>
-<h3 id="avoid-this">❌ Avoid This<a class="headerlink" href="#avoid-this" title="Permanent link">&para;</a></h3>
+<h3 id="avoid-this">✗ Avoid This<a class="headerlink" href="#avoid-this" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Don't save to <code>/tmp</code> or <code>~</code> (outside workspace)</strong></li>
 <li><strong>Don't commit large files</strong> to Git</li>
@@ -891,7 +891,7 @@ docker image prune
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <h3 id="understand-containers">Understand Containers<a class="headerlink" href="#understand-containers" title="Permanent link">&para;</a></h3>
 <p><strong>Learn how containers work:</strong><br />
-- → <a href="containers-explained.html">Containers Explained</a></p>
+- → <a href="containers-and-docker.html">Containers Explained</a></p>
 <h3 id="learn-daily-workflow">Learn Daily Workflow<a class="headerlink" href="#learn-daily-workflow" title="Permanent link">&para;</a></h3>
 <p><strong>Put knowledge into practice:</strong><br />
 - → <a href="../core-guides/daily-workflow.html">Daily Usage Patterns</a></p>
